@@ -1,0 +1,1862 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="no-referrer">
+<title>Flearance</title>
+<meta name="description" content="Каталог инструментов: open-source софт, AI-агенты, приватность, обход блокировок, обучение. Без регистрации, без логов.">
+<meta name="keywords" content="каталог инструментов, open-source, приватность, обход блокировок, AI, саморазвитие, Tor, VPN, безопасность">
+<meta name="author" content="FLEARANCE">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="FLEARANCE — арсенал инструментов">
+<meta property="og:description" content="Каталог инструментов: open-source софт, AI-агенты, приватность, обход блокировок, обучение. Без регистрации, без логов.">
+<meta property="og:image" content="og-image.png">
+<meta property="og:url" content="https://flearance.github.io">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:site_name" content="FLEARANCE">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="FLEARANCE — арсенал инструментов">
+<meta name="twitter:description" content="Каталог инструментов: open-source софт, AI-агенты, приватность, обход блокировок, обучение.">
+<meta name="twitter:image" content="og-image.png">
+
+<!-- Sitemap -->
+<link rel="sitemap" type="application/xml" href="sitemap.xml">
+
+<!-- RSS -->
+<link rel="alternate" type="application/rss+xml" title="FLEARANCE RSS" href="feed.xml">
+<style>
+  :root {
+    --bg:#0d0d12; --bg2:#090910; --bg3:#14141e;
+    --accent:#6dd400; --accent2:#00c896; --accent3:#a855f7;
+    --text:#e4e0ec; --text-dim:rgba(228,224,236,0.5); --text-mid:rgba(228,224,236,0.72);
+    --border:rgba(109,212,0,0.12); --glow:rgba(109,212,0,0.06);
+    --card-bg:rgba(255,255,255,0.025); --card-hover:rgba(109,212,0,0.05);
+    --font-body:'Inter','Segoe UI','Helvetica Neue',Arial,sans-serif;
+    --font-mono:'JetBrains Mono','Fira Code','SF Mono','Courier New',monospace;
+    --sp-1:8px; --sp-2:12px; --sp-3:20px; --sp-4:32px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--bg);color:var(--text);font-family:var(--font-body);min-height:100vh;overflow-x:hidden;line-height:1.6;}
+
+  @keyframes pulseGlow{0%,100%{filter:drop-shadow(0 0 20px rgba(109,212,0,0.3))}50%{filter:drop-shadow(0 0 40px rgba(109,212,0,0.6))}}
+  @keyframes fadeInUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+  /* SPLASH */
+  #splash{position:fixed;inset:0;background:var(--bg2);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:1000;transition:opacity 0.8s ease,visibility 0.8s ease;}
+  #splash.hide{opacity:0;visibility:hidden;pointer-events:none;}
+  .splash-logo{font-family:var(--font-mono);font-size:clamp(36px,8vw,72px);font-weight:700;letter-spacing:14px;background:linear-gradient(135deg,#6dd400,#00c896);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:pulseGlow 2s ease-in-out infinite;}
+  .splash-sub{font-family:var(--font-mono);font-size:11px;letter-spacing:5px;color:var(--text-dim);margin-top:16px;text-transform:uppercase;}
+  .splash-checks{display:flex;flex-direction:column;gap:10px;margin-top:28px;min-height:90px;}
+  .splash-check{font-family:var(--font-mono);font-size:12px;letter-spacing:2px;color:var(--accent);opacity:0;transform:translateY(6px);transition:opacity 0.35s ease,transform 0.35s ease;display:flex;align-items:center;gap:10px;}
+  .splash-check.show{opacity:1;transform:translateY(0);}
+  .splash-bar{margin-top:24px;width:200px;height:1px;background:rgba(109,212,0,0.15);overflow:hidden;opacity:0;transition:opacity 0.3s ease;}
+  .splash-bar.show{opacity:1;}
+  .splash-bar-fill{height:100%;background:linear-gradient(90deg,#6dd400,#00c896);width:0%;transition:width 1.4s ease;}
+  .splash-bar-fill.go{width:100%;}
+  .splash-skip{position:absolute;bottom:28px;right:36px;font-family:var(--font-mono);font-size:10px;letter-spacing:2px;color:rgba(228,224,236,0.2);background:none;border:none;cursor:pointer;text-transform:uppercase;transition:color 0.2s ease;padding:4px 8px;}
+  .splash-skip:hover{color:rgba(228,224,236,0.5);}
+
+  /* NAV */
+  nav{display:flex;align-items:center;justify-content:space-between;padding:14px 32px;border-bottom:1px solid var(--border);background:rgba(9,9,16,0.97);position:sticky;top:0;z-index:50;backdrop-filter:blur(12px);}
+  .nav-logo{font-family:var(--font-mono);font-size:16px;font-weight:700;letter-spacing:8px;flex-shrink:0;display:flex;align-items:baseline;}
+  .nav-logo-prefix{color:var(--accent2);font-size:0.9em;letter-spacing:2px;margin-right:6px;}
+  .nav-logo-text{background:linear-gradient(135deg,#6dd400,#00c896);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+  .nav-links{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+  .nav-btn{font-family:var(--font-mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dim);background:transparent;border:1px solid var(--border);padding:7px 14px;cursor:pointer;transition:all 0.2s ease;white-space:nowrap;}
+  .nav-btn:hover,.nav-btn.active{color:var(--accent);border-color:var(--accent);background:var(--glow);}
+  .nav-btn.support{border-color:rgba(168,85,247,0.25);color:rgba(168,85,247,0.65);}
+  .nav-btn.support:hover,.nav-btn.support.active{color:var(--accent3);border-color:var(--accent3);background:rgba(168,85,247,0.07);}
+
+  /* MAIN */
+  #main{opacity:0;transition:opacity 0.8s ease;min-height:100vh;display:flex;flex-direction:column;}
+  #main.show{opacity:1;}
+
+  /* LAYOUT */
+  .hero{flex:1;display:flex;}
+  .sidebar{width:260px;min-height:calc(100vh - 53px);border-right:1px solid var(--border);padding:28px 22px;background:rgba(12,4,22,0.4);flex-shrink:0;position:sticky;top:53px;height:calc(100vh - 53px);overflow-y:auto;overflow-x:hidden;transition:width 0.35s cubic-bezier(.25,.8,.3,1),padding 0.35s cubic-bezier(.25,.8,.3,1),border-color 0.35s ease;}
+  .sidebar.collapsed{width:0;padding:28px 0;border-right-color:transparent;}
+  .sidebar.collapsed .sidebar-inner-content{opacity:0;pointer-events:none;}
+  .sidebar-inner-content{transition:opacity 0.2s ease;min-width:216px;}
+  .sidebar-edge{width:18px;flex-shrink:0;position:sticky;top:53px;height:calc(100vh - 53px);display:flex;align-items:flex-start;justify-content:center;cursor:pointer;background:rgba(0,0,0,0.15);border-right:1px solid var(--border);transition:background 0.2s ease;}
+  .sidebar-edge:hover{background:rgba(184,208,62,0.06);}
+  .sidebar-edge-chevron{margin-top:24px;transition:transform 0.35s ease;color:var(--text-dim);}
+  .sidebar-edge:hover .sidebar-edge-chevron{color:var(--accent);}
+  .sidebar-edge-chevron svg{width:11px;height:11px;stroke:currentColor;display:block;}
+  .sidebar-edge.is-open .sidebar-edge-chevron{transform:rotate(180deg);}
+  .sidebar-title{font-family:var(--font-mono);font-size:11px;letter-spacing:3px;color:var(--accent);text-transform:uppercase;margin-bottom:18px;padding-bottom:10px;border-bottom:1px solid var(--border);}
+  .policy-item{display:flex;gap:10px;margin-bottom:16px;align-items:flex-start;}
+  .policy-dot{width:5px;height:5px;border-radius:50%;background:var(--accent);margin-top:7px;flex-shrink:0;box-shadow:0 0 6px rgba(109,212,0,0.5);}
+  .policy-text{font-size:13px;line-height:1.7;color:var(--text-dim);}
+  .policy-text strong{color:var(--text-mid);font-weight:600;}
+
+  .content{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;padding:40px 32px 40px;}
+  .content-tagline{font-family:var(--font-mono);font-size:12px;letter-spacing:4px;color:var(--text-dim);text-transform:uppercase;margin-bottom:36px;}
+
+  /* PAGES */
+  .panel-page{display:none;width:100%;animation:fadeInUp 0.3s ease;}
+  .panel-page.active{display:block;}
+
+  /* SESSION BLOCK */
+  .session-block{width:100%;max-width:560px;}
+  .session-label{font-family:var(--font-mono);font-size:11px;letter-spacing:3px;color:var(--text-dim);text-transform:uppercase;margin-bottom:10px;display:block;}
+  .session-id-box{background:rgba(0,0,0,0.3);border:1px dashed rgba(109,212,0,0.2);padding:14px 18px;font-family:var(--font-mono);font-size:13px;color:var(--text-dim);letter-spacing:1px;word-break:break-all;line-height:1.6;margin-bottom:10px;}
+  .session-id-label{font-family:var(--font-mono);font-size:10px;color:rgba(255,180,60,0.55);letter-spacing:2px;display:block;margin-bottom:4px;}
+  .contact-methods{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--sp-3);margin-top:var(--sp-2);}
+  @media(max-width:640px){.contact-methods{grid-template-columns:1fr;}}
+  .warning-box{font-size:13px;color:rgba(255,180,60,0.85);letter-spacing:0.2px;line-height:1.7;padding:12px 16px;border-left:2px solid rgba(255,160,40,0.4);background:rgba(255,140,0,0.04);margin-bottom:10px;}
+  .warning-box strong{color:rgba(255,200,80,1);}
+
+  /* BLOCKED BANNER */
+  .blocked-banner{display:flex;gap:14px;align-items:flex-start;width:100%;max-width:560px;padding:16px 18px;border:1px solid rgba(255,160,40,0.25);background:rgba(255,140,0,0.04);margin-bottom:20px;animation:fadeInUp 0.3s ease;}
+  .blocked-icon{font-size:22px;line-height:1;flex-shrink:0;margin-top:2px;color:rgba(255,180,60,0.8);}
+  .blocked-body{flex:1;}
+  .blocked-title{font-family:var(--font-mono);font-size:12px;letter-spacing:1px;color:rgba(255,200,80,0.95);font-weight:600;margin-bottom:6px;}
+  .blocked-text{font-size:13px;color:var(--text-dim);line-height:1.7;margin-bottom:10px;}
+  .blocked-text strong{color:var(--text-mid);}
+  .blocked-btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent2);background:transparent;border:1px solid rgba(0,200,150,0.25);padding:7px 14px;cursor:pointer;transition:all 0.2s ease;}
+  .blocked-btn:hover{color:#00e6a8;border-color:rgba(0,200,150,0.5);background:rgba(0,200,150,0.06);}
+  .blocked-btn svg{flex-shrink:0;}
+
+  /* COPY BTN */
+  .copy-btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:11px;color:var(--accent);letter-spacing:1px;border:none;border-bottom:1px solid rgba(109,212,0,0.3);padding-bottom:2px;cursor:pointer;background:none;transition:all 0.2s ease;margin-top:6px;}
+  .copy-btn:hover{color:#8fff00;border-color:#8fff00;text-shadow:0 0 8px rgba(109,212,0,0.5);}
+  .copy-btn .copy-icon{font-size:13px;transition:transform 0.15s ease;}
+  .copy-btn:hover .copy-icon{transform:scale(1.15);}
+  .copy-btn.copied{color:var(--accent2);border-color:var(--accent2);}
+
+  /* HOW IT WORKS */
+  .howto-wrap{max-width:600px;}
+  .howto-wrap h2{font-family:var(--font-mono);font-size:18px;letter-spacing:5px;color:var(--accent);margin-bottom:24px;}
+  .howto-step{display:flex;gap:16px;margin-bottom:22px;align-items:flex-start;}
+  .step-num{font-family:var(--font-mono);font-size:22px;font-weight:700;color:var(--accent);opacity:0.4;flex-shrink:0;line-height:1;margin-top:2px;min-width:24px;}
+  .step-body{font-size:14px;color:var(--text-dim);line-height:1.8;}
+  .step-body strong{color:var(--text-mid);font-weight:600;}
+  .step-body code{font-family:var(--font-mono);font-size:12px;background:rgba(109,212,0,0.06);border:1px solid rgba(109,212,0,0.12);padding:2px 7px;color:var(--accent2);display:inline-block;margin-top:6px;line-height:1.6;}
+  .format-box{background:rgba(0,0,0,0.25);border:1px solid var(--border);padding:16px 18px;margin-top:12px;font-family:var(--font-mono);font-size:12px;line-height:2;}
+  .format-row{color:var(--text-dim);}
+  .format-row span{color:var(--accent);font-weight:600;}
+  .format-note{font-family:var(--font-mono);font-size:10px;color:rgba(255,180,60,0.5);margin-top:8px;border-top:1px solid var(--border);padding-top:8px;}
+
+  /* CATALOG */
+  .catalog-controls{width:100%;max-width:900px;margin-bottom:20px;}
+  .catalog-tabs{display:flex;gap:var(--sp-1);margin-bottom:var(--sp-3);flex-wrap:wrap;}
+  .cat-tab{font-family:var(--font-mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dim);background:transparent;border:1px solid var(--border);padding:var(--sp-1) var(--sp-2);cursor:pointer;transition:all 0.2s ease;}
+  .tab-prefix{color:var(--accent2);opacity:0.55;margin-right:4px;}
+  .cat-tab.active .tab-prefix,.cat-tab:hover .tab-prefix{opacity:0.9;}
+  .cat-tab:hover{color:var(--accent);border-color:rgba(109,212,0,0.3);}
+  .cat-tab.active{color:var(--accent);border-color:var(--accent);background:var(--glow);}
+  .cat-tab.support{border-color:rgba(168,85,247,0.25);color:rgba(168,85,247,0.65);}
+  .cat-tab.support:hover{color:var(--accent3);border-color:var(--accent3);background:rgba(168,85,247,0.07);}
+  .cat-tab.bypass{border-color:rgba(255,180,60,0.25);color:rgba(255,180,60,0.65);}
+  .cat-tab.bypass:hover{color:rgba(255,200,80,0.9);border-color:rgba(255,180,60,0.5);background:rgba(255,140,0,0.07);}
+  .cat-search{width:100%;max-width:400px;font-family:var(--font-mono);font-size:12px;letter-spacing:1px;color:var(--text);background:rgba(0,0,0,0.3);border:1px solid var(--border);padding:9px 14px;outline:none;transition:border-color 0.2s ease;}
+  .cat-search::placeholder{color:var(--text-dim);letter-spacing:1px;}
+  .cat-search:focus{border-color:rgba(109,212,0,0.35);}
+  .catalog-count{font-family:var(--font-mono);font-size:10px;color:var(--text-dim);letter-spacing:1.5px;margin-top:10px;text-transform:uppercase;}
+
+  /* WELCOME MODAL */
+  .welcome-overlay{position:fixed;inset:0;background:rgba(5,5,9,0.85);backdrop-filter:blur(6px);z-index:950;display:flex;align-items:center;justify-content:center;padding:24px;opacity:0;visibility:hidden;transition:opacity 0.4s ease,visibility 0.4s ease;}
+  .welcome-overlay.open{opacity:1;visibility:visible;}
+  .welcome-modal{width:100%;max-width:480px;background:var(--bg3);border:1px solid rgba(109,212,0,0.2);box-shadow:0 20px 60px rgba(0,0,0,0.6);padding:36px 32px 28px;text-align:center;transform:scale(0.94) translateY(10px);opacity:0;transition:transform 0.35s cubic-bezier(.2,.8,.2,1),opacity 0.3s ease;position:relative;}
+  .welcome-overlay.open .welcome-modal{transform:scale(1) translateY(0);opacity:1;}
+  .welcome-title{font-family:var(--font-mono);font-size:clamp(24px,5vw,36px);font-weight:700;letter-spacing:8px;background:linear-gradient(135deg,#6dd400,#00c896);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:20px;}
+  .welcome-text{font-size:14px;color:var(--text-dim);line-height:1.9;text-align:left;margin-bottom:24px;}
+  .welcome-text strong{color:var(--text-mid);}
+  .welcome-timer{font-family:var(--font-mono);font-size:11px;color:var(--text-dim);letter-spacing:2px;margin-bottom:16px;}
+  .welcome-timer span{color:var(--accent);font-weight:700;}
+  .welcome-btn{font-family:var(--font-mono);font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--bg);background:linear-gradient(135deg,#6dd400,#00c896);border:none;padding:12px 28px;cursor:pointer;transition:opacity 0.2s ease,transform 0.15s ease;opacity:0;visibility:hidden;}
+  .welcome-btn.show{opacity:1;visibility:visible;}
+  .welcome-btn:hover{transform:scale(1.03);}
+  .rec-overlay{position:fixed;inset:0;background:rgba(5,5,9,0.75);backdrop-filter:blur(4px);z-index:900;display:flex;align-items:center;justify-content:center;padding:24px;opacity:0;visibility:hidden;transition:opacity 0.25s ease,visibility 0.25s ease;}
+  .rec-overlay.open{opacity:1;visibility:visible;}
+  .rec-modal{width:100%;max-width:520px;height:420px;overflow-y:auto;background:var(--bg3);border:1px solid rgba(168,85,247,0.25);box-shadow:0 20px 60px rgba(0,0,0,0.6);padding:26px 28px 24px;transform:scale(0.94) translateY(10px);opacity:0;transition:transform 0.28s cubic-bezier(.2,.8,.2,1),opacity 0.25s ease;position:relative;}
+  .rec-overlay.open .rec-modal{transform:scale(1) translateY(0);opacity:1;}
+  .rec-pages{height:calc(100% - 100px);overflow-y:auto;}
+  .rec-modal-close{position:absolute;top:18px;right:20px;background:none;border:none;color:var(--text-dim);font-size:18px;line-height:1;cursor:pointer;transition:color 0.2s ease;}
+  .rec-modal-close:hover{color:var(--accent3);}
+  .rec-modal h2{font-family:var(--font-mono);font-size:16px;letter-spacing:4px;color:var(--accent3);margin-bottom:18px;}
+  .rec-tabs{display:flex;gap:6px;margin-bottom:18px;flex-wrap:wrap;}
+  .rec-tab{font-family:var(--font-mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dim);background:transparent;border:1px solid var(--border);padding:6px 12px;cursor:pointer;transition:all 0.2s ease;}
+  .rec-tab:hover{color:var(--accent3);border-color:rgba(168,85,247,0.3);}
+  .rec-tab.active{color:var(--accent3);border-color:var(--accent3);background:rgba(168,85,247,0.07);}
+  .rec-welcome{font-family:var(--font-mono);font-size:clamp(22px,4vw,32px);font-weight:700;letter-spacing:6px;background:linear-gradient(135deg,#6dd400,#00c896);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:18px;}
+  .rec-welcome-text{font-size:13px;color:var(--text-dim);line-height:1.9;}
+  .rec-welcome-text strong{color:var(--text-mid);}
+  .rec-page{display:none;}
+  .rec-page.active{display:block;}
+  .rec-section{margin-bottom:20px;}
+  .rec-section-title{font-family:var(--font-mono);font-size:11px;letter-spacing:3px;color:var(--text-dim);text-transform:uppercase;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--border);}
+  .rec-section ul{margin:8px 0 0 18px;color:var(--text-dim);font-size:13px;line-height:2;}
+  .rec-section ul li::marker{color:var(--accent3);}
+  .rec-section ul li strong{color:var(--text-mid);}
+  .risk-criteria-list{display:flex;flex-direction:column;gap:12px;}
+  .risk-criterion{padding:10px 12px;border:1px solid var(--border);background:rgba(0,0,0,0.15);}
+  .risk-criterion-head{display:flex;align-items:center;gap:10px;margin-bottom:6px;flex-wrap:wrap;}
+  .risk-criterion-name{font-family:var(--font-mono);font-size:11px;letter-spacing:1px;color:var(--accent);text-transform:uppercase;}
+  .risk-criterion-q{font-family:var(--font-mono);font-size:10px;color:var(--accent2);letter-spacing:0.5px;}
+  .risk-criterion-desc{font-size:12px;color:var(--text-dim);line-height:1.7;}
+  .guide-risk.clickable{cursor:pointer;transition:all 0.2s ease;}
+  .guide-risk.clickable:hover{transform:scale(1.05);filter:brightness(1.2);}
+
+  .catalog-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:var(--sp-2);margin-top:var(--sp-1);width:100%;}
+  .catalog-card{position:relative;min-width:0;border:1px solid var(--border);padding:var(--sp-3);background:var(--card-bg);transition:all 0.2s ease;animation:fadeInUp 0.3s ease;}
+  .catalog-card:hover{border-color:rgba(109,212,0,0.25);background:var(--card-hover);}
+  .card-cat{font-family:var(--font-mono);font-size:9px;color:var(--accent3);letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;}
+  .card-nick{font-family:var(--font-mono);font-size:10px;color:var(--accent2);letter-spacing:2px;margin-bottom:6px;}
+  .card-title{font-size:15px;font-weight:700;letter-spacing:1px;color:var(--text);margin-bottom:var(--sp-1);padding-right:var(--sp-4);}
+  .card-desc{font-size:13px;color:var(--text-dim);line-height:1.7;margin-bottom:var(--sp-2);overflow-wrap:break-word;}
+  .card-tip{font-family:var(--font-mono);font-size:11px;color:rgba(109,212,0,0.5);border-top:1px solid var(--border);padding-top:var(--sp-1);line-height:1.6;margin-bottom:var(--sp-1);overflow-wrap:break-word;}
+  .card-addr{display:block;margin-top:6px;font-family:var(--font-mono);font-size:11px;color:var(--text-dim);letter-spacing:0.5px;word-break:break-all;line-height:1.6;border:1px dashed rgba(109,212,0,0.1);padding:6px 10px;background:rgba(0,0,0,0.2);}
+  .card-addr-label{font-family:var(--font-mono);font-size:9px;color:rgba(255,180,60,0.5);letter-spacing:2px;display:block;margin-bottom:3px;}
+
+  /* CARD FOOTER ROW (copy + guide button) */
+  .guide-btn{position:absolute;top:14px;right:16px;display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;flex-shrink:0;border:1px solid rgba(109,212,0,0.25);background:rgba(109,212,0,0.04);cursor:pointer;transition:all 0.2s ease;}
+  .guide-btn:hover{border-color:#8fff00;background:rgba(109,212,0,0.1);}
+  .guide-btn svg{width:12px;height:12px;stroke:var(--accent);transition:stroke 0.2s ease;}
+  .guide-btn:hover svg{stroke:#8fff00;}
+  .guide-btn .guide-tooltip{position:absolute;top:calc(100% + 8px);right:0;background:#0d0d12;border:1px solid rgba(109,212,0,0.3);color:var(--accent);font-family:var(--font-mono);font-size:10px;letter-spacing:1px;padding:5px 9px;white-space:nowrap;opacity:0;visibility:hidden;transition:opacity 0.18s ease,transform 0.18s ease;transform:translateY(-4px);pointer-events:none;z-index:5;}
+  .guide-btn:hover .guide-tooltip{opacity:1;visibility:visible;transform:translateY(0);}
+
+  /* GUIDE MODAL */
+  .guide-overlay{position:fixed;inset:0;background:rgba(5,5,9,0.75);backdrop-filter:blur(4px);z-index:900;display:flex;align-items:center;justify-content:center;padding:24px;opacity:0;visibility:hidden;transition:opacity 0.25s ease,visibility 0.25s ease;}
+  .guide-overlay.open{opacity:1;visibility:visible;}
+  .guide-modal{width:100%;max-width:560px;max-height:84vh;overflow-y:auto;background:var(--bg3);border:1px solid rgba(109,212,0,0.25);box-shadow:0 0 0 1px rgba(0,0,0,0.4),0 20px 60px rgba(0,0,0,0.6);padding:26px 28px 24px;transform:scale(0.94) translateY(10px);opacity:0;transition:transform 0.28s cubic-bezier(.2,.8,.2,1),opacity 0.25s ease;position:relative;}
+  .guide-overlay.open .guide-modal{transform:scale(1) translateY(0);opacity:1;}
+  .guide-modal-close{position:absolute;top:18px;right:20px;background:none;border:none;color:var(--text-dim);font-size:18px;line-height:1;cursor:pointer;transition:color 0.2s ease;}
+  .guide-modal-close:hover{color:var(--accent);}
+  .guide-header{position:relative;margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid var(--border);}
+  .guide-cat{font-family:var(--font-mono);font-size:9px;color:var(--accent3);letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;}
+  .guide-title{font-size:17px;font-weight:700;letter-spacing:0.5px;color:var(--text);margin-bottom:6px;padding-right:20px;}
+  .guide-subtitle{font-family:var(--font-mono);font-size:11px;color:var(--text-dim);letter-spacing:0.5px;}
+  .guide-step{display:flex;gap:14px;margin-bottom:16px;align-items:flex-start;}
+  .guide-step-num{font-family:var(--font-mono);font-size:18px;font-weight:700;color:var(--accent);opacity:0.4;flex-shrink:0;line-height:1.3;min-width:20px;}
+  .guide-step-body{font-size:13px;color:var(--text-dim);line-height:1.75;}
+  .guide-step-body strong{color:var(--text-mid);font-weight:600;}
+  .guide-intro{margin-bottom:20px;padding:14px 16px;border-left:2px solid rgba(80,180,255,0.45);background:rgba(40,150,255,0.05);}
+  .guide-intro-label{font-family:var(--font-mono);font-size:10px;letter-spacing:2px;color:rgba(120,190,255,0.9);text-transform:uppercase;margin-bottom:8px;}
+  .guide-intro-text{font-size:13px;color:rgba(180,215,255,0.85);line-height:1.7;}
+  .guide-safety{margin-top:20px;padding:14px 16px;border-left:2px solid rgba(255,160,40,0.45);background:rgba(255,140,0,0.05);}
+  .guide-safety-label{font-family:var(--font-mono);font-size:10px;letter-spacing:2px;color:rgba(255,200,80,0.9);text-transform:uppercase;margin-bottom:8px;}
+  .guide-safety-text{font-size:13px;color:rgba(255,200,140,0.85);line-height:1.7;}
+  .guide-risk{display:inline-block;font-family:var(--font-mono);font-size:9px;letter-spacing:1.5px;text-transform:uppercase;padding:3px 9px;margin-bottom:10px;border:1px solid;}
+  .guide-risk.low{color:var(--accent2);border-color:rgba(109,212,0,0.4);background:rgba(109,212,0,0.06);}
+  .guide-risk.medium{color:rgba(255,200,80,0.9);border-color:rgba(255,180,60,0.4);background:rgba(255,140,0,0.06);}
+  .guide-risk.high{color:#ff6b6b;border-color:rgba(255,80,80,0.4);background:rgba(255,60,60,0.06);}
+  .guide-tabs{display:flex;gap:6px;margin-bottom:16px;}
+  .guide-tab{font-family:var(--font-mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dim);background:none;border:1px solid var(--border);padding:6px 14px;cursor:pointer;transition:all 0.2s ease;}
+  .guide-tab:hover{color:var(--accent);border-color:rgba(109,212,0,0.3);}
+  .guide-tab.active{color:var(--accent);border-color:var(--accent);background:var(--glow);}
+  .guide-gtab{display:none;}
+  .guide-gtab.active{display:block;}
+  .guide-scan-rec{margin-top:16px;padding:12px 16px;border:1px solid var(--border);background:rgba(0,0,0,0.15);}
+  .guide-scan-rec-title{font-family:var(--font-mono);font-size:10px;letter-spacing:2px;color:var(--text-dim);text-transform:uppercase;margin-bottom:8px;}
+  .guide-scan-link{font-family:var(--font-mono);font-size:11px;color:var(--accent2);text-decoration:none;display:inline;margin-right:12px;}
+  .guide-scan-link:hover{color:#00e6a8;text-decoration:underline;}
+  .catalog-card.pinned{border-color:rgba(0,200,150,0.3);background:rgba(0,200,150,0.03);}
+  .catalog-card.pinned:hover{border-color:rgba(0,200,150,0.5);background:rgba(0,200,150,0.06);}
+  .catalog-card.flash{animation:cardFlash 3s ease forwards;}
+  @keyframes cardFlash{0%{border-color:rgba(168,85,247,0.6);background:rgba(168,85,247,0.1);box-shadow:0 0 20px rgba(168,85,247,0.15);}100%{border-color:rgba(109,212,0,0.12);background:rgba(255,255,255,0.025);box-shadow:none;}}
+  .pinned-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:24px;width:100%;}
+  @media(max-width:860px){.pinned-grid{grid-template-columns:1fr;}}
+
+  /* RISK DETAILS */
+  .guide-risk-details{margin:14px 0 18px;border:1px solid var(--border);background:rgba(0,0,0,0.2);padding:14px 16px;}
+  .guide-risk-details-title{font-family:var(--font-mono);font-size:10px;letter-spacing:2px;color:var(--text-dim);text-transform:uppercase;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border);}
+  .risk-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;font-size:12px;}
+  .risk-row:last-child{margin-bottom:0;}
+  .risk-label{font-family:var(--font-mono);font-size:10px;color:var(--text-dim);min-width:150px;letter-spacing:0.5px;}
+  .risk-value{font-family:var(--font-mono);font-size:10px;letter-spacing:1px;text-transform:uppercase;}
+  .risk-value.low{color:var(--accent2);}
+  .risk-value.medium{color:rgba(255,200,80,0.9);}
+  .risk-value.high{color:#ff6b6b;}
+  .risk-value.yes{color:var(--accent2);}
+  .risk-value.no{color:rgba(255,200,80,0.9);}
+  .risk-bar{flex:1;height:3px;background:rgba(255,255,255,0.06);max-width:80px;overflow:hidden;}
+  .risk-bar-fill{height:100%;transition:width 0.3s ease;}
+  .risk-bar-fill.low{background:var(--accent2);width:33%;}
+  .risk-bar-fill.medium{background:rgba(255,200,80,0.9);width:66%;}
+  .risk-bar-fill.high{background:#ff6b6b;width:100%;}
+  .card-risk-dot{position:absolute;top:16px;right:46px;width:7px;height:7px;border-radius:50%;}
+  .risk-legend{display:flex;gap:var(--sp-3);margin-top:var(--sp-1);flex-wrap:wrap;}
+  .risk-legend-item{display:flex;align-items:center;gap:6px;font-family:var(--font-mono);font-size:10px;letter-spacing:0.5px;color:var(--text-dim);}
+  .risk-legend-item .card-risk-dot{width:6px;height:6px;}
+  .card-risk-dot.low{background:var(--accent2);box-shadow:0 0 5px rgba(109,212,0,0.5);}
+  .card-risk-dot.medium{background:rgba(255,200,80,0.9);box-shadow:0 0 5px rgba(255,180,60,0.5);}
+  .card-risk-dot.high{background:#ff6b6b;box-shadow:0 0 5px rgba(255,80,80,0.5);}
+
+  /* SECTION TITLE */
+  .section-title{font-family:var(--font-mono);font-size:11px;letter-spacing:5px;color:var(--text-dim);text-transform:uppercase;margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid var(--border);width:100%;max-width:900px;}
+
+  /* POLICY */
+  .policy-full{max-width:620px;}
+  .policy-full h2{font-family:var(--font-mono);font-size:18px;letter-spacing:5px;color:var(--accent);margin-bottom:24px;}
+  .policy-full p{font-size:14px;color:var(--text-dim);line-height:1.9;margin-bottom:16px;}
+  .policy-full p strong{color:var(--text-mid);font-weight:600;}
+  .policy-full ul{margin:8px 0 16px 18px;color:var(--text-dim);font-size:14px;line-height:2;}
+  .policy-full ul li::marker{color:var(--accent);}
+
+  /* SUPPORT */
+  .support-wrap{max-width:500px;}
+  .support-wrap h2{font-family:var(--font-mono);font-size:18px;letter-spacing:5px;color:var(--accent3);margin-bottom:16px;}
+  .support-wrap p{font-size:14px;color:var(--text-dim);line-height:1.9;margin-bottom:24px;}
+  .xmr-box{background:rgba(168,85,247,0.05);border:1px solid rgba(168,85,247,0.18);padding:18px 22px;font-family:var(--font-mono);font-size:12px;color:rgba(168,85,247,0.8);letter-spacing:1px;word-break:break-all;line-height:1.8;}
+  .xmr-label{font-family:var(--font-mono);font-size:9px;letter-spacing:3px;color:var(--accent3);margin-bottom:8px;display:block;}
+  .qr-wrap{text-align:center;margin:20px 0;}
+  .qr-img{width:180px;height:180px;object-fit:contain;filter:invert(1) hue-rotate(60deg) brightness(1.2) contrast(1.1);border:1px solid rgba(168,85,247,0.2);padding:12px;background:rgba(168,85,247,0.03);}
+  .qr-label{font-family:var(--font-mono);font-size:9px;letter-spacing:2px;color:var(--accent3);margin-top:10px;text-transform:uppercase;}
+  .qr-expand-btn{font-family:var(--font-mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent3);background:none;border:1px solid rgba(168,85,247,0.25);padding:7px 16px;cursor:pointer;transition:all 0.2s ease;margin-top:12px;}
+  .qr-expand-btn:hover{color:#c084fc;border-color:rgba(168,85,247,0.5);background:rgba(168,85,247,0.07);}
+  .qr-time-modal{position:fixed;inset:0;z-index:960;background:rgba(5,5,9,0.85);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;padding:24px;opacity:0;visibility:hidden;transition:opacity 0.3s ease,visibility 0.3s ease;}
+  .qr-time-modal.open{opacity:1;visibility:visible;}
+  .qr-time-box{width:100%;max-width:360px;background:var(--bg3);border:1px solid rgba(168,85,247,0.25);padding:28px 24px;text-align:center;transform:scale(0.94);opacity:0;transition:transform 0.28s cubic-bezier(.2,.8,.2,1),opacity 0.25s ease;}
+  .qr-time-modal.open .qr-time-box{transform:scale(1);opacity:1;}
+  .qr-time-title{font-family:var(--font-mono);font-size:13px;letter-spacing:2px;color:var(--accent3);text-transform:uppercase;margin-bottom:20px;}
+  .qr-time-btns{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;}
+  .qr-time-btns button{font-family:var(--font-mono);font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--text-dim);background:none;border:1px solid var(--border);padding:10px 20px;cursor:pointer;transition:all 0.2s ease;}
+  .qr-time-btns button:hover{color:var(--accent3);border-color:var(--accent3);background:rgba(168,85,247,0.07);}
+  .qr-time-close{margin-top:16px;font-family:var(--font-mono);font-size:10px;letter-spacing:1px;color:var(--text-dim);background:none;border:none;cursor:pointer;transition:color 0.2s ease;}
+  .qr-time-close:hover{color:var(--accent3);}
+  .qr-fullscreen{position:fixed;inset:0;z-index:960;background:rgba(5,5,9,0.92);backdrop-filter:blur(8px);display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:opacity 0.3s ease,visibility 0.3s ease;}
+  .qr-fullscreen.open{opacity:1;visibility:visible;}
+  .qr-fullscreen-img{width:min(80vw,80vh);height:min(80vw,80vh);object-fit:contain;filter:invert(1) hue-rotate(60deg) brightness(1.2) contrast(1.1);border:2px solid rgba(168,85,247,0.3);padding:20px;background:rgba(168,85,247,0.03);}
+  .qr-fullscreen-timer{font-family:var(--font-mono);font-size:clamp(40px,10vw,72px);font-weight:700;color:var(--accent3);margin-top:24px;letter-spacing:4px;text-shadow:0 0 30px rgba(168,85,247,0.4);}
+  .qr-fullscreen-close{position:absolute;top:20px;right:24px;font-family:var(--font-mono);font-size:18px;color:var(--text-dim);background:none;border:none;cursor:pointer;transition:color 0.2s ease;}
+  .qr-fullscreen-close:hover{color:var(--accent3);}
+
+  /* AMBIENT */
+  .glow-orb{position:fixed;border-radius:50%;filter:blur(100px);pointer-events:none;z-index:0;}
+  .orb1{width:400px;height:400px;background:rgba(109,212,0,0.035);top:-100px;right:10%;}
+  .orb2{width:300px;height:300px;background:rgba(168,85,247,0.04);bottom:10%;left:5%;}
+
+  /* TOP NAV MOBILE (secondary) */
+  .top-nav-mobile{display:none;}
+
+  /* MOBILE */
+  @media(max-width:860px){
+    html,body{overflow-x:hidden;}
+    .sidebar{display:none;}
+    .sidebar-edge{display:none;}
+    nav{padding:10px 16px;}
+    .nav-links{display:none !important;}
+    .content{padding:16px 14px;padding-top:8px;padding-bottom:110px;}
+    .content *{box-sizing:border-box;}
+    .top-nav-mobile{display:flex;align-items:stretch;padding:0;background:rgba(9,9,16,0.97);border-bottom:1px solid var(--border);overflow-x:auto;overflow-y:hidden;scrollbar-width:none;-ms-overflow-style:none;}
+    .top-nav-mobile::-webkit-scrollbar{display:none;}
+    .top-nav-mobile .tn-btn{flex:1 1 0;display:flex;align-items:center;justify-content:center;gap:6px;background:none;border:none;color:var(--text-dim);font-family:var(--font-mono);font-size:9px;letter-spacing:1px;text-transform:uppercase;padding:10px 4px;cursor:pointer;transition:all 0.2s ease;white-space:nowrap;border-bottom:2px solid transparent;-webkit-tap-highlight-color:transparent;min-width:0;}
+    .top-nav-mobile .tn-btn:hover,.top-nav-mobile .tn-btn.active{color:var(--accent2);border-bottom-color:var(--accent2);}
+    .top-nav-mobile .tn-icon{font-size:14px;line-height:1;flex-shrink:0;}
+    /* Session block mobile */
+    .session-id-box{font-size:10px;padding:10px 12px;letter-spacing:0.5px;}
+    .session-id-label{font-size:9px;}
+    .warning-box{font-size:12px;padding:10px 12px;}
+    /* Counters mobile */
+    .content .section-title{font-size:10px;letter-spacing:3px;}
+    /* Catalog mobile */
+    .catalog-tabs{flex-wrap:nowrap;gap:4px;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:none;-ms-overflow-style:none;padding-bottom:2px;}
+    .catalog-tabs::-webkit-scrollbar{display:none;}
+    .cat-tab{flex-shrink:0;padding:var(--sp-1) var(--sp-1);}
+    .cat-search{width:100%;max-width:100%;}
+    .catalog-grid{grid-template-columns:repeat(2,1fr) !important;gap:10px !important;}
+    .pinned-grid{grid-template-columns:1fr !important;gap:10px !important;}
+    .catalog-card{padding:var(--sp-2);}
+    .card-title{font-size:13px;}
+    .card-desc{font-size:11px;line-height:1.5;}
+    .card-tip{font-size:10px;}
+    .card-addr{font-size:10px;padding:4px 8px;}
+    .card-nick{font-size:9px;}
+    .card-cat{font-size:8px;}
+    /* Guide modal mobile */
+    .guide-overlay{padding:12px;}
+    .guide-modal{max-height:90vh;padding:20px 16px;}
+    .guide-risk-details .risk-label{min-width:80px;}
+    /* Welcome modal mobile */
+    .welcome-overlay{padding:16px;}
+    .welcome-modal{padding:28px 20px 24px;}
+    /* Feed mobile */
+    .feed-item{padding:12px 0;}
+    .feed-title{font-size:14px;}
+    /* Rec modal mobile */
+    .rec-overlay{padding:12px;}
+    .rec-modal{height:auto;max-height:85vh;padding:20px 16px;}
+  }
+
+  /* BOTTOM NAV (mobile only) */
+  .bottomnav{display:none;position:fixed;bottom:0;left:0;right:0;z-index:100;background:rgba(9,9,16,0.97);backdrop-filter:blur(12px);border-top:1px solid var(--border);padding:6px 0 env(safe-area-inset-bottom);}
+  @media(max-width:860px){
+    .bottomnav{display:flex;align-items:stretch;}
+  }
+  .bnav-btn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;background:none;border:none;color:var(--text-dim);font-family:var(--font-mono);font-size:8px;letter-spacing:0.8px;text-transform:uppercase;padding:8px 2px;cursor:pointer;transition:all 0.2s ease;position:relative;-webkit-tap-highlight-color:transparent;min-height:48px;}
+  .bnav-btn .bnav-icon{font-size:20px;line-height:1;transition:transform 0.2s ease;}
+  .bnav-btn.active{color:var(--accent);}
+  .bnav-btn.active .bnav-icon{transform:scale(1.15);filter:drop-shadow(0 0 6px rgba(109,212,0,0.5));}
+  .bnav-btn.support-bnav{color:rgba(168,85,247,0.55);}
+  .bnav-btn.support-bnav.active{color:var(--accent3);}
+  .bnav-btn.support-bnav.active .bnav-icon{filter:drop-shadow(0 0 6px rgba(168,85,247,0.5));}
+
+  /* SLANG */
+  .slang{color:var(--accent2);border-bottom:1px dashed rgba(0,200,150,0.4);cursor:pointer;}
+  .slang:hover{color:#00e6a8;}
+  #slang-popup{position:fixed;background:var(--bg3);border:1px solid var(--border);padding:10px 14px;font-size:12px;color:var(--text-dim);line-height:1.6;width:260px;z-index:999;pointer-events:none;opacity:0;visibility:hidden;transition:opacity 0.18s ease,visibility 0.18s ease;box-shadow:0 8px 24px rgba(0,0,0,0.5);}
+
+  /* FEED */
+  .feed-item{position:relative;display:flex;gap:16px;padding:16px 0;border-bottom:1px solid var(--border);animation:fadeInUp 0.3s ease;}
+  .feed-item:last-child{border-bottom:none;}
+  .feed-date-col{flex-shrink:0;width:70px;text-align:right;padding-top:2px;}
+  .feed-day{font-family:var(--font-mono);font-size:22px;font-weight:700;color:var(--accent);line-height:1;}
+  .feed-month{font-family:var(--font-mono);font-size:10px;letter-spacing:1.5px;color:var(--text-dim);text-transform:uppercase;margin-top:2px;}
+  .feed-line{position:absolute;left:calc(70px + 8px);top:0;bottom:0;width:1px;background:var(--border);}
+  .feed-dot{position:absolute;left:calc(70px + 4px);top:20px;width:9px;height:9px;border-radius:50%;background:var(--accent);box-shadow:0 0 6px rgba(109,212,0,0.5);z-index:1;}
+  .feed-body{flex:1;padding-left:24px;}
+  .feed-cat{font-family:var(--font-mono);font-size:9px;color:var(--accent3);letter-spacing:2px;text-transform:uppercase;margin-bottom:4px;cursor:pointer;transition:color 0.2s ease;display:inline-block;border-bottom:1px dashed rgba(168,85,247,0.3);padding-bottom:1px;}
+  .feed-cat:hover{color:#c084fc;border-bottom-color:rgba(168,85,247,0.6);}
+  .feed-title{font-size:15px;font-weight:700;letter-spacing:0.5px;color:var(--text);margin-bottom:4px;}
+  .feed-desc{font-size:13px;color:var(--text-dim);line-height:1.7;margin-bottom:6px;}
+  .feed-nick{font-family:var(--font-mono);font-size:10px;color:var(--accent2);letter-spacing:1px;}
+  .feed-group-label{font-family:var(--font-mono);font-size:11px;letter-spacing:2px;color:var(--text-dim);text-transform:uppercase;padding:20px 0 10px;margin-left:94px;border-bottom:1px solid var(--border);margin-bottom:0;}
+  @media(max-width:860px){.feed-date-col{width:50px;}.feed-day{font-size:18px;}.feed-line{left:calc(50px + 8px);}.feed-dot{left:calc(50px + 4px);}.feed-body{padding-left:16px;}.feed-group-label{margin-left:66px;}}
+
+  /* SUGGEST FORM */
+  #suggest-form input:focus, #suggest-form textarea:focus {border-color:rgba(109,212,0,0.35);}
+</style>
+</head>
+<body>
+
+<div class="glow-orb orb1"></div>
+<div class="glow-orb orb2"></div>
+<div id="slang-popup"></div>
+
+<div id="splash">
+  <div class="splash-logo">FLEARANCE</div>
+  <div class="splash-sub">арсенал инструментов</div>
+  <div class="splash-checks">
+    <div class="splash-check" id="chk1">&#10004; &nbsp;open-source фокус</div>
+    <div class="splash-check" id="chk2">&#10004; &nbsp;без регистрации</div>
+    <div class="splash-check" id="chk3">&#10004; &nbsp;без логов</div>
+  </div>
+  <div class="splash-bar" id="splash-bar"><div class="splash-bar-fill" id="splash-bar-fill"></div></div>
+  <button class="splash-skip" id="splash-skip-btn">пропустить &rarr;</button>
+</div>
+
+<div class="welcome-overlay" id="welcome-overlay">
+  <div class="welcome-modal">
+    <div class="welcome-title">Добро пожаловать!</div>
+    <div class="welcome-text">
+      <p style="margin-bottom:14px;"><strong>FLEARANCE</strong> — арсенал инструментов для приватности, саморазвития и обхода блокировок. Без регистрации, без логов — просто открываешь и пользуешься.</p>
+      <p style="margin-bottom:14px;">Прямо сейчас ты можешь: <strong>скопировать Session ID</strong> и отправить запрос на добавление инструмента, <strong>пролистать каталог</strong> — там уже 80+ проверенных ссылок, или нажать <strong>«Предложить инструмент»</strong> и пополнить базу сам.</p>
+      <p>Все ссылки копируются и вставляются вручную — это для твоей безопасности. Если что-то непонятно — раздел <strong>«Как работаем»</strong> разложит всё по шагам.</p>
+    </div>
+    <div class="welcome-timer">Подожди <span id="welcome-sec">11</span> секунд...</div>
+    <button class="welcome-btn" id="welcome-btn">Продолжить</button>
+  </div>
+</div>
+
+<div id="main">
+  <nav>
+    <div class="nav-logo"><span class="nav-logo-prefix">//</span><span class="nav-logo-text">FLEARANCE</span></div>
+    <div class="nav-links">
+      <button class="nav-btn active" data-page="home">Главная</button>
+      <button class="nav-btn" data-page="howto">Как работаем</button>
+      <button class="nav-btn" data-page="catalog">Каталог</button>
+      <button class="nav-btn" data-page="lenta">Лента</button>
+      <button class="nav-btn" data-page="popular">Популярные</button>
+      <button class="nav-btn" data-page="policy">Политика</button>
+      <button class="nav-btn support" data-page="support">Поддержать</button>
+    </div>
+  </nav>
+
+  <div class="top-nav-mobile" id="top-nav-mobile">
+    <button class="tn-btn" data-page="popular"><span class="tn-icon">★</span>Популярные</button>
+    <button class="tn-btn" data-page="lenta"><span class="tn-icon">≡</span>Лента</button>
+    <button class="tn-btn" data-page="policy"><span class="tn-icon">▣</span>Политика</button>
+  </div>
+
+  <div class="hero">
+    <div class="sidebar" id="sidebar">
+      <div class="sidebar-inner-content">
+        <div class="sidebar-title">// принципы</div>
+        <div class="policy-item"><div class="policy-dot"></div><div class="policy-text"><strong>Open-source в приоритете.</strong> Инструменты с открытым исходным кодом — проверяем, рекомендуем.</div></div>
+        <div class="policy-item"><div class="policy-dot"></div><div class="policy-text"><strong>Расширение возможностей.</strong> Каждый ресурс — шаг к новым навыкам, доходу или самостоятельности.</div></div>
+        <div class="policy-item"><div class="policy-dot"></div><div class="policy-text"><strong>Один запрос — одно решение.</strong> С фокусом на конкретную задачу и советами по применению.</div></div>
+        <div class="policy-item"><div class="policy-dot"></div><div class="policy-text"><strong>Анонимность</strong> пользователей — приоритет. Ник в каталоге — единственный публичный идентификатор.</div></div>
+        <div class="policy-item"><div class="policy-dot"></div><div class="policy-text"><strong>Легальность.</strong> Только то, что не нарушает закон. Отказ — без обсуждений.</div></div>
+      </div>
+    </div>
+
+    <div class="sidebar-edge" id="sidebar-edge">
+      <div class="sidebar-edge-chevron"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></div>
+    </div>
+
+    <div class="content">
+
+      <div class="panel-page active" id="page-home">
+        <div class="content-tagline">// инструменты для расширения возможностей</div>
+
+        <div class="blocked-banner" id="blocked-banner">
+          <div class="blocked-icon">&#9888;</div>
+          <div class="blocked-body">
+            <div class="blocked-title">Часть ссылок в каталоге может быть недоступна в отдельных регионах</div>
+            <div class="blocked-text">Для доступа к инструментам рекомендуем <strong>Tor Browser</strong> — повышает анонимность и приватность соединения.</div>
+            <button class="blocked-btn" id="blocked-tor-btn">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+              открыть Tor Browser в каталоге
+            </button>
+          </div>
+        </div>
+
+        <!-- Счётчики -->
+        <div style="display:flex;gap:32px;margin-bottom:32px;flex-wrap:wrap;justify-content:center;">
+          <div style="text-align:center;">
+            <div id="counter-tools" style="font-family:var(--font-mono);font-size:clamp(32px,5vw,48px);font-weight:700;background:linear-gradient(135deg,#6dd400,#00c896);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">0</div>
+            <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:2px;color:var(--text-dim);text-transform:uppercase;">инструментов</div>
+          </div>
+          <div style="text-align:center;">
+            <div id="counter-requests" style="font-family:var(--font-mono);font-size:clamp(32px,5vw,48px);font-weight:700;background:linear-gradient(135deg,#a855f7,#00c896);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">0</div>
+            <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:2px;color:var(--text-dim);text-transform:uppercase;">выполнено запросов</div>
+          </div>
+        </div>
+
+        <!-- Последние добавленные -->
+        <div style="width:100%;max-width:900px;margin-bottom:32px;">
+          <div class="section-title">// последние добавленные</div>
+          <div id="recent-tools" class="catalog-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;"></div>
+        </div>
+
+        <div class="session-block">
+          <span class="session-label">// как отправить запрос</span>
+          <div class="warning-box" style="margin-bottom:0;">
+            Есть два способа отправить запрос на инструмент — через <strong>Session</strong> или по <strong>Email</strong>.<br>
+            Все шаги, шаблон сообщения и контакты — на странице <button onclick="showPage('howto')" style="font-family:var(--font-mono);font-size:13px;color:var(--accent2);background:none;border:none;border-bottom:1px solid rgba(0,200,150,0.3);padding:0 0 1px;cursor:pointer;">Как работаем</button>.
+          </div>
+        </div>
+      </div>
+
+      <div class="panel-page" id="page-howto">
+        <div class="howto-wrap">
+          <h2>// КАК РАБОТАЕМ</h2>
+          <div class="howto-step">
+            <div class="step-num">1</div>
+            <div class="step-body">
+              Выбери способ связи — <strong>Session</strong> или <strong>Email</strong> — и отправь запрос.
+              <div class="contact-methods">
+                <div class="contact-method">
+                  <span class="session-id-label">// Session ID</span>
+                  <div class="session-id-box" style="margin-bottom:10px;">
+                    <span id="session-id-text">054051b2d571e9ababfeef6a5671812775706b6497cca4684e6a13ae114aefba5a</span>
+                  </div>
+                  <button class="copy-btn" id="session-copy-btn">
+                    <span class="copy-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"></path></svg></span> скопировать Session ID
+                  </button>
+                </div>
+                <div class="contact-method">
+                  <span class="session-id-label">// Email</span>
+                  <div class="session-id-box" style="margin-bottom:10px;">
+                    <span id="contact-email-text">flearance.contact@protonmail.com</span>
+                  </div>
+                  <button class="copy-btn" id="email-copy-btn">
+                    <span class="copy-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"></path></svg></span> скопировать Email
+                  </button>
+                </div>
+              </div>
+              <div style="margin-top:14px;font-size:12px;color:rgba(255,180,60,0.5);letter-spacing:0.3px;line-height:1.7;">
+                &#9888; Псевдоним виден публично &mdash; не используй настоящее имя.
+              </div>
+            </div>
+          </div>
+          <div class="howto-step">
+            <div class="step-num">2</div>
+            <div class="step-body">
+              Напиши запрос по формату:
+              <div class="format-box">
+                <div class="format-row"><span>Ник:</span> псевдоним для каталога</div>
+                <div class="format-row"><span>Запрос:</span> что нужно найти или получить</div>
+                <div class="format-row"><span>Предпочтения:</span> уточнения (ОС, платформа, бюджет и т.д.)</div>
+                <div class="format-note">* Поле «Предпочтения» можно оставить пустым.</div>
+              </div>
+              <button class="copy-btn" id="template-copy-btn" style="margin-top:14px;">
+                <span class="copy-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"></path></svg></span> скопировать шаблон
+              </button>
+            </div>
+          </div>
+          <div class="howto-step">
+            <div class="step-num">3</div>
+            <div class="step-body">
+              Решение появится в <strong>Каталоге</strong> с твоим ником, описанием и советами.<br><br>
+              Время обработки &mdash; <strong>до 24ч</strong>. Ответ в Session не приходит &mdash; проверяй каталог через <strong>Ctrl+F &rarr; твой ник</strong>.
+            </div>
+          </div>
+          <div class="howto-step">
+            <div class="step-num">4</div>
+            <div class="step-body">
+              Ссылки копируются кнопкой и вставляются вручную в <strong>браузер</strong>. Прямые клики намеренно отключены для безопасности.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel-page" id="page-catalog">
+        <div class="section-title">// каталог инструментов</div>
+        <div class="catalog-controls">
+          <div class="catalog-tabs">
+            <button class="cat-tab active" data-cat="all"><span class="tab-prefix">//</span>Все</button>
+            <button class="cat-tab" data-cat="access"><span class="tab-prefix">//</span>Операционные Системы</button>
+            <button class="cat-tab" data-cat="git"><span class="tab-prefix">//</span>Git / Open-Source</button>
+            <button class="cat-tab" data-cat="ai"><span class="tab-prefix">//</span>AI-Agents</button>
+            <button class="cat-tab" data-cat="edu"><span class="tab-prefix">//</span>Обучение</button>
+            <button class="cat-tab" data-cat="hosting"><span class="tab-prefix">//</span>Хостинг</button>
+            <button class="cat-tab" data-cat="tools"><span class="tab-prefix">//</span>Сервисы</button>
+            <button class="cat-tab" data-cat="sec"><span class="tab-prefix">//</span>Безопасность</button>
+            <button class="cat-tab" data-cat="fun"><span class="tab-prefix">//</span>Моды и игры</button>
+            <button class="cat-tab support" id="catalog-rec-btn">Рекомендации владельца</button>
+            <button class="cat-tab bypass" id="catalog-suggest-btn">Предложить инструмент</button>
+          </div>
+          <input type="text" class="cat-search" placeholder="поиск по каталогу...">
+          <div class="catalog-count" id="cat-count"></div>
+          <div class="risk-legend"><span class="risk-legend-item"><span class="card-risk-dot low" style="position:static;"></span>низкий риск</span><span class="risk-legend-item"><span class="card-risk-dot medium" style="position:static;"></span>средний риск</span><span class="risk-legend-item"><span class="card-risk-dot high" style="position:static;"></span>высокий риск</span></div>
+        </div>
+        <div class="pinned-grid" id="pinned-grid"></div>
+        <div class="catalog-grid" id="catalog-grid"></div>
+      </div>
+
+      <!-- Форма "Предложить инструмент" -->
+      <div class="guide-overlay" id="suggest-overlay">
+        <div class="guide-modal" id="suggest-modal" style="max-width:520px;">
+          <button class="guide-modal-close" id="suggest-modal-close">&times;</button>
+          <div class="guide-header">
+            <div class="guide-cat">// предложить инструмент</div>
+            <div class="guide-title" style="font-size:16px;">Предложи инструмент для каталога</div>
+            <div class="guide-subtitle">Заполни форму — мы проверим и добавим.</div>
+          </div>
+          <form id="suggest-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" style="display:flex;flex-direction:column;gap:16px;">
+            <div>
+              <label style="font-family:var(--font-mono);font-size:10px;letter-spacing:2px;color:var(--text-dim);text-transform:uppercase;display:block;margin-bottom:6px;">Название *</label>
+              <input type="text" id="suggest-title" required style="width:100%;font-family:var(--font-mono);font-size:13px;color:var(--text);background:rgba(0,0,0,0.3);border:1px solid var(--border);padding:10px 14px;outline:none;transition:border-color 0.2s ease;box-sizing:border-box;" placeholder="Например: Tor Browser">
+            </div>
+            <div>
+              <label style="font-family:var(--font-mono);font-size:10px;letter-spacing:2px;color:var(--text-dim);text-transform:uppercase;display:block;margin-bottom:6px;">Ссылка *</label>
+              <input type="url" id="suggest-url" required style="width:100%;font-family:var(--font-mono);font-size:13px;color:var(--text);background:rgba(0,0,0,0.3);border:1px solid var(--border);padding:10px 14px;outline:none;transition:border-color 0.2s ease;box-sizing:border-box;" placeholder="https://...">
+            </div>
+            <div>
+              <label style="font-family:var(--font-mono);font-size:10px;letter-spacing:2px;color:var(--text-dim);text-transform:uppercase;display:block;margin-bottom:6px;">Описание</label>
+              <textarea id="suggest-desc" rows="3" style="width:100%;font-family:var(--font-mono);font-size:13px;color:var(--text);background:rgba(0,0,0,0.3);border:1px solid var(--border);padding:10px 14px;outline:none;transition:border-color 0.2s ease;resize:vertical;box-sizing:border-box;" placeholder="Кратко опиши, зачем он нужен"></textarea>
+            </div>
+            <div>
+              <label style="font-family:var(--font-mono);font-size:10px;letter-spacing:2px;color:var(--text-dim);text-transform:uppercase;display:block;margin-bottom:6px;">Твой ник (необязательно)</label>
+              <input type="text" id="suggest-nick" style="width:100%;font-family:var(--font-mono);font-size:13px;color:var(--text);background:rgba(0,0,0,0.3);border:1px solid var(--border);padding:10px 14px;outline:none;transition:border-color 0.2s ease;box-sizing:border-box;" placeholder="Псевдоним для каталога">
+            </div>
+            <div style="display:flex;gap:10px;align-items:center;">
+              <button type="submit" style="font-family:var(--font-mono);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--bg);background:linear-gradient(135deg,#6dd400,#00c896);border:none;padding:12px 24px;cursor:pointer;transition:opacity 0.2s ease;">отправить</button>
+              <span id="suggest-status" style="font-family:var(--font-mono);font-size:11px;color:var(--accent2);letter-spacing:1px;"></span>
+            </div>
+          </form>
+          <div style="margin-top:16px;padding:12px 14px;border-left:2px solid rgba(255,160,40,0.4);background:rgba(255,140,0,0.04);font-size:12px;color:rgba(255,200,140,0.85);line-height:1.7;">
+            <strong style="color:rgba(255,200,80,1);">Важно:</strong> Мы проверяем каждый инструмент перед добавлением. Не отправляй вредоносный софт или нелегальный контент — отказ без обсуждений.
+          </div>
+        </div>
+      </div>
+
+      <div class="guide-overlay" id="guide-overlay">
+        <div class="guide-modal" id="guide-modal">
+          <button class="guide-modal-close" id="guide-modal-close">&times;</button>
+          <div class="guide-header">
+            <div class="guide-cat" id="guide-cat"></div>
+            <div class="guide-title" id="guide-title"></div>
+            <div class="guide-subtitle">Руководство по скачиванию и безопасности.</div>
+          </div>
+          <div class="guide-tabs">
+            <button class="guide-tab active" data-gtab="risk">Риск</button>
+            <button class="guide-tab" data-gtab="tool">Инструмент</button>
+          </div>
+          <div class="guide-gtab active" id="guide-gtab-risk">
+            <div id="guide-risk-badge"></div>
+            <div class="guide-risk-details" id="guide-risk-details" style="display:none;">
+              <div class="guide-risk-details-title">// оценка рисков</div>
+              <div id="guide-risk-rows"></div>
+            </div>
+            <div class="guide-scan-rec" id="guide-scan-rec" style="display:none;">
+              <div class="guide-scan-rec-title">// проверь файл перед использованием</div>
+              <a class="guide-scan-link" href="https://www.virustotal.com" target="_blank">VirusTotal</a>
+              <a class="guide-scan-link" href="https://any.run" target="_blank">Any.Run</a>
+              <a class="guide-scan-link" href="https://www.hybrid-analysis.com" target="_blank">Hybrid Analysis</a>
+            </div>
+          </div>
+          <div class="guide-gtab" id="guide-gtab-tool">
+            <div class="guide-intro" id="guide-intro-block" style="display:none;">
+              <div class="guide-intro-label">// что это и как работает</div>
+              <div class="guide-intro-text" id="guide-intro-text"></div>
+            </div>
+            <div id="guide-steps"></div>
+            <div class="guide-safety" id="guide-safety-block">
+              <div class="guide-safety-label">// сводка о безопасности</div>
+              <div class="guide-safety-text" id="guide-safety-text"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="qr-time-modal" id="qr-time-modal">
+        <div class="qr-time-box">
+          <div class="qr-time-title">выберите время показа QR-кода</div>
+          <div class="qr-time-btns">
+            <button data-sec="3">3 сек</button>
+            <button data-sec="5">5 сек</button>
+            <button data-sec="10">10 сек</button>
+            <button data-sec="15">15 сек</button>
+            <button data-sec="custom">свой</button>
+          </div>
+          <button class="qr-time-close" id="qr-time-close">отмена</button>
+        </div>
+      </div>
+
+      <div class="qr-fullscreen" id="qr-fullscreen">
+        <button class="qr-fullscreen-close" id="qr-fullscreen-close">&times;</button>
+        <img src="qr.png" alt="Monero QR" class="qr-fullscreen-img" id="qr-fullscreen-img">
+        <div class="qr-fullscreen-timer" id="qr-fullscreen-timer"></div>
+      </div>
+
+      <div class="rec-overlay" id="rec-overlay">
+        <div class="rec-modal">
+          <button class="rec-modal-close" id="rec-modal-close">&times;</button>
+          <h2>// РЕКОМЕНДАЦИИ ВЛАДЕЛЬЦА</h2>
+          <div class="rec-tabs">
+            <button class="rec-tab active" data-rec="about">О инструментах</button>
+            <button class="rec-tab" data-rec="help">Помощь</button>
+            <button class="rec-tab" data-rec="site">По сайту</button>
+            <button class="rec-tab" data-rec="tools">По инструментам</button>
+          </div>
+          <div class="rec-pages">
+            <div class="rec-page active" id="rec-page-about">
+              <div class="rec-section">
+                <p style="font-size:13px;color:var(--text-dim);line-height:1.8;margin-bottom:12px;">Слушай, тут всё просто. Всё, что лежит в каталоге — не магия и не привилегия, а обычные <strong>инструменты</strong>. Они расширяют твои возможности, но, как и любой инструмент, могут поранить, если держать его не за ту сторону.</p>
+                <p style="font-size:13px;color:var(--text-dim);line-height:1.8;margin-bottom:12px;">Я не пытаюсь никого запугать рисками — просто по опыту знаю: человек, который понимает, как работает его инструмент, получает от него пользу. А тот, кто нажимает не глядя — иногда огребает не по злому умыслу, а просто потому что не знал.</p>
+                <p style="font-size:13px;color:var(--text-dim);line-height:1.8;margin-bottom:20px;"><strong>Поэтому — перед тем как что-то использовать:</strong> открой гайд, глянь на риск-метку, пойми, для чего это вообще нужно. Не всё подходит для всех задач, и это нормально.</p>
+              </div>
+              <div class="rec-section">
+                <div class="rec-section-title">// критерии оценки рисков</div>
+                <div class="risk-criteria-list">
+                  <div class="risk-criterion">
+                    <div class="risk-criterion-head"><span class="risk-criterion-name">деанонимизация</span><span class="risk-criterion-q">Кто я в этом инструменте?</span></div>
+                    <div class="risk-criterion-desc">Насколько инструмент помогает установить реальную личность пользователя. Низкий — регистрация без телефона/email. Средний — нужен email или номер. Высокий — подтверждение личности (паспорт, видео, карта).</div>
+                  </div>
+                  <div class="risk-criterion">
+                    <div class="risk-criterion-head"><span class="risk-criterion-name">утечка данных</span><span class="risk-criterion-q">Что я здесь оставляю?</span></div>
+                    <div class="risk-criterion-desc">Объём и тип данных, которые могут уйти наружу. Низкий — данные обрабатываются локально. Средний — уходят на серверы провайдера, но зашифрованы. Высокий — данные доступны провайдеру в открытом виде.</div>
+                  </div>
+                  <div class="risk-criterion">
+                    <div class="risk-criterion-head"><span class="risk-criterion-name">уровень знаний</span><span class="risk-criterion-q">Знаю ли я, что делаю?</span></div>
+                    <div class="risk-criterion-desc">Какие знания нужны, чтобы случайно не утечь. Низкий — интуитивно понятен. Средний — требует базовых знаний, есть настройки которые стоит изменить. Высокий — требует технических знаний, ошибки = утечка данных.</div>
+                  </div>
+                  <div class="risk-criterion">
+                    <div class="risk-criterion-head"><span class="risk-criterion-name">сложность настройки</span><span class="risk-criterion-q">Насколько сложно настроить правильно?</span></div>
+                    <div class="risk-criterion-desc">Чем сложнее настройка — тем выше шанс ошибки. Низкий — скачал и работает. Средний — несколько шагов. Высокий — терминал, команды, зависимости.</div>
+                  </div>
+                  <div class="risk-criterion">
+                    <div class="risk-criterion-head"><span class="risk-criterion-name">зависимость от third-party</span><span class="risk-criterion-q">От кого я зависю?</span></div>
+                    <div class="risk-criterion-desc">Насколько инструмент зависит от внешних сервисов. Низкий — полностью локальный. Средний — зависит от одного сервиса, но есть self-hosted. Высокий — полная зависимость от облака.</div>
+                  </div>
+                  <div class="risk-criterion">
+                    <div class="risk-criterion-head"><span class="risk-criterion-name">альтернативы</span><span class="risk-criterion-q">Есть ли более безопасный вариант?</span></div>
+                    <div class="risk-criterion-desc">Наличие более безопасной замены. «Есть» — можно заменить на приватный аналог. «Нет» — уникальный инструмент, замены нет.</div>
+                  </div>
+                </div>
+                <p style="font-size:12px;color:var(--text-dim);line-height:1.8;margin-top:16px;padding-top:12px;border-top:1px solid var(--border);">Общий уровень риска определяется <strong>наибольшим</strong> значением среди критериев — консервативный подход: лучше переоценить, чем недооценить.</p>
+              </div>
+            </div>
+
+            <div class="rec-page" id="rec-page-help">
+              <div class="rec-section">
+                <ul>
+                  <li>Обратись к <strong>компетентному ИИ</strong> (Claude, ChatGPT) с просьбой разобраться в выбранном инструменте — объясни, что хочешь сделать, и получи рекомендацию</li>
+                  <li>Обратись к <strong>владельцу FLEARANCE</strong> — он с радостью ответит и порекомендует лучшее решение для твоей задачи</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="rec-page" id="rec-page-site">
+              <div class="rec-section">
+                <ul>
+                  <li>Держи под рукой <strong>Tor Browser</strong> или <strong>Orbot</strong> — так соединение стабильнее и приватнее, особенно если какая-то ссылка ведёт себя странно</li>
+                  <li>Не используй реальное имя в псевдониме — каталог публичный</li>
+                  <li>Скопируй шаблон запроса перед отправкой — ускорит обработку</li>
+                  <li>Проверяй каталог через <strong>Ctrl+F</strong> по нику — ответ появится там, а не в Session</li>
+                  <li>Ссылки копируются кнопкой и вставляются вручную — прямые клики отключены намеренно</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="rec-page" id="rec-page-tools">
+              <div class="rec-section">
+                <p style="font-size:13px;color:var(--text-dim);line-height:1.7;margin-bottom:14px;"><strong>Мессенджеры</strong> — основа приватных коммуникаций. Вот что рекомендую:</p>
+                <ul>
+                  <li><strong>SimpleX Chat</strong> — максимальная приватность. Нет даже номера телефона для регистрации. Полная [децентрализация]</li>
+                  <li><strong>Session</strong> — улучшенный интерфейс, работает через сеть Lokinet. Хороший баланс удобства и приватности</li>
+                  <li><strong>Signal</strong> — золотой стандарт [E2E шифрование], но без [децентрализация] — привязка к номеру телефона повышает риск [деанонимизация]</li>
+                  <li><strong>Molly</strong> — улучшенная версия Signal с дополнительными настройками приватности и автоблокировкой</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel-page" id="page-lenta">
+        <div class="section-title">// лента добавлений</div>
+        <div style="max-width:700px;width:100%;">
+          <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-dim);letter-spacing:1px;margin-bottom:24px;line-height:1.7;">
+            Все инструменты в хронологическом порядке — от новых к старым. Полная история добавлений.
+          </div>
+          <div id="lenta-feed"></div>
+          <div id="lenta-empty" style="display:none;text-align:center;padding:60px 20px;color:var(--text-dim);font-family:var(--font-mono);font-size:13px;letter-spacing:1px;">
+            лента пуста
+          </div>
+        </div>
+      </div>
+
+      <div class="panel-page" id="page-popular">
+        <div class="section-title">// популярные инструменты</div>
+        <div style="max-width:900px;width:100%;">
+          <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-dim);letter-spacing:1px;margin-bottom:20px;line-height:1.7;">
+            Инструменты сортируются по количеству просмотров. Чем чаще открывают руководство — тем выше в списке.
+          </div>
+          <div id="popular-grid" class="catalog-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;"></div>
+          <div id="popular-empty" style="display:none;text-align:center;padding:60px 20px;color:var(--text-dim);font-family:var(--font-mono);font-size:13px;letter-spacing:1px;">
+            Пока нет данных о просмотрах. Открывай руководства в каталоге — данные появятся здесь.
+          </div>
+        </div>
+      </div>
+
+      <div class="panel-page" id="page-policy">
+        <div class="policy-full">
+          <h2>// ПОЛИТИКА</h2>
+          <p><strong>FLEARANCE</strong> &mdash; арсенал инструментов для расширения возможностей. Мы собираем open-source решения, AI-агенты, лайфхаки и ресурсы, которые помогают учиться, зарабатывать и становиться самостоятельнее.</p>
+          <p><strong>Приоритет:</strong></p>
+          <ul>
+            <li>Open-source софт и инструменты с открытым исходным кодом</li>
+            <li>AI-агенты и автоматизация рабочих процессов</li>
+            <li>Фичи, гайды и лайфхаки для повышения продуктивности</li>
+            <li>Бесплатные ресурсы и легальные способы получения платного софта</li>
+            <li>Инструменты приватности и цифровой безопасности</li>
+          </ul>
+          <p><strong>Не принимаются:</strong> запросы на незаконный контент, вредоносный софт, материалы причиняющие вред людям &mdash; отказ без обсуждений.</p>
+          <p><strong>Анонимность:</strong> мы не храним данные пользователей. Нет логов, нет баз данных, нет куки. Единственный публичный идентификатор &mdash; псевдоним в каталоге. Выбирай ник, не связанный с личностью.</p>
+          <p><strong>Ответственность:</strong> FLEARANCE — навигационный сервис. Все ресурсы — внешние сайты вне нашего контроля. Пользователь самостоятельно оценивает законность использования в своей юрисдикции.</p>
+          <p><strong>Дисклеймер:</strong> материалы сайта носят исключительно информационный и образовательный характер — мы описываем принципы работы технологий шифрования, анонимизации трафика и защиты данных. Сайт не предназначен и не рекламируется как средство обхода блокировок, установленных законодательством какой-либо страны. Использование любых инструментов из каталога должно осуществляться в соответствии с действующим законодательством страны пользователя — ответственность за это лежит на пользователе.</p>
+        </div>
+      </div>
+
+      <div class="panel-page" id="page-support">
+        <div class="support-wrap">
+          <h2>// ПОДДЕРЖАТЬ</h2>
+          <p>FLEARANCE существует на принципах свободы и open-source. Если проект полезен &mdash; поддержи через Monero. Единственная по-настоящему приватная криптовалюта.</p>
+          <div class="xmr-box" id="xmr-address-box">
+            <span class="xmr-label">// XMR адрес</span>
+            <span id="xmr-addr-text">[твой адрес monero здесь]</span>
+          </div>
+          <div class="qr-wrap">
+            <img src="qr.png" alt="Monero QR" class="qr-img" id="qr-img">
+            <div class="qr-label">// QR-код для оплаты</div>
+            <button class="qr-expand-btn" id="qr-expand-btn">⤢ развернуть QR</button>
+          </div>
+          <button class="copy-btn" id="xmr-copy-btn" style="margin-top:14px;">
+            <span class="copy-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"></path></svg></span> скопировать адрес Monero
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="bottomnav" id="bottomnav">
+  <button class="bnav-btn active" data-page="home"><span class="bnav-icon">⬡</span><span>Главная</span></button>
+  <button class="bnav-btn" data-page="howto"><span class="bnav-icon">◈</span><span>Как работаем</span></button>
+  <button class="bnav-btn" data-page="catalog"><span class="bnav-icon">◇</span><span>Каталог</span></button>
+  <button class="bnav-btn support-bnav" data-page="support"><span class="bnav-icon">♥</span><span>Поддержать</span></button>
+</div>
+
+<script>
+var SLANG = {
+  "Tor":"Программа для анонимного доступа в интернет. Скрывает реальное местоположение и шифрует трафик.",
+  "VPN":"Виртуальная частная сеть. Шифрует трафик и пропускает через сервер в другой стране.",
+  "APK":"Файл установки приложения для Android. Аналог .exe на Windows.",
+  "Docker":"Программа, запускающая приложения в изолированном контейнере — как виртуальная машина, но легче.",
+  "Git":"Система контроля версий. Отслеживает изменения в коде и позволяет работать в команде.",
+  "open-source":"Программа с открытым исходным кодом. Любой может посмотреть, как она работает, и изменить.",
+  "API":"Программный интерфейс. Способ для программ общаться друг с другом.",
+  "CLI":"Командная строка. Интерфейс, где вводишь команды текстом вместо кнопок.",
+  "MCP":"Протокол для подключения инструментов к AI-агентам.",
+  "SSH":"Протокол безопасного подключения к удалённому компьютеру через командную строку.",
+  "localhost":"Твой собственный компьютер. Адрес 127.0.0.1.",
+  "SOCKS5":"Тип прокси-сервера. Маршрутизирует весь трафик через себя.",
+  "proxy":"Посредник между тобой и сайтом. Скрывает реальное подключение.",
+  "GPU":"Графический процессор. Ускоряет вычисления, особенно в AI и 3D.",
+  "VRAM":"Память видеокарты. Объём влияет на размер запускаемых моделей.",
+  "LLM":"Большая языковая модель. AI, который понимает и генерирует текст.",
+  "RAG":"Метод, при котором AI ищет ответы в твоих загруженных документах.",
+  "Docker Compose":"Инструмент для запуска нескольких контейнеров Docker одновременно.",
+  "markdown":"Простой язык разметки для текста. Заголовки, списки, ссылки — пишутся символами.",
+  "E2E шифрование":"Сквозное шифрование. Данные зашифрованы от отправителя до получателя.",
+  ".onion":"Адрес сайта в сети Tor. Доступен только через Tor Browser.",
+  "Audit":"Режим бесплатного просмотра курса. Все видео и материалы доступны, сертификат — платный.",
+  "децентрализация":"Система без единого центра управления. Данные распределены между участниками, а не хранятся на одном сервере. Повышает приватность, но сложнее в использовании.",
+  "деанонимизация":"Раскрытие личности пользователя. Когда данные позволяют установить реальную личность человека за аккаунтом.",
+  "obfs4":"Тип маскировки трафика Tor. Делает Tor-трафик похожим на обычный HTTPS, что помогает обойти блокировки.",
+  "snowflake":"Альтернативный метод обхода блокировок Tor. Использует peer-to-peer сеть для маршрутизации трафика через добровольцев.",
+  "мост":"Промежуточный узел Tor, который скрыт от публичного списка. Помогает подключиться к сети Tor, когда прямые подключения заблокированы.",
+  "webtunnel":"Тип моста Tor, который маскирует трафик под обычное HTTPS-подключение к сайту. Наиболее устойчив к блокировкам на уровне DPI."
+};
+
+var RISK_DATA = {
+  "Claude (Anthropic)":{deanon:"medium",leak:"high",knowledge:"low",setup:"low",dependency:"high",legal:"medium",alternatives:"yes"},
+  "ChatGPT (OpenAI)":{deanon:"medium",leak:"high",knowledge:"low",setup:"low",dependency:"high",legal:"medium",alternatives:"yes"},
+  "Grok (xAI)":{deanon:"medium",leak:"high",knowledge:"low",setup:"low",dependency:"high",legal:"medium",alternatives:"yes"},
+  "Заблокированные приложения":{deanon:"medium",leak:"medium",knowledge:"medium",setup:"medium",dependency:"medium",legal:"low",alternatives:"yes"},
+  "Windows 11":{deanon:"low",leak:"low",knowledge:"low",setup:"low",dependency:"low",legal:"low",alternatives:"yes"},
+  "Linux Mint":{deanon:"low",leak:"low",knowledge:"low",setup:"low",dependency:"low",legal:"low",alternatives:"yes"},
+  "Ubuntu":{deanon:"low",leak:"low",knowledge:"low",setup:"medium",dependency:"low",legal:"low",alternatives:"yes"},
+  "Arch Linux":{deanon:"low",leak:"low",knowledge:"high",setup:"high",dependency:"low",legal:"low",alternatives:"yes"},
+  "GrapheneOS":{deanon:"low",leak:"low",knowledge:"medium",setup:"medium",dependency:"low",legal:"low",alternatives:"no"},
+  "Qubes OS":{deanon:"low",leak:"low",knowledge:"high",setup:"high",dependency:"low",legal:"low",alternatives:"no"},
+  "macOS":{deanon:"low",leak:"low",knowledge:"low",setup:"low",dependency:"low",legal:"low",alternatives:"yes"},
+  "Fedora":{deanon:"low",leak:"low",knowledge:"medium",setup:"low",dependency:"low",legal:"low",alternatives:"yes"},
+  "Kali Linux":{deanon:"low",leak:"low",knowledge:"high",setup:"medium",dependency:"low",legal:"low",alternatives:"yes"},
+  "Whonix":{deanon:"low",leak:"low",knowledge:"high",setup:"high",dependency:"medium",legal:"low",alternatives:"no"},
+  "Tails OS":{deanon:"low",leak:"low",knowledge:"medium",setup:"medium",dependency:"low",legal:"low",alternatives:"no"},
+  "Ollama":{deanon:"low",leak:"low",knowledge:"medium",setup:"medium",dependency:"low",legal:"low",alternatives:"yes"},
+  "uBlock Origin":{deanon:"low",leak:"low",knowledge:"low",setup:"low",dependency:"low",legal:"low",alternatives:"yes"},
+  "Bitwarden":{deanon:"medium",leak:"medium",knowledge:"medium",setup:"low",dependency:"medium",legal:"low",alternatives:"yes"},
+  "yt-dlp":{deanon:"low",leak:"low",knowledge:"medium",setup:"medium",dependency:"low",legal:"medium",alternatives:"yes"},
+  "Joplin":{deanon:"low",leak:"low",knowledge:"low",setup:"low",dependency:"low",legal:"low",alternatives:"yes"},
+  "GIMP":{deanon:"low",leak:"low",knowledge:"low",setup:"low",dependency:"low",legal:"low",alternatives:"yes"},
+  "KeePassXC":{deanon:"low",leak:"low",knowledge:"low",setup:"low",dependency:"low",legal:"low",alternatives:"no"},
+  "Blender":{deanon:"low",leak:"low",knowledge:"medium",setup:"medium",dependency:"low",legal:"low",alternatives:"no"},
+  "Neovim":{deanon:"low",leak:"low",knowledge:"high",setup:"high",dependency:"low",legal:"low",alternatives:"yes"},
+  "Signal":{deanon:"medium",leak:"low",knowledge:"low",setup:"low",dependency:"medium",legal:"low",alternatives:"yes"},
+  "SimpleX Chat":{deanon:"low",leak:"low",knowledge:"low",setup:"low",dependency:"low",legal:"low",alternatives:"yes"},
+  "Session":{deanon:"low",leak:"low",knowledge:"low",setup:"low",dependency:"medium",legal:"low",alternatives:"yes"},
+  "Molly":{deanon:"medium",leak:"low",knowledge:"medium",setup:"medium",dependency:"medium",legal:"low",alternatives:"yes"},
+  "FFmpeg":{deanon:"low",leak:"low",knowledge:"high",setup:"high",dependency:"low",legal:"low",alternatives:"no"},
+  "LM Studio":{deanon:"low",leak:"low",knowledge:"low",setup:"low",dependency:"low",legal:"low",alternatives:"yes"},
+  "Open WebUI":{deanon:"low",leak:"low",knowledge:"high",setup:"high",dependency:"low",legal:"low",alternatives:"yes"},
+  "ComfyUI":{deanon:"low",leak:"low",knowledge:"high",setup:"high",dependency:"low",legal:"low",alternatives:"yes"},
+  "Stable Diffusion (local)":{deanon:"low",leak:"low",knowledge:"high",setup:"high",dependency:"low",legal:"low",alternatives:"yes"},
+  "LangChain":{deanon:"medium",leak:"medium",knowledge:"high",setup:"medium",dependency:"high",legal:"low",alternatives:"yes"},
+  "Hugging Face":{deanon:"medium",leak:"medium",knowledge:"low",setup:"low",dependency:"high",legal:"low",alternatives:"yes"},
+  "Whisper (OpenAI)":{deanon:"low",leak:"low",knowledge:"medium",setup:"medium",dependency:"low",legal:"low",alternatives:"yes"},
+  "InsightsLM":{deanon:"low",leak:"low",knowledge:"high",setup:"high",dependency:"low",legal:"low",alternatives:"no"},
+  "Cua":{deanon:"low",leak:"medium",knowledge:"high",setup:"high",dependency:"medium",legal:"low",alternatives:"no"},
+  "GitHub Student Developer Pack":{deanon:"high",leak:"medium",knowledge:"low",setup:"low",dependency:"high",legal:"low",alternatives:"no"},
+  "Cloudflare Workers":{deanon:"medium",leak:"medium",knowledge:"medium",setup:"medium",dependency:"high",legal:"low",alternatives:"yes"},
+  "Vercel / Netlify":{deanon:"medium",leak:"medium",knowledge:"low",setup:"low",dependency:"high",legal:"low",alternatives:"yes"},
+  "Railway / Render":{deanon:"medium",leak:"medium",knowledge:"low",setup:"low",dependency:"high",legal:"low",alternatives:"yes"},
+  "VS Code (оптимизация)":{deanon:"low",leak:"low",knowledge:"low",setup:"low",dependency:"low",legal:"low",alternatives:"yes"},
+  "Notion (бесплатный план)":{deanon:"medium",leak:"high",knowledge:"low",setup:"low",dependency:"high",legal:"low",alternatives:"yes"},
+  "Obsidian":{deanon:"low",leak:"low",knowledge:"low",setup:"low",dependency:"low",legal:"low",alternatives:"yes"},
+  "Tor Browser (продвинутое)":{deanon:"low",leak:"low",knowledge:"high",setup:"medium",dependency:"low",legal:"high",alternatives:"no"},
+  "Coursera / edX (бесплатный доступ)":{deanon:"high",leak:"medium",knowledge:"low",setup:"low",dependency:"high",legal:"low",alternatives:"yes"},
+  "MIT OpenCourseWare":{deanon:"low",leak:"low",knowledge:"low",setup:"low",dependency:"low",legal:"low",alternatives:"yes"},
+  "FreeAPI":{deanon:"low",leak:"low",knowledge:"low",setup:"low",dependency:"low",legal:"low",alternatives:"yes"},
+  "Oracle Cloud (бесплатный VPS)":{deanon:"high",leak:"medium",knowledge:"high",setup:"high",dependency:"high",legal:"low",alternatives:"yes"},
+  "Google Colab":{deanon:"medium",leak:"high",knowledge:"low",setup:"low",dependency:"high",legal:"low",alternatives:"yes"},
+  "Frontend Mentor":{deanon:"medium",leak:"low",knowledge:"low",setup:"low",dependency:"low",legal:"low",alternatives:"yes"},
+  "Exercism":{deanon:"medium",leak:"low",knowledge:"low",setup:"low",dependency:"low",legal:"low",alternatives:"yes"},
+  "Canva (бесплатный план)":{deanon:"medium",leak:"high",knowledge:"low",setup:"low",dependency:"high",legal:"low",alternatives:"yes"},
+  "VirusTotal":{deanon:"low",leak:"low",knowledge:"low",setup:"low",dependency:"low",legal:"low",alternatives:"yes"},
+  "Any.Run":{deanon:"low",leak:"low",knowledge:"medium",setup:"low",dependency:"medium",legal:"low",alternatives:"yes"},
+  "Hybrid Analysis":{deanon:"low",leak:"low",knowledge:"medium",setup:"low",dependency:"medium",legal:"low",alternatives:"yes"},
+  "Draper":{deanon:"low",leak:"low",knowledge:"low",setup:"low",dependency:"medium",legal:"low",alternatives:"yes"},
+  "Murdoku":{deanon:"low",leak:"low",knowledge:"low",setup:"low",dependency:"low",legal:"low",alternatives:"yes"},
+  "JEC Archive":{deanon:"low",leak:"low",knowledge:"low",setup:"low",dependency:"low",legal:"low",alternatives:"yes"},
+  "Dreamshift":{deanon:"low",leak:"low",knowledge:"low",setup:"low",dependency:"low",legal:"low",alternatives:"yes"},
+  "Tactiq":{deanon:"medium",leak:"medium",knowledge:"low",setup:"low",dependency:"high",legal:"low",alternatives:"yes"},
+  "Obscura":{deanon:"low",leak:"low",knowledge:"high",setup:"medium",dependency:"low",legal:"medium",alternatives:"yes"},
+  "Copilot/DeepSeek API":{deanon:"medium",leak:"medium",knowledge:"high",setup:"high",dependency:"high",legal:"high",alternatives:"yes"},
+  "Anthropic Prompt Library":{deanon:"low",leak:"low",knowledge:"low",setup:"low",dependency:"low",legal:"low",alternatives:"yes"},
+  "AI/ML Pentesting Roadmap":{deanon:"low",leak:"low",knowledge:"medium",setup:"low",dependency:"low",legal:"low",alternatives:"yes"},
+  "Witcher Online":{deanon:"low",leak:"low",knowledge:"low",setup:"low",dependency:"low",legal:"low",alternatives:"yes"},
+  ".edu почта (Tyler JC)":{deanon:"high",leak:"medium",knowledge:"medium",setup:"medium",dependency:"medium",legal:"high",alternatives:"yes"},
+  "X Minecraft Launcher":{deanon:"low",leak:"low",knowledge:"low",setup:"low",dependency:"low",legal:"low",alternatives:"yes"},
+  "Techtool Lite":{deanon:"low",leak:"low",knowledge:"low",setup:"low",dependency:"low",legal:"low",alternatives:"yes"},
+  "Студенческие скидки":{deanon:"high",leak:"medium",knowledge:"medium",setup:"medium",dependency:"medium",legal:"high",alternatives:"yes"},
+  "FMHY Privacy":{deanon:"low",leak:"low",knowledge:"low",setup:"low",dependency:"low",legal:"low",alternatives:"yes"},
+  "ZCode 3.0":{deanon:"medium",leak:"medium",knowledge:"low",setup:"low",dependency:"high",legal:"low",alternatives:"yes"},
+  "BoardRepo":{deanon:"low",leak:"low",knowledge:"low",setup:"low",dependency:"low",legal:"low",alternatives:"yes"},
+  "Audio Guide":{deanon:"low",leak:"low",knowledge:"low",setup:"low",dependency:"low",legal:"low",alternatives:"yes"},
+  "PPT Master":{deanon:"low",leak:"low",knowledge:"low",setup:"low",dependency:"low",legal:"low",alternatives:"yes"},
+  "Ponytail":{deanon:"low",leak:"low",knowledge:"low",setup:"low",dependency:"low",legal:"low",alternatives:"yes"},
+  "Fingerprint Detector":{deanon:"low",leak:"low",knowledge:"low",setup:"low",dependency:"low",legal:"low",alternatives:"yes"}
+};
+
+var CATALOG = [
+  {pinned:true,cat:"sec",nick:"flearance",title:"VirusTotal",date:"2025-12-01",tags:["вирус","троян","вредоносный","проверка","файл","сканер","антивирус","безопасность","Malware","детект"],desc:"Проверка файлов через 70+ антивирусных движков. Мгновенный результат, репутация файла, связи с вредоносными файлами.",tip:"virustotal.com — загрузи файл или вставь URL для проверки.",addr:"virustotal.com",addrLabel:"ресурс",guide:{risk:"low",intro:"VirusTotal сканирует загруженные файлы и URL-адреса через более чем 70 антивирусных движков и сервисов анализа. Показывает детекции, хэши, связи, публичные комментарии.",steps:["Перейди на <strong>virustotal.com</strong>","Нажми <strong>\"Choose file\"</strong> или перетащи файл","Дождись результатов сканирования","Проверь количество детекций — если 0/70+ — файл чист"],safety:"VirusTotal не выполняет файл — только сканирует сигнатурами. Для поведенческого анализа используй Any.Run или Hybrid Analysis."}},
+  {pinned:true,cat:"sec",nick:"flearance",title:"Any.Run",date:"2025-12-01",tags:["вирус","sandbox","поведение","файл"," анализ","вредоносный","троян","песочница","отчёт","Malware"],desc:"Интерактивный sandbox — запускает файлы в изолированной среде и показывает их поведение в реальном времени.",tip:"any.run — загрузи подозрительный файл и наблюдай за его действиями.",addr:"any.run",addrLabel:"ресурс",guide:{risk:"low",intro:"Any.Run — облачный sandbox для анализа вредоносного ПО. Показывает сети-запросы, файловые операции, реестр, процессы в реальном времени.",steps:["Перейди на <strong>any.run</strong>","Нажми <strong>\"Upload\"</strong> и загрузи файл","Выбери ОС и нажми <strong>\"Run\"</strong>","Наблюдай за поведением файла в реальном времени"],safety:"Файл запускается в изолированной среде — никакого риска для твоего устройства. Результаты публичные — не загружай конфиденциальные файлы."}},
+  {pinned:true,cat:"sec",nick:"flearance",title:"Hybrid Analysis",date:"2025-12-01",tags:["вирус","sandbox","анализ","вредоносный","файл","отчёт","поведение","Malware","тест"],desc:"Бесплатный sandbox-анализ с глубоким отчётом: поведение, сети, файлы, реестр, ошибки.",tip:"hybrid-analysis.com — загрузи файл для детального анализа.",addr:"hybrid-analysis.com",addrLabel:"ресурс",guide:{risk:"low",intro:"Hybrid Analysis — бесплатный сервис от CrowdStrike для анализа вредоносного ПО. Предоставляет подробные отчёты о поведении файлов.",steps:["Перейди на <strong>hybrid-analysis.com</strong>","Нажми <strong>\"Choose File\"</strong> и загрузи файл","Подожди завершения анализа (1-5 минут)","Изучи отчёт: поведение, сети, файлы, детекции"],safety:"Анализ проводится в облачном sandbox. Бесплатный план ограничивает количество запросов в день."}},
+  {cat:"ai",nick:"draper",title:"Draper",date:"2026-01-15",tags:["бизнес","стартап","идея","валидация","анализ","деньги"," маркетинг","финансы","ИИ"],desc:"Проверка бизнес-идеи на выживаемость — ИИ-маркетолог и финансист разнесут проект по косточкам.",tip:"draper.chat/use-cases/idea-validation — пиши идею, получаешь разбор.",addr:"draper.chat",addrLabel:"сайт",guide:{risk:"low",intro:"Draper — AI-сервис для валидации бизнес-идей. Нейросеть анализирует идею с точки зрения маркетинга, финансов и масштабирования.",steps:["Перейди на <strong>draper.chat/use-cases/idea-validation</strong>","Опиши свою бизнес-идею в поле ввода","Получи разбор от ИИ-маркетолога и финансиста","Используй рекомендации для улучшения продукта"],safety:"Сервис бесплатный. Данные — только текстовый ввод, ничего критичного."}},
+  {cat:"fun",nick:"murdoku",title:"Murdoku",date:"2026-02-10",tags:["игра","головоломка","судоку","детектив","бесплатно","онлайн","rowser","развлечение"],desc:"Детективная головоломка — судоку с уликами. Найди убийцу, распредели участников по зонам.",tip:"murdoku.com/play/?lang=ru — бесплатно, русский язык.",addr:"murdoku.com",addrLabel:"сайт",guide:{risk:"low",intro:"Murdoku — браузерная игра, смешивающая судоку и детектив. Игрок изучает схому места преступления и распределяет участников дела по зонам.",steps:["Перейди на <strong>murdoku.com/play/?lang=ru</strong>","Нажми \"Начать игру\"","Изучи улики и распредели участников по зонам","Убедись, что в каждой строке и столбце только один человек"],safety:"Браузерная игра, ничего не скачивает. Безопасно."}},
+  {cat:"fun",nick:"jecarchive",title:"JEC Archive",date:"2026-02-10",tags:["радио","музыка","трэш","онлайн","стрим","аудио","народный"],desc:"Интернет-радио нижнего интернета — культовые интернет-персонажи, трэш и нишевый вайб.",tip:"jecarchive.ru — уникальный народный проект.",addr:"jecarchive.ru",addrLabel:"сайт",guide:{risk:"low",intro:"JEC Archive — интернет-радио со специфическим контентом. Нишевый народный проект.",steps:["Перейди на <strong>jecarchive.ru</strong>","Наслаждайся трансляцией"],safety:"Прослушивание ничего не скачивает. Безопасно."}},
+  {cat:"fun",nick:"dreamshift",title:"Dreamshift",date:"2026-03-01",scan:true,tags:["minecraft","мод","игра","измерения","бэкрумс","пиксельная","кооп"],desc:"Мод для Minecraft — 20 сюрреалистичных измерений с сюжетом и пугающими фишками.",tip:"multision.dev/dreamshift — CurseForge, бесплатно.",addr:"multision.dev/dreamshift",addrLabel:"скачать",guide:{risk:"low",intro:"Dreamshift — мод для Minecraft, добавляющий параллельные измерения в стиле бэкрумсов. 20 уникальных миров со своим сюжетом.",steps:["Перейди на <strong>multision.dev/dreamshift</strong>","Скачай мод с CurseForge","Установи через лаунчер Minecraft","Запусти игру с модом"],safety:"Мод открытый, проверен сообществом. Скачивай только с CurseForge или официального сайта."}},
+  {cat:"ai",nick:"tactiq",title:"Tactiq",date:"2026-03-15",tags:["перевод","созвон","видео","аудио","транскрибация","расширение","браузер","язык","meet","zoom"],desc:"Расширение для браузера — переводит созвоны, видео и аудио на 35+ языков в реальном времени.",tip:"tactiq.io/translate — запускается из браузера.",addr:"tactiq.io",addrLabel:"сайт",guide:{risk:"medium",intro:"Tactiq — расширение для Chrome, которое транскрибирует и переводит аудио/видео контент. Работает с Google Meet, Zoom, YouTube.",steps:["Установи расширение Tactiq из Chrome Web Store","Открой созвон или видео","Нажми кнопку перевода в интерфейсе расширения","Выбери язык перевода"],safety:"Расширение требует доступа к аудио браузера. Используй только для легальных целей. Не загружай конфиденциальные созвоны."}},
+  {cat:"sec",nick:"obscura",title:"Obscura",date:"2026-03-20",scan:true,tags:["браузер","парсинг","бот","автоматизация","headless","быстрый","легковесный","stealth"],desc:"Суперлёгкий браузер для парсинга и ИИ-агентов — 70 МБ, Stealth Mode, 85 мс загрузка.",tip:"github.com/h4ckf0r0day/obscura — бесплатно, open-source.",addr:"github.com/h4ckf0r0day/obscura",addrLabel:"GitHub",guide:{risk:"medium",intro:"Obscura — головless-браузер для автоматизации. Stealth Mode скрывает ботовость от сайтов. Работает без GUI.",steps:["Клонируй репозиторий: <strong>git clone https://github.com/h4ckf0r0day/obscura</strong>","Установи зависимости: <strong>pip install -r requirements.txt</strong>","Запусти: <strong>python app.py</strong>","Используй API по адресу http://127.0.0.1:8000"],safety:"Инструмент для разработчиков. Stealth Mode — для обхода антибот-защиты, используй Responsibly."}},
+  {cat:"ai",nick:"anthropic-prompts",title:"Anthropic Prompt Library",date:"2026-04-05",tags:["промпт","шаблон","claude","нейросеть","код","анализ","ревью","бесплатно"],desc:"Бесплатная библиотека готовых промптов от Anthropic — для анализа, отладки, ревью кода и многого другого.",tip:"code.claude.com/docs/en/prompt-library",addr:"code.claude.com",addrLabel:"документация",guide:{risk:"low",intro:"Официальная библиотека промптов от Anthropic. Готовые шаблоны для любых задач с Claude.",steps:["Перейди на <strong>code.claude.com/docs/en/prompt-library</strong>","Найди нужный раздел (код, анализ, безопасность)","Скопируй промпт","Используй в Claude"],safety:"Официальный ресурс Anthropic. Безопасно."}},
+  {cat:"git",nick:"pentest-roadmap",title:"AI/ML Pentesting Roadmap",date:"2026-04-10",tags:["пентест","безопасность","кибербез","machine learning","обучение","гайд","roadmap","книги","курс"],desc:"Библия пентеста ИИ и ML 2026 — дорожная карта от начала до конца с книгами, видео и репозиториями.",tip:"github.com/anmolksachan/AI-ML-Free-Resources",addr:"github.com/anmolksachan",addrLabel:"GitHub",guide:{risk:"low",intro:"Полный гайд по изучению пентеста AI/ML систем. Включает структуру обучения, ресурсы и Bug Bounty программы.",steps:["Перейди на <strong>github.com/anmolksachan/AI-ML-Free-Resources-for-Security-and-Prompt-Injection</strong>","Изучи структуру репозитория","Начни с базовых материалов","Следуй дорожной карте"],safety:"Образовательный ресурс. Используй полученные знания только на легальных тестах."}},
+  {cat:"fun",nick:"witcher-online",title:"Witcher Online",date:"2026-04-15",scan:true,tags:["игра","кооп","мод","witcher","ведьмак","многопользовательская","rpg","сюжет"],desc:"Кооперативный мод для Witcher 3 — проходи сюжет с друзьями, синхронизированные катсцены и решения.",tip:"nexusmods.com — Witcher Online 4.0, русский язык.",addr:"nexusmods.com/witcher3/mods/11590",addrLabel:"мод",guide:{risk:"low",intro:"Witcher Online — мод для The Witcher 3, добавляющий кооперативное прохождение. Пати до 4 человек, синхронизация катсцен и решений.",steps:["Скачай мод с <strong>nexusmods.com</strong>","Установи через мод-менеджер или вручную","Добавь друзей в пати","Начни совместное прохождение"],safety:"Мод для оффлайн-игры. Не влияет на безопасность. Скачивай только с NexusMods."}},
+  {cat:"fun",nick:"xmcl",title:"X Minecraft Launcher",date:"2026-04-25",scan:true,tags:["minecraft","лаунчер","мод","игра","оптимизация","кооп","открытый код","бесплатно"],desc:"Лучший лаунчер для Minecraft — настраиваемый интерфейс, моды, шейдеры, кооп, русский язык.",tip:"xmcl.app — бесплатно, open-source.",addr:"xmcl.app",addrLabel:"сайт",guide:{risk:"low",intro:"X Minecraft Launcher — альтернативный лаунчер с поддержкой Forge, Fabric, OptiFine и встроенными модами.",steps:["Скачай с <strong>xmcl.app</strong>","Установи лаунчер","Выбери версию Minecraft","Установи нужные моды прямо из лаунчера","Добавь друзей для коопа"],safety:"Open-source лаунчер. Скачивай только с официального сайта."}},
+  {cat:"tools",nick:"techtool",title:"Techtool Lite",date:"2026-05-01",scan:true,tags:["macbook","оптимизация","батарея","ускорение","утилита","macos","починка","чистка"],desc:"Утилита для оптимизации MacBook — следит за батареей, чистит кэш, убирает тормоза.",tip:"micromat.com/products/techtool-lite — бесплатно.",addr:"micromat.com",addrLabel:"сайт",guide:{risk:"low",intro:"Techtool Lite — утилита от Micromat (30 лет опыта) для обслуживания и оптимизации macOS.",steps:["Скачай с <strong>micromat.com/products/techtool-lite</strong>","Установи на MacBook","Запусти проверку системы","Следуй рекомендациям"],safety:"Легитимный софт от известного разработчика. Бесплатная версия."}},
+  {cat:"sec",nick:"fmhy",title:"FMHY Privacy",date:"2026-05-10",tags:["приватность","безопасность","антивирус","шифрование","подборка","софт","защита","антибот"],desc:"Огромная библиотека софта для приватности — антивирусы, антиботы, шифрование, проверка ссылок.",tip:"fmhy.net/privacy — всё бесплатно.",addr:"fmhy.net/privacy",addrLabel:"ресурс",guide:{risk:"low",intro:"FreeMedia HeckYeah — подборка софта для приватности и безопасности. Адблоки, антивирусы, шифрование, утилиты.",steps:["Перейди на <strong>fmhy.net/privacy</strong>","Выбери нужный раздел","Скачай и установи нужный софт","Настрой по инструкции"],safety:"Проверенный ресурс сообщества. Все ссылки ведут на официальные сайты."}},
+  {cat:"ai",nick:"zcode",title:"ZCode 3.0",date:"2026-05-15",tags:["код","программирование","нейросеть","вайбкодинг","ai","агент","бесплатно","разработка"],desc:"AI-кодирование от GLM — пишет код, управляет агентами, работает через Telegram и WeChat.",tip:"zcode.z.ai — бесплатно.",addr:"zcode.z.ai",addrLabel:"сайт",guide:{risk:"low",intro:"ZCode 3.0 — AI-комбайн для вайбкодинга от Zhipu AI. Заточен под модель GLM-5.2.",steps:["Перейди на <strong>zcode.z.ai</strong>","Зарегистрируйся","Начни использовать для написания кода"],safety:"Бесплатный сервис. Данные обрабатываются на серверах провайдера."}},
+  {cat:"git",nick:"boardrepo",title:"BoardRepo",date:"2026-05-20",tags:["электроника","diy","плата","хардвер","проект","открытый код","микроконтроллер","ардуино"],desc:"GitHub для электроников — 750+ открытых DIY-проектов с платами, документацией и исходниками.",tip:"boardrepo.com/browse — бесплатно.",addr:"boardrepo.com",addrLabel:"сайт",guide:{risk:"low",intro:"BoardRepo — каталог открытых проектов по электронике. Платы, контроллеры, сенсоры — всё с исходниками.",steps:["Перейди на <strong>boardrepo.com/browse</strong>","Найди интересный проект","Скачай исходники и документацию","Повтори в своей мастерской"],safety:"Open-source проекты. Безопасно."}},
+  {cat:"tools",nick:"audio-guide",title:"Audio Guide",date:"2026-05-25",tags:["аудио","наушники","колонки","звук","усилитель","цап","подбор","бюджет","хай-фай"],desc:"Подбор аудио-сетапа под бюджет — наушники, колонки, ЦАП, усилители.",tip:"audio-guide.ykj13.ru/podbor — бесплатно.",addr:"audio-guide.ykj13.ru",addrLabel:"ресурс",guide:{risk:"low",intro:"Сервис для подбора аудио-оборудования по бюджету. Внутриканальные, полноразмерные наушники, колонки, ЦАП.",steps:["Перейди на <strong>audio-guide.ykj13.ru/podbor</strong>","Выбери тип оборудования","Задай бюджет","Получи рекомендации"],safety:"Информационный ресурс. Ничего не скачивает."}},
+  {cat:"ai",nick:"ppt-master",title:"PPT Master",date:"2026-06-01",scan:true,tags:["презентация","ppt","документ","дизайн","автоматизация","бесплатно","работа","учеба"],desc:"Генерация презентаций за пару минут — закидываешь документ, ИИ оформляет professionally.",tip:"github.com/hugohe3/ppt-master — бесплатно.",addr:"github.com/hugohe3/ppt-master",addrLabel:"GitHub",guide:{risk:"low",intro:"PPT Master — инструмент для автоматического создания презентаций из документов с помощью ИИ.",steps:["Клонируй репозиторий: <strong>git clone https://github.com/hugohe3/ppt-master</strong>","Установи зависимости","Запусти и загрузи исходный документ","Получи готовую презентацию"],safety:"Open-source. Данные обрабатываются локально."}},
+  {cat:"ai",nick:"ponytail",title:"Ponytail",date:"2026-06-05",scan:true,tags:["код","оптимизация","скорость","агент","claude","codex","экономия","бесплатно"],desc:"Скилл для Claude Code и Codex — агенты пишут на 80% меньше кода и работают в 3 раза быстрее.",tip:"github.com/DietrichGebert/ponytail — бесплатно.",addr:"github.com/DietrichGebert/ponytail",addrLabel:"GitHub",guide:{risk:"low",intro:"Ponytail — оптимизация для AI-агентов кодирования. Экономит лимиты на 47-77%.",steps:["Клонируй репозиторий: <strong>git clone https://github.com/DietrichGebert/ponytail</strong>","Следуй инструкции по установке","Используй с Claude Code или Codex"],safety:"Open-source. Безопасно."}},
+  {cat:"sec",nick:"fingerprint-detector",title:"Fingerprint Detector",date:"2026-06-10",scan:true,tags:["приватность","трекинг","отпечаток","браузер","защита","маскировка","шпион","данные"],desc:"Расширение для браузера — показывает как сайты собирают данные и помогает скрыться от трекинга.",tip:"github.com/mr-r3b00t/fingerprintdetector — бесплатно.",addr:"github.com/mr-r3b00t/fingerprintdetector",addrLabel:"GitHub",guide:{risk:"low",intro:"Fingerprint Detector — расширение с тремя режимами: Detect (мониторинг), Ghost (маскировка средними значениями), Spoof (полная подмена отпечатка).",steps:["Скачай расширение с <strong>github.com/mr-r3b00t/fingerprintdetector</strong>","Установи в браузер","Выбери режим работы: Detect, Ghost или Spoof","Наблюдай за тем, какие данные собирают сайты"],safety:"Защитное расширение. Безопасно. Используй для повышения приватности."}},
+  {pinned:true,cat:"ai",nick:"flearance",title:"Claude (Anthropic)",date:"2026-06-15",desc:"Один из сильнейших AI-ассистентов — для текста, кода, анализа документов. В части регионов недоступен напрямую.",tip:"Через настроенный Tor-маршрут сайт открывается как обычно.",addr:"claude.ai",addrLabel:"сайт",guide:{risk:"low",intro:"Claude.ai — официальный сайт нейросети Claude от Anthropic. В некоторых странах прямой доступ к сервису ограничен на уровне провайдера, поэтому без обхода блокировки сайт может не открываться даже с VPN, если конкретно этот адрес попадает под фильтрацию.",steps:["Убедись, что Tor-маршрут (через Orbot / мост) настроен и активен — трафик идёт через локальный SOCKS5 на 127.0.0.1:9150 (или связку, которую тебе уже настроили).","Открой <strong>claude.ai</strong> в браузере, который использует этот прокси.","Нажми <strong>\"Sign up\"</strong> для регистрации или <strong>\"Log in\"</strong>, если аккаунт уже есть.","При регистрации потребуется email и подтверждение — следуй полям формы как они подписаны на сайте на момент захода (интерфейс периодически обновляется)."],safety:"Регистрация и использование Claude.ai само по себе легально — ограничения касаются только сетевой доступности в отдельных регионах. Соблюдай условия использования сервиса (Anthropic ToS) — FLEARANCE помогает только с доступом к сайту, а не с обходом правил самого сервиса."}},
+  {pinned:true,cat:"ai",nick:"flearance",title:"ChatGPT (OpenAI)",date:"2026-06-15",desc:"AI-чат от OpenAI — один из самых известных. В некоторых регионах официально не предоставляется.",tip:"Доступен через тот же Tor-маршрут, что и остальные нейросети.",addr:"chatgpt.com",addrLabel:"сайт",guide:{risk:"low",intro:"ChatGPT — нейросеть-ассистент от OpenAI. OpenAI официально не предоставляет сервис в ряде стран, поэтому даже с VPN могут быть ограничения (например, при оплате или верификации номера) — это уже политика самого сервиса, а не просто блокировка сети.",steps:["Через настроенный Tor-доступ открой <strong>chatgpt.com</strong>.","Нажми <strong>\"Sign up\"</strong> для регистрации аккаунта или <strong>\"Log in\"</strong> для входа.","Заполни форму регистрации по полям, которые видишь на странице на момент захода.","Бесплатная версия доступна сразу после регистрации; платные функции (GPT-4 и выше) могут требовать привязку карты — это уже отдельный вопрос, не связанный с доступом к сайту."],safety:"Доступность сервиса в твоём регионе зависит от политики самой OpenAI, а не только от сетевых ограничений — даже после обхода блокировки могут быть нюансы с оплатой или верификацией. FLEARANCE помогает только с сетевым доступом к сайту."}},
+  {pinned:true,cat:"ai",nick:"flearance",title:"Grok (xAI)",date:"2026-06-15",desc:"AI-ассистент от xAI (Илон Маск), встроен в X (Twitter). Доступность по регионам ограничена.",tip:"Тот же принцип — открывается через Tor-маршрут.",addr:"grok.com",addrLabel:"сайт",guide:{risk:"low",intro:"Grok — нейросеть от компании xAI, доступна как отдельным сайтом, так и внутри платформы X (бывший Twitter). В части регионов доступ ограничен на сетевом уровне.",steps:["Через настроенный Tor-маршрут открой <strong>grok.com</strong> (либо x.ai, в зависимости от того, какой адрес сейчас актуален).","Зарегистрируйся через email или существующий аккаунт X, следуя кнопкам на странице.","Если используешь через X — потребуется отдельный аккаунт самой платформы X."],safety:"Доступ к Grok через X также подчиняется правилам самой платформы X — обход сетевой блокировки не отменяет её собственные условия использования."}},
+  {cat:"access",nick:"flearance",title:"macOS",date:"2026-07-12",tags:["macos","apple","mac","переустановка","recovery","базовый"],desc:"Официальная переустановка через встроенный Recovery Mode — без сторонних образов и Hackintosh-костылей.",tip:"support.apple.com — Recovery работает прямо из прошивки Mac.",addr:"support.apple.com/guide/mac-help/macos-recovery",addrLabel:"инструкция",guide:{risk:"low",intro:"macOS переустанавливается через встроенный Recovery Mode — раздел, зашитый в прошивку Mac, не требующий флешки или стороннего образа системы.",steps:["Выключи Mac полностью","Для Apple Silicon: зажми кнопку питания до появления опций загрузки → выбери <strong>\"Options\"</strong>. Для Intel Mac: зажми <strong>Cmd+R</strong> при включении","В окне <strong>macOS Recovery</strong> выбери <strong>\"Переустановить macOS\"</strong>","Следуй мастеру — потребуется Apple ID для верификации"],safety:"Используй только встроенный Recovery — сторонние загрузочные образы macOS (\"Hackintosh\") нарушают лицензионное соглашение Apple и не гарантируют стабильность на не-Apple железе."}},
+  {cat:"access",nick:"flearance",title:"Fedora",date:"2026-07-12",tags:["linux","ос","fedora","разработка","средний","redhat"],desc:"Свежее ПО и актуальное ядро при сохранении стабильности — популярен у разработчиков и как база для docker/toolbox.",tip:"fedoraproject.org — Workstation-редакция для повседневного использования.",addr:"fedoraproject.org",addrLabel:"сайт",guide:{risk:"low",intro:"Fedora — дистрибутив, спонсируемый Red Hat, с более свежими версиями пакетов и ядра, чем Ubuntu, но с сохранением тестирования перед релизом.",steps:["Скачай <strong>Fedora Workstation</strong> с <strong>fedoraproject.org</strong>","Запиши образ через <strong>Fedora Media Writer</strong> (официальный инструмент проекта) на флешку","Загрузись с флешки — доступен live-режим для пробы без установки","Запусти установщик <strong>Anaconda</strong>, если всё устраивает"],safety:"Цикл релизов короче, чем у Ubuntu LTS (~13 месяцев поддержки) — планируй регулярные обновления версии системы."}},
+  {cat:"access",nick:"flearance",title:"Kali Linux",date:"2026-07-12",tags:["linux","пентест","безопасность","профессиональный","security","хакинг"],desc:"Дистрибутив для пентестеров с сотнями предустановленных security-инструментов — индустриальный стандарт в этой нише.",tip:"kali.org — официальный образ, проверяй подпись перед установкой.",addr:"kali.org",addrLabel:"сайт",guide:{risk:"low",intro:"Kali Linux — дистрибутив на базе Debian, ориентированный на тестирование на проникновение и аудит безопасности. Используется профессионалами ИБ и на профильных курсах.",steps:["Скачай ISO с <strong>kali.org/get-kali</strong> и сверь SHA256-сумму с указанной на сайте","Запиши на флешку или разверни как виртуальную машину (готовые VM-образы тоже есть на сайте)","Загрузись и выбери live-режим либо установку","В live-режиме доступны все инструменты сразу, без установки"],safety:"Использование инструментов Kali против систем без разрешения владельца — уголовно наказуемо практически везде. Тестируй только то, на что есть письменное разрешение, или используй специально созданные учебные стенды (TryHackMe, HackTheBox)."}},
+  {cat:"access",nick:"flearance",title:"Whonix",date:"2026-07-12",tags:["анонимность","tor","виртуализация","профессиональный","приватность"],desc:"Анонимная среда из двух виртуальных машин — Gateway маршрутизирует весь трафик через Tor, Workstation изолирована от реального IP даже при компрометации.",tip:"whonix.org — работает поверх VirtualBox или KVM, либо в связке с Qubes OS.",addr:"whonix.org",addrLabel:"сайт",guide:{risk:"low",intro:"Whonix состоит из двух виртуальных машин: Gateway (весь трафик идёт только через Tor) и Workstation (не имеет прямого доступа к сети — только через Gateway). Даже если Workstation скомпрометирована, реальный IP не раскрывается.",steps:["Установи <strong>VirtualBox</strong> (или используй Whonix как шаблон внутри Qubes OS)","Скачай образы Gateway и Workstation с <strong>whonix.org</strong>","Импортируй оба в VirtualBox через <strong>\"Файл → Импорт конфигурации\"</strong>","Запусти сначала Gateway, дождись подключения к Tor, затем запусти Workstation"],safety:"Требует более уверенного понимания виртуализации, чем Tails. Для постоянной анонимной среды (не разовой сессии) — предпочтительнее Tails."}},
+  {cat:"access",nick:"flearance",title:"Tails OS",date:"2026-07-12",tags:["анонимность","tor","live","амнезия","профессиональный","приватность"],desc:"Live-система с флешки — весь трафик через Tor из коробки, ничего не сохраняется на диск после выключения.",tip:"tails.net — загружается с флешки, не устанавливается на диск.",addr:"tails.net",addrLabel:"сайт",guide:{risk:"low",intro:"Tails (The Amnesic Incognito Live System) — операционная система, которая загружается с флешки и не оставляет следов на компьютере после выключения. Весь сетевой трафик принудительно идёт через Tor.",steps:["Скачай образ с <strong>tails.net</strong> и сверь подпись (инструкция на сайте обязательна к прочтению)","Запиши образ на флешку через <strong>Etcher</strong> или официальный <strong>Tails Installer</strong> (если ставишь с другой Tails/Linux)","Загрузись с флешки — выбери <strong>\"Tails\"</strong> в меню загрузки компьютера (обычно F12/F2/Del при включении)","При необходимости постоянного хранилища — настрой зашифрованный <strong>Persistent Storage</strong> при первом запуске"],safety:"Не меняй размер окна Tor Browser внутри Tails и не устанавливай посторонние расширения — это уникализирует твой отпечаток среди других пользователей Tails."}},
+  {cat:"access",nick:"flearance",title:"Windows 11",date:"2026-07-05",tags:["windows","ос","система","установка","microsoft","базовый"],desc:"Официальная установка с нуля через Media Creation Tool — самый массовый вариант для старта.",tip:"microsoft.com — инструмент сам создаёт загрузочную флешку.",addr:"microsoft.com/software-download/windows11",addrLabel:"сайт",guide:{risk:"low",intro:"Media Creation Tool — официальная утилита Microsoft для чистой установки или обновления Windows 11. Не требует стороннего ПО и сторонних образов.",steps:["Зайди на официальную страницу загрузки Windows 11 на <strong>microsoft.com</strong>","Скачай <strong>\"Media Creation Tool\"</strong>","Вставь флешку от 8ГБ и запусти утилиту — выбери <strong>\"Создать установочный носитель\"</strong>","Перезагрузи компьютер с флешки и следуй мастеру установки"],safety:"Скачивай образ только с официального сайта Microsoft — сторонние сборки Windows часто содержат встроенное ПО для слежки или майнеры."}},
+  {cat:"access",nick:"flearance",title:"Linux Mint",date:"2026-07-05",tags:["linux","ос","система","новичок","убунту","базовый"],desc:"Linux-дистрибутив для новичков — интерфейс интуитивно похож на Windows, минимум настройки после установки.",tip:"linuxmint.com — качай Cinnamon-редакцию, она самая стабильная.",addr:"linuxmint.com",addrLabel:"сайт",guide:{risk:"low",intro:"Linux Mint — один из самых дружелюбных дистрибутивов для тех, кто переходит с Windows впервые. Основан на Ubuntu, но проще в освоении.",steps:["Скачай ISO-образ редакции <strong>Cinnamon</strong> с <strong>linuxmint.com</strong>","Запиши образ на флешку через <strong>Rufus</strong> (Windows) или <strong>balenaEtcher</strong> (любая ОС)","Загрузись с флешки и выбери <strong>\"Install Linux Mint\"</strong>","Следуй мастеру установки — язык, раскладка, разметка диска"],safety:"Перед установкой сделай бэкап важных файлов — разметка диска может случайно затронуть существующие разделы."}},
+  {cat:"access",nick:"flearance",title:"Ubuntu",date:"2026-07-05",tags:["linux","ос","система","убунту","разработка","средний"],desc:"Самый популярный Linux-дистрибутив — огромное community, готов и для разработки, и для повседневных задач.",tip:"ubuntu.com — LTS-версия самая стабильная для долгого использования.",addr:"ubuntu.com/download/desktop",addrLabel:"сайт",guide:{risk:"low",intro:"Ubuntu — дистрибутив с самым большим сообществом и документацией, поддерживается Canonical. LTS-версии получают обновления безопасности 5 лет.",steps:["Скачай <strong>LTS-версию</strong> (например 24.04) с <strong>ubuntu.com</strong>","Запиши на флешку через <strong>Rufus</strong> или <strong>balenaEtcher</strong>","Загрузись с флешки — можно попробовать систему без установки (\"Try Ubuntu\")","Запусти установщик, если всё устраивает"],safety:"Выбирай именно LTS-версию для повседневной работы — версии с обычной поддержкой обновляются только 9 месяцев."}},
+  {cat:"access",nick:"flearance",title:"Arch Linux",date:"2026-07-05",tags:["linux","ос","архитектура","продвинутый","ручная сборка","rolling"],desc:"Минималистичная ручная сборка — полный контроль над системой, для тех, кто хочет разобраться, как всё устроено изнутри.",tip:"archlinux.org — Arch Wiki — одна из лучших технических документаций в опенсорсе.",addr:"archlinux.org",addrLabel:"сайт",guide:{risk:"low",intro:"Arch Linux — rolling-release дистрибутив без графического установщика по умолчанию: систему собираешь вручную, компонент за компонентом. Требует уверенного владения терминалом.",steps:["Скачай ISO с <strong>archlinux.org</strong> и запиши на флешку","Загрузись с флешки в командную строку","Следуй <strong>Arch Wiki → Installation Guide</strong> — разметка диска, монтирование, установка базовых пакетов через <strong>pacstrap</strong>","Настрой загрузчик (GRUB или systemd-boot) и сетевые компоненты вручную"],safety:"Не рекомендуется как первая система в Linux — рассчитан на пользователей, уже понимающих файловую систему Linux и работу с терминалом."}},
+  {cat:"access",nick:"flearance",title:"GrapheneOS",date:"2026-07-05",tags:["android","mobile","приватность","pixel","профессиональный","hardened"],desc:"Приватная мобильная ОС для Pixel — hardened Android без сервисов Google по умолчанию, песочница на уровне ядра.",tip:"grapheneos.org — устанавливается только на устройства Pixel.",addr:"grapheneos.org",addrLabel:"сайт",guide:{risk:"low",intro:"GrapheneOS — форк Android с усиленной приватностью и безопасностью: hardened-ядро, отсутствие сервисов Google (можно поставить опционально в песочнице), минимизация телеметрии.",steps:["Убедись, что у тебя устройство <strong>Google Pixel</strong> из поддерживаемого списка","Перейди на <strong>grapheneos.org/install</strong> — установка через веб-инсталлятор в браузере Chrome/ChromeOS","Разблокируй загрузчик устройства (это сотрёт все данные)","Следуй пошаговому веб-инсталлятору — он сам прошивает нужные образы"],safety:"Разблокировка загрузчика полностью стирает данные на телефоне — сделай бэкап заранее. Совместимо только с устройствами линейки Pixel."}},
+  {cat:"access",nick:"flearance",title:"Qubes OS",date:"2026-07-05",tags:["безопасность","изоляция","виртуализация","профессиональный","компартментализация"],desc:"ОС на основе изоляции через виртуальные машины — каждое приложение живёт в своём отдельном отсеке (Qube).",tip:"qubes-os.org — требует поддержку виртуализации в процессоре (Intel VT-x/AMD-V).",addr:"qubes-os.org",addrLabel:"сайт",guide:{risk:"low",intro:"Qubes OS — система безопасности через изоляцию (compartmentalization): рабочие процессы разнесены по независимым виртуальным машинам (Qubes), так что компрометация одной не затрагивает остальные. Используется специалистами по безопасности и людьми с повышенными требованиями к приватности.",steps:["Проверь поддержку виртуализации в BIOS/UEFI (VT-x/AMD-V и VT-d/AMD-Vi для изоляции устройств)","Скачай ISO с <strong>qubes-os.org</strong> и проверь его подпись (инструкция на сайте)","Запиши на флешку и загрузись","Следуй установщику — создай разные Qubes для разных сфер (работа/личное/недоверенное)"],safety:"Требовательна к железу и имеет кривую обучения — для комфортной работы нужно 16ГБ+ RAM. Не лучший выбор как первая ОС."}},
+  {cat:"sec",nick:"flearance",title:"Заблокированные приложения",date:"2026-06-15",desc:"Часть приложений недоступна в Google Play даже с VPN — региональная привязка магазина, а не только сети.",tip:"Решается сменой региона аккаунта Google Play или установкой APK напрямую с официального сайта разработчика.",addr:"—",addrLabel:"инфо",guide:{risk:"medium",intro:"Иногда приложение не появляется в Google Play не из-за блокировки интернета, а потому что сам магазин Google Play привязан к региону аккаунта — VPN на трафик это не лечит, нужно либо менять регион в настройках Google Play (платёжный метод и адрес должны совпадать с новым регионом), либо ставить APK напрямую с официального сайта разработчика, если он его публикует.",steps:["Сначала проверь, действительно ли дело в регионе: открой страницу приложения в Play Store через браузер с VPN другой страны — если описание приложения появляется, значит дело в регионе аккаунта, а не в самом приложении.","Вариант 1 — смена региона: Google аккаунт → Google Play → Настройки → Аккаунт → Страна и профиль. Учти: Google может ограничивать частую смену региона.","Вариант 2 — APK напрямую: ищи только официальный сайт разработчика или его официальный GitHub-репозиторий (если есть) — не сторонние APK-каталоги, там частая практика подмены файлов вредоносными версиями."],safety:"Установка APK не из Google Play отключает встроенную проверку Google Play Protect для этого файла — устанавливай только из источников, в подлинности которых уверен сам (официальный сайт/GitHub разработчика), и проверяй цифровую подпись/хэш, если разработчик их публикует."}},
+
+  {cat:"git",nick:"flearance",title:"Ollama",date:"2026-06-20",scan:true,desc:"Запуск LLM-моделей локально на своём ПК. Полная приватность, без API-ключей и облака. Поддерживает Llama 3, Mistral, Gemma и десятки других.",tip:"Установи: ollama.com/download. Затем ollama run llama3",addr:"ollama.com",addrLabel:"скачать",guide:{risk:"low",intro:"Ollama — программа для запуска [LLM] моделей прямо на твоём компьютере. Никаких облаков и API-ключей — всё работает локально, данные не покидают устройство.",steps:["Перейди на <strong>ollama.com/download</strong>","Скачай установщик для своей ОС (Windows / macOS / Linux)","Запусти установщик и следуй подсказкам мастера","Открой <strong>терминал</strong> и введи: <code>ollama run llama3</code>","Модель скачается автоматически — задай вопрос в появившемся чате"],safety:"Всё работает локально — трафик не уходит на внешние серверы. Модели занимают место на диске (4-8 ГБ каждая). Убедись, что на диске достаточно свободного места."}},
+  {cat:"git",nick:"flearance",title:"uBlock Origin",date:"2026-06-20",desc:"Блокировщик рекламы и трекеров. Open-source, лёгкий, без белых списков. Один из самых важных инструментов приватности.",tip:"Доступен для всех браузеров. Полная версия эффективнее Lite.",addr:"github.com/nicoketchum/uBlock",addrLabel:"GitHub",guide:{risk:"low",intro:"uBlock Origin — расширение для браузера, которое блокирует рекламу, трекеры и вредоносные скрипты. Работает тише и эффективнее аналогов.",steps:["Открой магазин расширений своего браузера (Chrome Web Store, Edge Add-ons, Firefox Add-ons)","В поиске введи \"uBlock Origin\"","Нажми <strong>\"Добавить в браузер\"</strong> или <strong>\"Get\"</strong>","Подтверди установку кнопкой <strong>\"Добавить расширение\"</strong>","Готово — реклама и трекеры блокируются автоматически"],safety:"Расширение не собирает данные о пользователе. Проверено миллионами пользователей. Рекомендуется к установке как базовый инструмент приватности."}},
+  {cat:"git",nick:"flearance",title:"Bitwarden",date:"2026-06-20",scan:true,desc:"Менеджер паролей с открытым исходным кодом. Хранит пароли, карты, заметки. Синхронизация между устройствами.",tip:"Self-hosted версия (Vaultwarden) ещё приватнее.",addr:"bitwarden.com",addrLabel:"сайт",guide:{risk:"low",intro:"Bitwarden — бесплатный менеджер паролей с открытым исходным кодом. Хранит все пароли в зашифрованном виде и синхронизирует между телефоном и компьютером.",steps:["Перейди на <strong>bitwarden.com</strong> и нажми <strong>\"Get Started\"</strong>","Заполни форму: email, имя, мастер-пароль (запомни его!)","Нажми <strong>\"Create Account\"</strong> и подтверди email","Скачай приложение для своего устройства с <strong>bitwarden.com/download</strong>","Войди в аккаунт — пароли синхронизируются автоматически"],safety:"Мастер-пароль — единственный пароль, который нужно запомнить. Его никто не видит и восстановить невозможно. Запиши его и храни в надёжном месте."}},
+  {cat:"git",nick:"flearance",title:"yt-dlp",date:"2026-06-20",desc:"Скачивание видео и аудио с YouTube, Twitch, VK и 1000+ других сайтов. Полностью open-source.",tip:"pip install yt-dlp. Скачивание: yt-dlp URL",addr:"github.com/yt-dlp/yt-dlp",addrLabel:"GitHub",guide:{risk:"medium",intro:"yt-dlp — программа для скачивания видео и аудио с тысяч сайтов. Работает через командную строку, но не сложнее обычной установки.",steps:["Установи <strong>Python</strong> с <strong>python.org</strong> (галочка \"Add to PATH\")","Открой <strong>терминал</strong> и введи: <code>pip install yt-dlp</code>","Скопируй ссылку на видео (YouTube, VK и др.)","Введи: <code>yt-dlp \"ссылка_на_видео\"</code>","Видео скачается в текущую папку"],safety:"Скачивай только для личного использования. Уважай авторские права создателей контента."}},
+  {cat:"git",nick:"flearance",title:"Joplin",date:"2026-06-20",scan:true,desc:"Open-source заметки альтернатива Evernote. E2E шифрование, синхронизация, Markdown.",tip:"Синхронизация через Nextcloud, Dropbox или S3.",addr:"joplinapp.org",addrLabel:"сайт",guide:{risk:"low",intro:"Joplin — бесплатная программа для заметок с [E2E шифрование]. Всё хранится локально или в твоём облаке, а не на чужих серверах.",steps:["Перейди на <strong>joplinapp.org</strong> и скачай установщик","Запусти установщик и следуй шагам мастера","Нажми <strong>\"New note\"</strong> для создания заметки","Пиши текст — поддерживается [markdown]","Для синхронизации: <strong>Tools → Options → Synchronization</strong> — выбери Dropbox, Nextcloud или S3"],safety:"Заметки хранятся локально. При синхронизации через облако — данные зашифрованы. Выбирай проверенные сервисы для синхронизации."}},
+  {cat:"git",nick:"flearance",title:"GIMP",date:"2026-06-20",scan:true,desc:"Полноценный редактор изображений. Открытый исходник. Аналог Photoshop для большинства задач.",tip:"Добавь GMIC плагин — сотни фильтров и эффектов бесплатно.",addr:"gimp.org",addrLabel:"сайт",guide:{risk:"low",intro:"GIMP — бесплатный редактор изображений с открытым исходным кодом. Позволяет редактировать фотографии, создавать графику и обрабатывать изображения.",steps:["Перейди на <strong>gimp.org</strong> и нажми <strong>\"Download\"</strong>","Скачай установщик для своей ОС","Запусти и установи с настройками по умолчанию","Открой изображение: <strong>File → Open</strong>","Инструменты слева: кисть, выделение, текст. Результат сохраняй через <strong>File → Export As</strong>"],safety:"Программа полностью бесплатна и безопасна. Скачивай только с официального сайта gimp.org."}},
+  {cat:"git",nick:"flearance",title:"KeePassXC",date:"2026-06-20",scan:true,desc:"Локальный менеджер паролей. Никаких облаков — база хранится только у тебя, зашифрованная.",tip:"Идеален для паролей, которые не должны покидать устройство.",addr:"keepassxc.org",addrLabel:"сайт",guide:{risk:"low",intro:"KeePassXC — локальный менеджер паролей. Вся база хранится в одном зашифрованном файле на твоём компьютере — никаких облаков и синхронизации.",steps:["Перейди на <strong>keepassxc.org</strong> и нажми <strong>\"Download\"</strong>","Скачай установщик для своей ОС","При первом запуске нажми <strong>\"Create new database\"</strong>","Задай мастер-пароль (единственный пароль, который нужно запомнить)","Добавляй записи кнопкой <strong>\"Add new entry\"</strong> — сайт, логин, пароль"],safety:"Мастер-пароль — ключ ко всем паролям. Его невозможно восстановить. Запиши его и храни отдельно от компьютера. База зашифрована — даже при копировании файла без пароля данные бесполезны."}},
+  {cat:"git",nick:"flearance",title:"Blender",date:"2026-06-20",scan:true,desc:"3D-моделирование, анимация, рендеринг, видеомонтаж. Используется в кино и играх. Полностью бесплатный.",tip:"tutorials.blender.org — официальные уроки.",addr:"blender.org",addrLabel:"сайт",guide:{risk:"low",intro:"Blender — бесплатная программа для 3D-моделирования, анимации и рендеринга. Используется в кино, играх и рекламе.",steps:["Перейди на <strong>blender.org</strong> и нажми <strong>\"Download Blender\"</strong>","Скачай установщик и запусти","При первом запуске выбери тему и язык (Settings → Interface → Translator → Russian)","Нажми <strong>Shift+A</strong> — добавление объекта (куб, сфера,平面)","Колёсико мыши — приближение. Зажми среднюю кнопку — вращение. <strong>tutorials.blender.org</strong> — официальные уроки"],safety:"Программа полностью бесплатна и безопасна. Скачивай только с официального сайта blender.org."}},
+  {cat:"git",nick:"flearance",title:"Neovim",date:"2026-06-20",desc:"Текстовый редактор с полной настройкой через Lua. Скорость редактирования кода на порядок выше.",tip:"Начни с LazyVim (lazyvim.org) — готовый конфиг.",addr:"neovim.io",addrLabel:"сайт",guide:{risk:"medium",intro:"Neovim — мощный текстовый редактор для кода. Работает через [CLI], полностью настраивается и работает быстрее графических редакторов.",steps:["Перейди на <strong>neovim.io</strong> и скачай последний релиз","Распакуй архив и добавь папку <strong>bin</strong> в PATH","Установи [Git] с <strong>git-scm.com</strong> (если нет)","Открой терминал и введи: <code>git clone https://github.com/LazyVim/starter ~/.config/nvim</code>","Запусти: <code>nvim</code> — LazyVim скачает плагины автоматически. <strong>:</strong> — вход в командный режим, <strong>:q</strong> — выход"],safety:"Neovim — безопасная программа. LazyVim — проверенный сообществом конфиг. Скачивай только с официальных сайтов."}},
+  {cat:"git",nick:"flearance",title:"Signal",date:"2026-06-20",desc:"Мессенджер с End-to-End шифрованием. Open-source сервер и клиент. Минимум метаданных.",tip:"Золотой стандарт для приватных коммуникаций.",addr:"signal.org",addrLabel:"сайт",guide:{risk:"low",intro:"Signal — мессенджер с [E2E шифрование]. Сообщения видят только отправитель и получатель — даже разработчики не могут их прочитать.",steps:["Перейди на <strong>signal.org</strong> и нажми <strong>\"Download Signal\"</strong>","Скачай приложение для своего устройства","Открой приложение и нажми <strong>\"Continue\"</strong>","Введи номер телефона — придёт SMS с кодом","Задай имя и PIN-код. Готово — найди контакта по номеру и начни чат"],safety:"Signal не хранит содержимое сообщений. Минимум метаданных. Рекомендуется для конфиденциальных коммуникаций."}},
+  {cat:"git",nick:"flearance",title:"SimpleX Chat",date:"2026-06-20",desc:"Максимальная приватность — без номера телефона, без профилей, без метаданных. Полная децентрализация.",tip:"simplex.chat — скачай приложение. Регистрация без номера телефона.",addr:"simplex.chat",addrLabel:"сайт",guide:{risk:"low",intro:"SimpleX Chat — мессенджер с максимальной приватностью. Единственный, который не требует номер телефона, email или какого-либо идентификатора для регистрации.",steps:["Перейди на <strong>simplex.chat</strong> и нажми <strong>\"Download\"</strong>","Скачай приложение для своего устройства (Android, iOS, Desktop)","Открой приложение — аккаунт создаётся автоматически, без регистрации","Поделись ссылкой на профиль с собеседником — она появится в контактах","Начни чат — всё зашифровано, метаданных нет"],safety:"SimpleX не хранит никаких данных пользователя — ни номера, ни email, ни IP. Самый приватный вариант из доступных мессенджеров."}},
+  {cat:"git",nick:"flearance",title:"Session",date:"2026-06-20",desc:"Мессенджер на базе сети Lokinet. Анонимность через onion-маршрутизацию, без номера телефона.",tip:"getsession.org — скачай и начни использовать.",addr:"getsession.org",addrLabel:"сайт",guide:{risk:"low",intro:"Session — мессенджер, работающий через сеть Lokinet. Трафик маршрутизируется через несколько узлов, как в [Tor], но для сообщений.",steps:["Перейди на <strong>getsession.org</strong> и нажми <strong>\"Download\"</strong>","Скачай приложение для своего устройства","Открой приложение — аккаунт создаётся автоматически","Скопируй Session ID и поделись с собеседником","Начни чат — сообщения зашифрованы и проходят через сеть Lokinet"],safety:"Session не требует номера телефона. Трафик проходит через onion-сеть. Хороший баланс приватности и удобства."}},
+  {cat:"git",nick:"flearance",title:"Molly",date:"2026-06-20",desc:"Улучшенная версия Signal с дополнительными настройками приватности, автоблокировкой и шифрованием на диске.",tip:"molly.im — скачай как альтернативу Signal.",addr:"molly.im",addrLabel:"сайт",guide:{risk:"low",intro:"Molly — форк Signal с дополнительными функциями приватности: автоблокировка, шифрование базы данных, улучшенная защита от [деанонимизация].",steps:["Перейди на <strong>molly.im</strong> и нажми <strong>\"Download\"</strong>","Скачай приложение (Android) или desktop-версию","Войди в тот же аккаунт Signal — контакты и чаты синхронизируются","Настрой автоблокировку: <strong>Settings → Privacy → Screen Lock</strong>","Включи шифрование базы данных для дополнительной защиты"],safety:"Molly использует тот же протокол [E2E шифрование] что и Signal, но добавляет локальную защиту данных. Рекомендуется для повышенных требований к приватности."}},
+  {cat:"git",nick:"flearance",title:"FFmpeg",date:"2026-06-20",scan:true,desc:"Обработка видео и аудио из командной строки. Конвертация, обрезка, слияние, кодирование.",tip:"ffmpeg -i input.mp4 -c:v libx264 output.mp4",addr:"ffmpeg.org",addrLabel:"сайт",guide:{risk:"medium",intro:"FFmpeg — мощная программа для обработки видео и аудио. Работает через [CLI], поддерживает сотни форматов.",steps:["Перейди на <strong>ffmpeg.org</strong> → <strong>\"Download\"</strong>","Скачай сборку для своей ОС (Windows — \"gyan.dev\" или \"BtbN\")","Распакуй архив и добавь папку <strong>bin</strong> в PATH","Открой терминал. Конвертация: <code>ffmpeg -i input.mp4 output.avi</code>","Обрезка: <code>ffmpeg -i input.mp4 -ss 00:01:00 -to 00:02:00 -c copy output.mp4</code> (с 1:00 по 2:00)"],safety:"FFmpeg — безопасная программа. Скачивай только с официального сайта ffmpeg.org или проверенных сборщиков."}},
+
+  {cat:"ai",nick:"flearance",title:"LM Studio",date:"2026-06-25",desc:"Десктопное приложение для запуска LLM локально. Простой GUI, загрузка моделей одной кнопкой.",tip:"Скачай модели через встроенный поиск. Llama 3 8B — хороший старт.",addr:"lmstudio.ai",addrLabel:"скачать",guide:{risk:"low",intro:"LM Studio — графическая программа для запуска [LLM] моделей на своём компьютере. Не нужна командная строка — всё делается мышкой.",steps:["Перейди на <strong>lmstudio.ai</strong> и скачай установщик","Запусти и нажми <strong>\"Search\"</strong> в левом меню","Найди модель (например, \"llama 3 8b\") и нажми <strong>\"Download\"</strong>","После загрузки перейди во вкладку <strong>\"Chat\"</strong>","Выбери модель в выпадающем списке и начни диалог"],safety:"Всё работает локально — данные не уходят на внешние серверы. Модели занимают место на диске."}},
+  {cat:"ai",nick:"flearance",title:"Open WebUI",date:"2026-06-25",desc:"Веб-интерфейс для Ollama. ChatGPT-подобный UI для локальных моделей. Поддержка RAG и плагинов.",tip:"docker run -d -p 3000:8080 ghcr.io/open-webui/open-webui",addr:"github.com/open-webui/open-webui",addrLabel:"GitHub",guide:{risk:"medium",intro:"Open WebUI — красивый веб-интерфейс для работы с локальными AI-моделями через [Ollama]. Поддерживает [RAG] — чат с твоими документами.",steps:["Установи [Docker] с <strong>docker.com</strong>","Открой терминал и введи: <code>docker run -d -p 3000:8080 ghcr.io/open-webui/open-webui</code>","Открой браузер: <strong>localhost:3000</strong>","Зарегистрируйся (первый аккаунт — администратор)","Выбери модель из списка и начни диалог"],safety:"Данные обрабатываются локально через [Docker]. Убедись, что [Docker] правильно настроен и обновлён."}},
+  {cat:"ai",nick:"flearance",title:"ComfyUI",date:"2026-06-25",desc:"Нодовый интерфейс для Stable Diffusion. Полный контроль над генерацией изображений.",tip:"Начни с базовых нодов, потом добавляй ControlNet и LoRA.",addr:"github.com/comfyanonymous/ComfyUI",addrLabel:"GitHub",guide:{risk:"medium",intro:"ComfyUI — программа для генерации изображений с помощью AI. Работает через нодовую систему — соединяешь блоки как конструктор.",steps:["Перейди на <strong>github.com/comfyanonymous/ComfyUI</strong>","Нажми <strong>\"Code\" → \"Download ZIP\"</strong>","Распакуй и установи <strong>Python 3.10+</strong> с <strong>python.org</strong>","В папке проекта выполни: <code>pip install -r requirements.txt</code>","Запусти: <code>python main.py</code> — откроется интерфейс в браузере на <strong>localhost:8188</strong>"],safety:"Нужна [GPU] с минимум 4 [VRAM] для стабильной работы. Скачивай только с официального репозитория."}},
+  {cat:"ai",nick:"flearance",title:"Stable Diffusion (local)",date:"2026-06-25",desc:"Генерация изображений по описанию. Локально без цензуры и лимитов. Нужна GPU от 4GB VRAM.",tip:"Automatic1111 WebUI или Forge — оптимизированная версия.",addr:"github.com/AUTOMATIC1111/stable-diffusion-webui",addrLabel:"GitHub",guide:{risk:"medium",intro:"Stable Diffusion — AI для генерации изображений. Работает локально — никаких лимитов и цензуры.",steps:["Перейди на <strong>github.com/AUTOMATIC1111/stable-diffusion-webui</strong>","Нажми <strong>\"Code\" → \"Download ZIP\"</strong>","Распакуй и запусти <strong>webui-user.bat</strong> (Windows) или <strong>webui.sh</strong> (Linux/macOS)","Скрипт скачает модель и зависимости (занимает время)","Откроется интерфейс на <strong>localhost:7860</strong> — введи описание и нажми <strong>\"Generate\"</strong>"],safety:"Нужна [GPU] с минимум 4 [VRAM]. Модели занимают 2-8 ГБ на диске. Скачивай только с официального репозитория."}},
+  {cat:"ai",nick:"flearance",title:"LangChain",date:"2026-06-25",desc:"Фреймворк для построения AI-агентов и цепочек. Автоматизация: парсинг документов, чат-боты.",tip:"pip install langchain. Документация: python.langchain.com",addr:"github.com/langchain-ai/langchain",addrLabel:"GitHub",guide:{risk:"medium",intro:"LangChain — фреймворк для создания AI-программ. Позволяет строить цепочки: загрузка документов → анализ → ответ с источниками.",steps:["Установи <strong>Python</strong> с <strong>python.org</strong>","В терминале: <code>pip install langchain</code>","Создай файл <strong>test.py</strong> с содержимым: <code>from langchain.llms import OpenAI; llm = OpenAI(temperature=0.7); print(llm(\"Привет\"))</code>","Для работы нужен [API]-ключ OpenAI (получи на <strong>platform.openai.com</strong>)","Запусти: <code>python test.py</code>"],safety:"API-ключ OpenAI — конфиденциальный. Не публикуй его и не храни в открытом виде. Стоимость запросов зависит от модели."}},
+  {cat:"ai",nick:"flearance",title:"Hugging Face",date:"2026-06-25",desc:"Hub моделей, датасетов и Spaces. Тысячи готовых AI-моделей для любых задач.",tip:"Spaces — запуск моделей в браузере бесплатно.",addr:"huggingface.co",addrLabel:"сайт",guide:{risk:"low",intro:"Hugging Face — крупнейший каталог AI-моделей. Здесь можно найти модели для текста, изображений, аудио и запустить их прямо в браузере.",steps:["Перейди на <strong>huggingface.co</strong> и нажми <strong>\"Sign Up\"</strong>","Зарегистрируйся через email","В поиске найди модель или датасет","Нажми <strong>\"Use in 🤗 Transformers\"</strong> — увидишь код для подключения","Во вкладке <strong>\"Spaces\"</strong> — запуск моделей прямо в браузере бесплатно"],safety:"Spaces запускаются на серверах Hugging Face. Не загружай конфиденциальные данные в публичные Spaces."}},
+  {cat:"ai",nick:"flearance",title:"Whisper (OpenAI)",date:"2026-06-25",desc:"Распознавание речи с точностью близкой к человеческой. Работает локально. 99 языков.",tip:"pip install openai-whisper. Затем: whisper audio.mp3 --model medium",addr:"github.com/openai/whisper",addrLabel:"GitHub",guide:{risk:"medium",intro:"Whisper — программа для распознавания речи. Превращает аудио в текст с высокой точностью, работает локально.",steps:["Установи <strong>Python</strong> с <strong>python.org</strong>","В терминале: <code>pip install openai-whisper</code>","Скачай аудиофайл (mp3, wav, m4a)","Введи: <code>whisper audio.mp3 --model medium --language Russian</code>","Результат появится в терминале и в файле <strong>audio.txt</strong>"],safety:"Аудио обрабатывается локально — данные не уходят на серверы. Модель medium — хороший баланс скорости и точности."}},
+  {cat:"ai",nick:"flearance",title:"InsightsLM",date:"2026-06-25",desc:"Open-source клон NotebookLM. Чатится с документами, делает выжимки со ссылками на источники, строит майндмапы, генерит подкасты.",tip:"Запускается локально через Docker — данные никуда не уходят.",addr:"github.com/theaiautomators/insights-lm-public",addrLabel:"GitHub",guide:{risk:"low",intro:"NotebookLM от Google — нейронка для работы с документами: загружаешь файлы, она отвечает по ним, цитирует источник, делает конспекты и даже озвучивает материал в формате подкаста. InsightsLM — open-source копия того же самого, но крутится у тебя на компьютере, без отправки данных в Google.",steps:["Зайди в репозиторий <strong>github.com/theaiautomators/insights-lm-public</strong> и открой <strong>README.md</strong> — там актуальная инструкция установки.","Нажми зелёную кнопку <strong>\"Code\"</strong> → <strong>\"Download ZIP\"</strong>, либо клонируй через <code>git clone</code>, если пользуешься Git.","Нужен установленный <strong>Docker</strong> (docker.com) — без него проект не запустится.","В папке проекта выполни команду из README (обычно <strong>docker compose up</strong>) — поднимутся все нужные сервисы.","После запуска открой указанный в README локальный адрес (обычно <strong>localhost</strong> с портом) в браузере — это и есть интерфейс, как у NotebookLM.","Загружай документы (PDF, текст, ссылки) во вкладке источников и начинай общаться с ними в чате."],safety:"Проект пока относительно новый — перед использованием с важными документами проверь README и issues в репозитории на предмет открытых проблем. Раз всё крутится локально через Docker, данные не уходят на сторонние сервера, но сохранность всё равно зависит от того, как настроено хранилище контейнеров на твоей машине. FLEARANCE не является автором проекта и не несёт ответственности за код стороннего репозитория."}},
+  {cat:"ai",nick:"flearance",title:"Cua",date:"2026-06-25",desc:"Агент для управления компом по промпту: распознаёт элементы интерфейса по скриншоту, выполняет задачи в изолированной среде.",tip:"Поддержка CLI и MCP, связка с Claude Code / Codex. Перед установкой — проверяй разрешения и open-source статус сам.",addr:"cua.ai",addrLabel:"сайт",guide:{risk:"medium",intro:"Cua — это AI-агент, который умеет управлять компьютером сам: смотрит на скриншот экрана, распознаёт кнопки и поля интерфейса, и по текстовой команде кликает, печатает, выполняет задачи — как будто за компом сидит человек. Работает в отдельной изолированной среде (контейнере), чтобы не лезть напрямую в систему, и подключается как инструмент к Claude Code, Codex и другим агентам через CLI или MCP.",steps:["Зайди на <strong>cua.ai</strong> и нажми кнопку <strong>\"Get Started\"</strong> в правом верхнем углу.","На странице выбери нужный способ запуска — <strong>\"CLI\"</strong> или <strong>\"Docker\"</strong> (вкладки сверху блока с кодом).","Скопируй команду установки кнопкой <strong>\"Copy\"</strong> рядом с блоком кода и выполни в терминале.","Для связки с Claude Code / Codex открой раздел <strong>\"MCP\"</strong> в боковом меню документации и следуй инструкции подключения сервера.","После установки агент создаёт изолированную среду (контейнер) — все действия выполняются в ней, а не напрямую на хосте."],safety:"Агент получает доступ к управлению интерфейсом — даже в изолированной среде. Не подключай к нему данные, которыми не готов поделиться. Перед использованием проверь актуальную политику данных на сайте проекта — она может измениться без уведомления в каталоге. FLEARANCE не контролирует код и инфраструктуру стороннего сервиса и не несёт ответственности за действия агента."}},
+
+  {cat:"tools",nick:"flearance",title:"GitHub Student Developer Pack",date:"2026-06-30",desc:"Бесплатные инструменты для студентов: GitHub Pro, JetBrains, DigitalOcean и 100+ сервисов.",tip:"Нужен .edu email или подтверждение студенческого статуса.",addr:"education.github.com",addrLabel:"сайт",guide:{risk:"low",intro:"GitHub Student Developer Pack — набор бесплатных инструментов для студентов: GitHub Pro, JetBrains, DigitalOcean и 100+ сервисов.",steps:["Перейди на <strong>education.github.com</strong>","Нажми <strong>\"Get benefits\"</strong>","Войди в аккаунт GitHub (или создай)","Заполни форму с данными студента (.edu email или подтверждение)","После одобрения — все инструменты доступны в течение года (обновляется ежегодно)"],safety:"Пак бесплатен для студентов. Подтверждение статуса — обязательно. Инструменты предоставляются официально через партнёрскую программу."}},
+  {cat:"hosting",nick:"flearance",title:"Cloudflare Workers",date:"2026-07-01",desc:"Бесплатный серверless: 100K запросов в день. Прокси, API, боты, вебхуки без сервера.",tip:"workers.cloudflare.com — документация.",addr:"workers.cloudflare.com",addrLabel:"документация",guide:{risk:"low",intro:"Cloudflare Workers — бесплатный [серверless] хостинг для кода. 100K запросов в день — достаточно для API, ботов и прокси.",steps:["Перейди на <strong>workers.cloudflare.com</strong>","Нажми <strong>\"Sign up\"</strong> и создай аккаунт","В консоли выбери <strong>\"Workers & Pages\"</strong>","Нажми <strong>\"Create application\"</strong> → <strong>\"Create Worker\"</strong>","Вставь код и нажми <strong>\"Deploy\"</strong> — приложение запущено"],safety:"Бесплатный тариф — 100K запросов в день. Для продакшена — проверяй лимиты. Код выполняется на серверах Cloudflare."}},
+  {cat:"hosting",nick:"flearance",title:"Vercel / Netlify",date:"2026-07-01",desc:"Бесплатный хостинг сайтов с автоматическим SSL, CDN и деплоем из Git.",tip:"Лимиты: 100GB трафика/мес (Vercel), 300 мин билда (Netlify).",addr:"vercel.com",addrLabel:"сайт",guide:{risk:"low",intro:"Vercel и Netlify — бесплатные платформы для хостинга сайтов. Автоматический SSL, CDN, деплой из [Git] — без настройки сервера.",steps:["Перейди на <strong>vercel.com</strong> (или <strong>netlify.com</strong>)","Нажми <strong>\"Sign Up\"</strong> и войди через GitHub","Нажми <strong>\"New Project\"</strong> и выбери репозиторий","Настройки оставь по умолчанию — нажми <strong>\"Deploy\"</strong>","Сайт запущен — получи ссылку вида <strong>your-project.vercel.app</strong>"],safety:"Бесплатный тариф — для персональных проектов. Не публикуй конфиденциальные данные — сайт доступен публично."}},
+  {cat:"hosting",nick:"flearance",title:"Railway / Render",date:"2026-07-01",desc:"Бесплатный хостинг бэкендов: Node.js, Python, Docker. Автодеплой из GitHub.",tip:"Railway: 5 долларов кредит каждый месяц. Render: free tier.",addr:"railway.app",addrLabel:"сайт",guide:{risk:"low",intro:"Railway и Render — бесплатные платформы для хостинга бэкендов. Запускают Node.js, Python, [Docker] — всё с автоматическим деплоем из [Git].",steps:["Перейди на <strong>railway.app</strong> (или <strong>render.com</strong>)","Нажми <strong>\"Sign Up\"</strong> и войди через GitHub","Нажми <strong>\"New Project\"</strong> и выбери репозиторий","Настрой тип приложения (Node.js, Python, Docker)","Нажми <strong>\"Deploy\"</strong> — бэкенд запущен, получи URL"],safety:"Railway — $5 кредит каждый месяц бесплатно. Render — free tier с ограничениями. Не публикуй конфиденциальные данные."}},
+  {cat:"git",nick:"flearance",title:"VS Code (оптимизация)",date:"2026-07-01",desc:"Секреты VS Code: Ctrl+Shift+P, zen mode через Ctrl+K Z, multi-cursor через Alt+Click.",tip:"Расширения: Error Lens, GitLens, TODO Highlight, Rainbow Brackets.",addr:"code.visualstudio.com",addrLabel:"сайт",guide:{risk:"low",intro:"VS Code — бесплатный редактор кода от Microsoft. Поддерживает десятки языков программирования и тысячи расширений.",steps:["Перейди на <strong>code.visualstudio.com</strong> и скачай установщик","Установи и запусти","Нажми <strong>Ctrl+Shift+X</strong> — открытие расширений. Установи: <strong>Error Lens</strong>, <strong>GitLens</strong>, <strong>TODO Highlight</strong>","<strong>Ctrl+K Z</strong> — zen mode (полноэкранный режим без отвлекающих элементов)","<strong>Alt+Click</strong> — multi-cursor (редактирование в нескольких местах одновременно)"],safety:"VS Code — безопасная программа. Расширения проверяются Microsoft. Устанавливай только из официального магазина."}},
+  {cat:"tools",nick:"flearance",title:"Notion (бесплатный план)",date:"2026-07-01",desc:"Неограниченные блоки для个人, загрузки до 5MB, 7-дневная история. Хватает для wiki.",tip:"notion.so/templates — десятки готовых систем организации.",addr:"notion.so",addrLabel:"сайт",guide:{risk:"low",intro:"Notion — универсальный инструмент для заметок, базы данных и wiki. Бесплатный план — неограниченные блоки для персонального использования.",steps:["Перейди на <strong>notion.so</strong> и нажми <strong>\"Get Notion free\"</strong>","Зарегистрируйся через email или Google","Нажми <strong>\"New page\"</strong> для создания страницы","Используй <strong>/</strong> для вызова команд: заголовки, списки, базы данных","Загружай файлы до 5MB — бесплатно"],safety:"Бесплатный план — для персонального использования. Не загружай конфиденциальные данные — данные хранятся на серверах Notion."}},
+  {cat:"git",nick:"flearance",title:"Obsidian",date:"2026-07-01",desc:"Markdown-заметки с графом связей. Всё хранится локально в .md файлах. Плагины open-source.",tip:"community.obsidian.md — плагины. Dataview — базы данных из заметок.",addr:"obsidian.md",addrLabel:"сайт",guide:{risk:"low",intro:"Obsidian — программа для заметок, которая работает с обычными [markdown] файлами. Всё хранится локально на твоём компьютере.",steps:["Перейди на <strong>obsidian.md</strong> и скачай установщик","Запусти и нажми <strong>\"Create vault\"</strong> — выбери папку для хранения заметок","<strong>Ctrl+N</strong> — новая заметка. Пиши на [markdown]","<strong>Ctrl+O</strong> — быстрый поиск заметок","<strong>Settings → Community plugins → Browse</strong> — установи <strong>Dataview</strong> для запросов к заметкам как к базе данных"],safety:"Все данные хранятся локально в твоей папке. Никаких облаков и серверов. Плагины — open-source, проверены сообществом."}},
+  {cat:"sec",nick:"flearance",title:"Tor Browser (продвинутое)",date:"2026-07-01",desc:"Луковая маршрутизация трафика, защита от отслеживания, доступ к .onion-ресурсам.",tip:"Security Level: Safest — максимальная защита.",addr:"torproject.org",addrLabel:"сайт",guide:{risk:"low",intro:"Tor Browser — браузер с луковой маршрутизацией трафика: соединение проходит через несколько независимых узлов сети, что затрудняет отслеживание источника запроса и повышает анонимность в сети.",steps:["Скачай установщик для своей ОС (Windows / macOS / Linux) с официального сайта или официального GitHub-репозитория проекта","Установи и запусти браузер","При первом запуске пройди мастер подключения к сети Tor","В настройках выбери уровень безопасности <strong>Safest</strong> для максимальной защиты"],safety:"Tor Browser — технология анонимизации трафика, легальная для использования. Не устанавливай дополнительные расширения — они могут снижать анонимность. Используй уровень безопасности <strong>Safest</strong>."}},
+
+  {cat:"edu",nick:"flearance",title:"Coursera / edX (бесплатный доступ)",date:"2026-07-01",desc:"Курсы MIT, Stanford, Google можно слушать бесплатно. Сертификат платный, знания — нет.",tip:"Выбери Audit при записи. Все видео и материалы доступны.",addr:"coursera.org",addrLabel:"сайт",guide:{risk:"low",intro:"Coursera и edX — образовательные платформы с курсами от ведущих университетов. Большинство курсов можно слушать бесплатно.",steps:["Перейди на <strong>coursera.org</strong> (или <strong>edx.org</strong>)","Нажми <strong>\"Join for Free\"</strong> или <strong>\"Register\"</strong>","Зарегистрируйся через email или Google","Найди курс в поиске","Нажми <strong>\"Enroll\"</strong> и выбери [Audit] — все видео и материалы бесплатны"],safety:"Бесплатный доступ (Audit) — легален и официально поддерживается платформами. Сертификат платный, но знания доступны всем."}},
+  {cat:"edu",nick:"flearance",title:"MIT OpenCourseWare",date:"2026-07-01",desc:"Полные лекции, конспекты и задачи MIT. Программирование, математика, физика, экономика.",tip:"ocw.mit.edu — ищи по предмету.",addr:"ocw.mit.edu",addrLabel:"курсы",guide:{risk:"low",intro:"MIT OpenCourseWare — бесплатный доступ к материалам курсов Массачусетского технологического института. Лекции, конспекты, задачи — всё бесплатно.",steps:["Перейди на <strong>ocw.mit.edu</strong>","Ищи предмет по названию или просматривай каталог","Открой страницу курса — там лекции, конспекты, задачи","Видео доступны на YouTube (ссылки на странице курса)","Материалы можно скачивать бесплатно без регистрации"],safety:"Все материалы доступны по лицензии Creative Commons. Их можно свободно использовать для обучения."}},
+  {cat:"tools",nick:"flearance",title:"FreeAPI",date:"2026-07-01",desc:"Тестовые API для практики. Пагинация, аутентификация, CRUD — бесплатно, без регистрации.",tip:"github.com/hiteshchoudhary/apihub — 200+ API.",addr:"freeapi.app",addrLabel:"сайт",guide:{risk:"low",intro:"FreeAPI — каталог бесплатных [API] для практики. Идеально для тех, кто учится работать с запросами и данными.",steps:["Перейди на <strong>freeapi.app</strong>","Выбери категорию API из каталога","Нажми на API — увидишь описание и примеры запросов","Скопируй URL запроса и вставь в браузер или Postman","Ответ приходит в формате JSON"],safety:"API бесплатные и открытые. Не храни конфиденциальные данные в запросах — это тестовые сервисы."}},
+  {cat:"hosting",nick:"flearance",title:"Oracle Cloud (бесплатный VPS)",date:"2026-07-01",desc:"Always Free tier: 2 VM, 24GB RAM, 200GB storage. Навсегда бесплатно.",tip:"Подходит для серверов, VPN, хостинга.",addr:"cloud.oracle.com/free",addrLabel:"регистрация",guide:{risk:"medium",intro:"Oracle Cloud — облачный сервис с бесплатным тарифом. Две виртуальные машины навсегда — можно запустить сервер, VPN или сайт.",steps:["Перейди на <strong>cloud.oracle.com/free</strong> и нажми <strong>\"Start for free\"</strong>","Зарегистрируй аккаунт (нужна карта для верификации, списания не будет)","В консоли выбери <strong>\"Create a VM instance\"</strong>","Выбери образ (Ubuntu, CentOS) и размер","Нажми <strong>\"Create\"</strong> — VM запустится. Подключись через [SSH]: <code>ssh -i ключ.pem ubuntu@IP</code>"],safety:"Карта нужна только для верификации — списаний не будет при соблюдении лимитов Always Free tier. Следи за потреблением, чтобы не выйти за рамки бесплатного тарифа."}},
+  {cat:"hosting",nick:"flearance",title:"Google Colab",date:"2026-07-01",desc:"Бесплатный GPU для Python-ноутбуков. Идеально для ML-экспериментов.",tip:"Runtime — Change runtime type — T4 GPU.",addr:"colab.research.google.com",addrLabel:"открыть",guide:{risk:"low",intro:"Google Colab — бесплатный сервис для запуска Python-кода с [GPU]. Идеально для обучения нейросетей и экспериментов с AI.",steps:["Перейди на <strong>colab.research.google.com</strong>","Нажми <strong>\"File → New notebook\"</strong>","В меню: <strong>Runtime → Change runtime type → T4 GPU</strong>","Пиши Python-код в ячейках и запускай через <strong>Shift+Enter</strong>","Ноутбук сохраняется в Google Drive автоматически"],safety:"Бесплатный GPU доступен с лимитами по времени. Не загружай конфиденциальные данные — ноутбуки хранятся на серверах Google."}},
+  {cat:"edu",nick:"flearance",title:"Frontend Mentor",date:"2026-07-01",desc:"Реальные задачи по вёрстке и JS. Дизайн в Figma, ты пишешь код. Бесплатно.",tip:"Начни с уровня Newbie. Задачи с ревью от сообщества.",addr:"frontendmentor.io",addrLabel:"задачи",guide:{risk:"low",intro:"Frontend Mentor — платформа с реальными задачами по веб-разработке. Получаешь дизайн-макет и пишешь код, который его повторяет.",steps:["Перейди на <strong>frontendmentor.io</strong> и нажми <strong>\"Sign Up\"</strong>","Зарегистрируйся через email или GitHub","В каталоге выбери задачу по уровню (<strong>Newbie</strong> → <strong>Junior</strong> → <strong>Intermediate</strong>)","Скачай дизайн (Figma) и начни писать код","После решения — опубликуй и получи ревью от сообщества"],safety:"Платформа бесплатна. Задачи — учебные, для практики. Код публикуется в твоём профиле."}},
+  {cat:"edu",nick:"flearance",title:"Exercism",date:"2026-07-01",desc:"Практика программирования на 65+ языках. Задачи с менторской обратной связью.",tip:"exercism.org/tracks — выбери язык.",addr:"exercism.org",addrLabel:"платформа",guide:{risk:"low",intro:"Exercism — бесплатная платформа для практики программирования. Задачи с проверкой кода и обратной связью от менторов.",steps:["Перейди на <strong>exercism.org</strong> и нажми <strong>\"Sign Up\"</strong>","Зарегистрируйся через GitHub или email","Перейди в <strong>\"Tracks\"</strong> и выбери язык программирования","Начни с первой задачи — прочитай описание и напиши решение","Отправь решение на проверку — получишь фидбек от ментора"],safety:"Платформа бесплатна. Код — учебный. Менторы — волонтёры из сообщества."}},
+  {cat:"tools",nick:"flearance",title:"Canva (бесплатный план)",date:"2026-07-01",desc:"Дизайн без навыков: постеры, презентации, резюме, логотипы. Тысячи шаблонов.",tip:"Бесплатно: базовые элементы, 5GB хранилища.",addr:"canva.com",addrLabel:"сайт",guide:{risk:"low",intro:"Canva — онлайн-редактор дизайна. Не нужно уметь рисовать — готовые шаблоны, drag-and-drop интерфейс.",steps:["Перейди на <strong>canva.com</strong> и нажми <strong>\"Sign Up\"</strong>","Зарегистрируйся через Google или email","Выбери шаблон (постер, презентация, резюме)","Редактируй текст, цвета, изображения","Нажми <strong>\"Share → Download\"</strong> — скачай результат (PNG, PDF)"],safety:"Бесплатный план — достаточно для большинства задач. Не загружай конфиденциальные данные — дизайн хранится на серверах Canva."}}
+];
+
+document.addEventListener("DOMContentLoaded", function() {
+  var splashDone = false;
+  var splashEl = document.getElementById("splash");
+  var mainEl = document.getElementById("main");
+
+  function skipSplash() {
+    if (splashDone) return;
+    splashDone = true;
+    splashEl.classList.add("hide");
+    setTimeout(function() { mainEl.classList.add("show"); }, 400);
+  }
+
+  document.getElementById("splash-skip-btn").addEventListener("click", skipSplash);
+
+  var checks = ["chk1", "chk2", "chk3"];
+  checks.forEach(function(id, i) {
+    setTimeout(function() {
+      document.getElementById(id).classList.add("show");
+    }, 300 + i * 400);
+  });
+
+  setTimeout(function() {
+    var bar = document.getElementById("splash-bar");
+    var fill = document.getElementById("splash-bar-fill");
+    bar.classList.add("show");
+    setTimeout(function() { fill.classList.add("go"); }, 50);
+  }, 300 + 3 * 400 + 100);
+
+  setTimeout(function() { skipSplash(); }, 300 + 3 * 400 + 100 + 1500);
+
+  var welcomeOverlay = document.getElementById("welcome-overlay");
+  var welcomeBtn = document.getElementById("welcome-btn");
+  var welcomeSec = document.getElementById("welcome-sec");
+  if (!localStorage.getItem("flearance-welcomed")) {
+    setTimeout(function() {
+      welcomeOverlay.classList.add("open");
+      var sec = 11;
+      var timer = setInterval(function() {
+        sec--;
+        welcomeSec.textContent = sec;
+        if (sec <= 0) {
+          clearInterval(timer);
+          welcomeBtn.classList.add("show");
+          document.querySelector(".welcome-timer").style.display = "none";
+        }
+      }, 1000);
+      welcomeBtn.addEventListener("click", function() {
+        welcomeOverlay.classList.remove("open");
+        localStorage.setItem("flearance-welcomed", "1");
+      });
+    }, 2000);
+  }
+
+  var navBtns = document.querySelectorAll(".nav-btn[data-page]");
+  navBtns.forEach(function(btn) {
+    btn.addEventListener("click", function() {
+      showPage(btn.getAttribute("data-page"));
+    });
+  });
+
+  var bnavBtns = document.querySelectorAll(".bnav-btn[data-page]");
+  bnavBtns.forEach(function(btn) {
+    btn.addEventListener("click", function() {
+      showPage(btn.getAttribute("data-page"));
+    });
+  });
+
+  var topNavBtns = document.querySelectorAll(".top-nav-mobile .tn-btn[data-page]");
+  topNavBtns.forEach(function(btn) {
+    btn.addEventListener("click", function() {
+      showPage(btn.getAttribute("data-page"));
+    });
+  });
+
+  var catRecBtn = document.getElementById("catalog-rec-btn");
+  var recOverlay = document.getElementById("rec-overlay");
+  var recModalClose = document.getElementById("rec-modal-close");
+  var recModal = recOverlay.querySelector(".rec-modal");
+
+  // Форма "Предложить инструмент"
+  var suggestBtn = document.getElementById("catalog-suggest-btn");
+  var suggestOverlay = document.getElementById("suggest-overlay");
+  var suggestModalClose = document.getElementById("suggest-modal-close");
+  var suggestForm = document.getElementById("suggest-form");
+  var suggestStatus = document.getElementById("suggest-status");
+
+  if (suggestBtn) {
+    suggestBtn.addEventListener("click", function() {
+      suggestOverlay.classList.add("open");
+    });
+  }
+
+  if (suggestModalClose) {
+    suggestModalClose.addEventListener("click", function() {
+      suggestOverlay.classList.remove("open");
+    });
+  }
+
+  if (suggestOverlay) {
+    suggestOverlay.addEventListener("click", function(e) {
+      if (e.target === this) suggestOverlay.classList.remove("open");
+    });
+  }
+
+  if (suggestForm) {
+    suggestForm.addEventListener("submit", function(e) {
+      e.preventDefault();
+      var title = document.getElementById("suggest-title").value.trim();
+      var url = document.getElementById("suggest-url").value.trim();
+      var desc = document.getElementById("suggest-desc").value.trim();
+      var nick = document.getElementById("suggest-nick").value.trim() || "аноним";
+
+      if (!title || !url) {
+        suggestStatus.textContent = "заполни название и ссылку";
+        suggestStatus.style.color = "rgba(255,180,60,0.85)";
+        return;
+      }
+
+      suggestStatus.textContent = "отправка...";
+      suggestStatus.style.color = "var(--text-dim)";
+
+      // Отправка на Formspree
+      var formAction = suggestForm.getAttribute("action");
+      if (formAction && formAction.indexOf("YOUR_FORM_ID") === -1) {
+        fetch(formAction, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ title: title, url: url, desc: desc, nick: nick, _subject: "FLEARANCE: новый инструмент от " + nick })
+        }).then(function() {
+          suggestStatus.textContent = "отправлено! спасибо";
+          suggestStatus.style.color = "#00c896";
+        }).catch(function() {
+          suggestStatus.textContent = "ошибка сети, попробуй позже";
+          suggestStatus.style.color = "rgba(255,180,60,0.85)";
+        });
+      } else {
+        // Fallback: localStorage если Formspree не настроен
+        var suggestions = JSON.parse(localStorage.getItem("flearance-suggestions") || "[]");
+        suggestions.push({ title: title, url: url, desc: desc, nick: nick, date: new Date().toISOString(), status: "pending" });
+        localStorage.setItem("flearance-suggestions", JSON.stringify(suggestions));
+        suggestStatus.textContent = "сохранено локально (Formspree не настроен)";
+        suggestStatus.style.color = "rgba(255,180,60,0.85)";
+      }
+
+      // Сохраняем в localStorage как бэкап + увеличиваем счётчик
+      var suggestions = JSON.parse(localStorage.getItem("flearance-suggestions") || "[]");
+      suggestions.push({ title: title, url: url, desc: desc, nick: nick, date: new Date().toISOString(), status: "pending" });
+      localStorage.setItem("flearance-suggestions", JSON.stringify(suggestions));
+      var requests = parseInt(localStorage.getItem("flearance-requests") || "0", 10);
+      localStorage.setItem("flearance-requests", String(requests + 1));
+
+      suggestForm.reset();
+      setTimeout(function() {
+        suggestOverlay.classList.remove("open");
+        suggestStatus.textContent = "";
+      }, 3000);
+    });
+  }
+
+  var blockedTorBtn = document.getElementById("blocked-tor-btn");
+  if (blockedTorBtn) {
+    blockedTorBtn.addEventListener("click", function() {
+      showPage("catalog");
+      filterCat("sec");
+    });
+  }
+
+  catRecBtn.addEventListener("click", function(e) {
+    e.stopPropagation();
+    resetRecTabs();
+    recOverlay.classList.add("open");
+    recModal.querySelectorAll("li").forEach(function(li) {
+      if (!li.dataset.parsed) {
+        li.innerHTML = parseSlang(li.innerHTML);
+        li.dataset.parsed = "1";
+      }
+    });
+  });
+  recModalClose.addEventListener("click", function() {
+    recOverlay.classList.remove("open");
+  });
+  recOverlay.addEventListener("click", function(e) {
+    if (e.target === this) recOverlay.classList.remove("open");
+  });
+  document.addEventListener("keydown", function(e) {
+    if (e.key === "Escape") recOverlay.classList.remove("open");
+  });
+
+  document.querySelectorAll(".rec-tab").forEach(function(tab) {
+    tab.addEventListener("click", function() {
+      document.querySelectorAll(".rec-tab").forEach(function(t) { t.classList.remove("active"); });
+      document.querySelectorAll(".rec-page").forEach(function(p) { p.classList.remove("active"); });
+      tab.classList.add("active");
+      var page = document.getElementById("rec-page-" + tab.getAttribute("data-rec"));
+      page.classList.add("active");
+      page.querySelectorAll("li").forEach(function(li) {
+        if (!li.dataset.parsed) {
+          li.innerHTML = parseSlang(li.innerHTML);
+          li.dataset.parsed = "1";
+        }
+      });
+    });
+  });
+
+  function resetRecTabs() {
+    document.querySelectorAll(".rec-tab").forEach(function(t) { t.classList.remove("active"); });
+    document.querySelectorAll(".rec-page").forEach(function(p) { p.classList.remove("active"); });
+    document.querySelector(".rec-tab").classList.add("active");
+    document.querySelector(".rec-page").classList.add("active");
+  }
+
+  var catTabs = document.querySelectorAll(".cat-tab[data-cat]");
+  catTabs.forEach(function(tab) {
+    tab.addEventListener("click", function() {
+      filterCat(tab.getAttribute("data-cat"));
+    });
+  });
+
+  document.querySelector(".cat-search").addEventListener("input", function(e) {
+    searchCatalog(e.target.value);
+  });
+
+  document.getElementById("session-copy-btn").addEventListener("click", function() {
+    var id = document.getElementById("session-id-text").textContent.trim();
+    doCopyAction(id, this, "скопировать Session ID");
+  });
+
+  document.getElementById("email-copy-btn").addEventListener("click", function() {
+    var email = document.getElementById("contact-email-text").textContent.trim();
+    doCopyAction(email, this, "скопировать Email");
+  });
+
+  document.getElementById("template-copy-btn").addEventListener("click", function() {
+    doCopyAction("Ник: \nЗапрос: \nПредпочтения: ", this, "скопировать шаблон");
+  });
+
+  document.getElementById("xmr-copy-btn").addEventListener("click", function() {
+    var addr = document.getElementById("xmr-addr-text").textContent.trim();
+    doCopyAction(addr, this, "скопировать адрес Monero");
+  });
+
+  // QR Time Modal + Fullscreen
+  var qrTimeModal = document.getElementById("qr-time-modal");
+  var qrFullscreen = document.getElementById("qr-fullscreen");
+  var qrFsTimer = document.getElementById("qr-fullscreen-timer");
+  var qrFsInterval = null;
+
+  function openQrFullscreen(sec) {
+    qrTimeModal.classList.remove("open");
+    qrFullscreen.classList.add("open");
+    qrFsTimer.textContent = sec;
+    qrFsInterval = setInterval(function() {
+      sec--;
+      if (sec <= 0) {
+        clearInterval(qrFsInterval);
+        qrFullscreen.classList.remove("open");
+        qrFsTimer.textContent = "";
+      } else {
+        qrFsTimer.textContent = sec;
+      }
+    }, 1000);
+  }
+
+  function closeQrTimeModal() {
+    qrTimeModal.classList.remove("open");
+  }
+
+  function closeQrFullscreen() {
+    qrFullscreen.classList.remove("open");
+    clearInterval(qrFsInterval);
+    qrFsTimer.textContent = "";
+  }
+
+  document.getElementById("qr-expand-btn").addEventListener("click", function() {
+    qrTimeModal.classList.add("open");
+  });
+
+  document.getElementById("qr-time-close").addEventListener("click", closeQrTimeModal);
+  qrTimeModal.addEventListener("click", function(e) {
+    if (e.target === qrTimeModal) closeQrTimeModal();
+  });
+
+  document.getElementById("qr-fullscreen-close").addEventListener("click", closeQrFullscreen);
+  qrFullscreen.addEventListener("click", function(e) {
+    if (e.target === qrFullscreen) closeQrFullscreen();
+  });
+
+  document.querySelectorAll(".qr-time-btns button").forEach(function(btn) {
+    btn.addEventListener("click", function() {
+      var secAttr = btn.getAttribute("data-sec");
+      var sec;
+      if (secAttr === "custom") {
+        var input = prompt("Введите количество секунд:", "10");
+        sec = parseInt(input, 10);
+        if (!sec || sec < 1) sec = 10;
+      } else {
+        sec = parseInt(secAttr, 10);
+      }
+      openQrFullscreen(sec);
+    });
+  });
+
+  renderCatalog();
+  renderCounters();
+  renderRecentTools();
+
+  document.getElementById("guide-modal-close").addEventListener("click", closeGuide);
+  document.getElementById("guide-overlay").addEventListener("click", function(e) {
+    if (e.target === this) closeGuide();
+  });
+  document.addEventListener("keydown", function(e) {
+    if (e.key === "Escape") closeGuide();
+  });
+
+  document.querySelectorAll(".guide-tab").forEach(function(tab) {
+    tab.addEventListener("click", function() {
+      document.querySelectorAll(".guide-tab").forEach(function(t) { t.classList.remove("active"); });
+      document.querySelectorAll(".guide-gtab").forEach(function(p) { p.classList.remove("active"); });
+      tab.classList.add("active");
+      document.getElementById("guide-gtab-" + tab.getAttribute("data-gtab")).classList.add("active");
+    });
+  });
+
+  var sidebarEl = document.getElementById("sidebar");
+  var sidebarEdge = document.getElementById("sidebar-edge");
+  if (localStorage.getItem("principles-collapsed") !== "0") {
+    sidebarEl.classList.add("collapsed");
+  } else {
+    sidebarEdge.classList.add("is-open");
+  }
+  sidebarEdge.addEventListener("click", function() {
+    var isCollapsed = sidebarEl.classList.toggle("collapsed");
+    sidebarEdge.classList.toggle("is-open", !isCollapsed);
+    localStorage.setItem("principles-collapsed", isCollapsed ? "1" : "0");
+  });
+});
+
+var currentCat = "all";
+var currentSearch = "";
+
+function showPage(name) {
+  document.querySelectorAll(".panel-page").forEach(function(p) { p.classList.remove("active"); });
+  document.getElementById("page-" + name).classList.add("active");
+  document.querySelectorAll(".nav-btn").forEach(function(b) { b.classList.remove("active"); });
+  var navBtn = document.querySelector('.nav-btn[data-page="' + name + '"]');
+  if (navBtn) navBtn.classList.add("active");
+  document.querySelectorAll(".bnav-btn").forEach(function(b) { b.classList.remove("active"); });
+  var bnavBtn = document.querySelector('.bnav-btn[data-page="' + name + '"]');
+  if (bnavBtn) bnavBtn.classList.add("active");
+  document.querySelectorAll(".top-nav-mobile .tn-btn").forEach(function(b) { b.classList.remove("active"); });
+  var tnBtn = document.querySelector('.top-nav-mobile .tn-btn[data-page="' + name + '"]');
+  if (tnBtn) tnBtn.classList.add("active");
+  if (name === "catalog") renderCatalog();
+  if (name === "lenta") renderLenta();
+  if (name === "popular") renderPopularTools();
+}
+
+function filterCat(cat) {
+  currentCat = cat;
+  document.querySelectorAll(".cat-tab").forEach(function(t) { t.classList.remove("active"); });
+  document.querySelector('.cat-tab[data-cat="' + cat + '"]').classList.add("active");
+  renderCatalog();
+}
+
+function searchCatalog(q) {
+  currentSearch = q.toLowerCase();
+  renderCatalog();
+}
+
+function renderCatalog() {
+  var grid = document.getElementById("catalog-grid");
+  var pinnedGrid = document.getElementById("pinned-grid");
+  if (!grid) return;
+  var count = 0;
+  var pinnedHtml = "";
+  var regularHtml = "";
+  for (var i = 0; i < CATALOG.length; i++) {
+    var item = CATALOG[i];
+    var matchCat = currentCat === "all" || item.cat === currentCat;
+    var matchSearch = !currentSearch ||
+      item.title.toLowerCase().indexOf(currentSearch) !== -1 ||
+      item.desc.toLowerCase().indexOf(currentSearch) !== -1 ||
+      item.tip.toLowerCase().indexOf(currentSearch) !== -1 ||
+      (item.tags && item.tags.join(" ").toLowerCase().indexOf(currentSearch) !== -1);
+    if (matchCat && matchSearch) {
+      count++;
+      var cardClass = item.pinned ? 'catalog-card pinned' : 'catalog-card';
+      var cardHtml = '<div class="' + cardClass + '">';
+      if (item.guide) {
+        var riskDot = item.guide.risk ? '<div class="card-risk-dot ' + item.guide.risk + '"></div>' : '';
+        cardHtml += riskDot;
+        cardHtml += '<button class="guide-btn" data-idx="' + i + '"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h9l5 5v15a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z"></path><path d="M15 2v5h5"></path><line x1="8" y1="13" x2="16" y2="13"></line><line x1="8" y1="17" x2="13" y2="17"></line></svg><span class="guide-tooltip">Руководство</span></button>';
+      }
+      cardHtml += '<div class="card-cat">// ' + catLabel(item.cat) + '</div>';
+      cardHtml += '<div class="card-nick">// ' + esc(item.nick) + '</div>';
+      cardHtml += '<div class="card-title">' + esc(item.title) + '</div>';
+      cardHtml += '<div class="card-desc">' + esc(item.desc) + '</div>';
+      cardHtml += '<div class="card-tip">' + esc(item.tip) + '</div>';
+      cardHtml += '<div class="card-addr"><span class="card-addr-label">// ' + esc(item.addrLabel) + '</span>' + esc(item.addr) + '</div>';
+      cardHtml += '<button class="copy-btn copy-addr-btn" data-addr="' + esc(item.addr) + '"><span class="copy-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"></path></svg></span> скопировать адрес</button>';
+      cardHtml += '</div>';
+      if (item.pinned) {
+        pinnedHtml += cardHtml;
+      } else {
+        regularHtml += cardHtml;
+      }
+    }
+  }
+  if (pinnedGrid) pinnedGrid.innerHTML = pinnedHtml;
+  grid.innerHTML = regularHtml || (!pinnedHtml ? '<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--text-dim);font-family:var(--font-mono);font-size:13px;letter-spacing:1px;">ничего не найдено</div>' : '');
+  document.getElementById("cat-count").textContent = count + " из " + CATALOG.length;
+
+  [grid, pinnedGrid].forEach(function(container) {
+    if (!container) return;
+    container.querySelectorAll(".copy-addr-btn").forEach(function(btn) {
+      btn.addEventListener("click", function() {
+        doCopyAction(btn.getAttribute("data-addr"), btn, "скопировать адрес");
+      });
+    });
+    container.querySelectorAll(".guide-btn").forEach(function(btn) {
+      btn.addEventListener("click", function() {
+        openGuide(CATALOG[parseInt(btn.getAttribute("data-idx"), 10)]);
+      });
+    });
+  });
+}
+
+function openGuide(item) {
+  var g = item.guide;
+  if (!g) return;
+  trackView(item.title);
+  document.getElementById("guide-cat").textContent = "// " + catLabel(item.cat);
+  document.getElementById("guide-title").textContent = item.title;
+
+  // Reset tabs to "Риск"
+  document.querySelectorAll(".guide-tab").forEach(function(t) { t.classList.remove("active"); });
+  document.querySelectorAll(".guide-gtab").forEach(function(p) { p.classList.remove("active"); });
+  document.querySelector('.guide-tab[data-gtab="risk"]').classList.add("active");
+  document.getElementById("guide-gtab-risk").classList.add("active");
+
+  var riskLabels = {low:"низкий риск", medium:"средний риск", high:"высокий риск"};
+  var riskClass = g.risk || "medium";
+  document.getElementById("guide-risk-badge").innerHTML =
+    '<span class="guide-risk clickable ' + riskClass + '" id="guide-risk-click">' + (riskLabels[riskClass] || riskClass) + ' &rarr;</span>';
+  document.getElementById("guide-risk-click").addEventListener("click", function() {
+    closeGuide();
+    setTimeout(function() {
+      document.getElementById("rec-overlay").classList.add("open");
+      document.querySelectorAll(".rec-tab").forEach(function(t) { t.classList.remove("active"); });
+      document.querySelectorAll(".rec-page").forEach(function(p) { p.classList.remove("active"); });
+      document.querySelector('.rec-tab[data-rec="about"]').classList.add("active");
+      document.getElementById("rec-page-about").classList.add("active");
+    }, 200);
+  });
+
+  var detailsBlock = document.getElementById("guide-risk-details");
+  var rowsEl = document.getElementById("guide-risk-rows");
+  var rd = RISK_DATA[item.title];
+  if (rd) {
+    var criterionLabels = {
+      deanon:"деанонимизация", leak:"утечка данных", knowledge:"уровень знаний",
+      setup:"сложность настройки", dependency:"зависимость от third-party",
+      alternatives:"альтернативы"
+    };
+    var altLabels = {yes:"есть", no:"нет"};
+    var rows = "";
+    ["deanon","leak","knowledge","setup","dependency","alternatives"].forEach(function(key) {
+      var val = rd[key];
+      if (!val) return;
+      var isAlt = key === "alternatives";
+      var displayVal = isAlt ? (altLabels[val] || val) : (riskLabels[val] || val);
+      var valClass = isAlt ? (val === "yes" ? "yes" : "no") : val;
+      rows += '<div class="risk-row"><span class="risk-label">' + criterionLabels[key] + '</span>';
+      if (!isAlt) {
+        rows += '<div class="risk-bar"><div class="risk-bar-fill ' + val + '"></div></div>';
+      }
+      rows += '<span class="risk-value ' + valClass + '">' + displayVal + '</span></div>';
+    });
+    rowsEl.innerHTML = rows;
+    detailsBlock.style.display = "block";
+  } else {
+    detailsBlock.style.display = "none";
+  }
+
+  var introBlock = document.getElementById("guide-intro-block");
+  if (g.intro) {
+    document.getElementById("guide-intro-text").innerHTML = parseSlang(g.intro);
+    introBlock.style.display = "block";
+  } else {
+    introBlock.style.display = "none";
+  }
+
+  var stepsHtml = "";
+  (g.steps || []).forEach(function(step, idx) {
+    stepsHtml += '<div class="guide-step"><div class="guide-step-num">' + (idx + 1) + '</div><div class="guide-step-body">' + parseSlang(step) + '</div></div>';
+  });
+  document.getElementById("guide-steps").innerHTML = stepsHtml;
+
+  document.getElementById("guide-safety-text").innerHTML = parseSlang(g.safety || "");
+
+  var scanBlock = document.getElementById("guide-scan-rec");
+  if (item.scan) {
+    scanBlock.style.display = "block";
+  } else {
+    scanBlock.style.display = "none";
+  }
+
+  var overlay = document.getElementById("guide-overlay");
+  overlay.classList.add("open");
+  document.getElementById("guide-modal").scrollTop = 0;
+}
+
+function parseSlang(text) {
+  return text.replace(/\[([^\]]+)\]/g, function(match, term) {
+    var def = SLANG[term];
+    if (!def) return match;
+    return '<span class="slang" data-def="' + def.replace(/"/g, '&quot;') + '">' + term + '</span>';
+  });
+}
+
+var slangPopup = document.getElementById("slang-popup");
+var slangActive = null;
+
+document.addEventListener("click", function(e) {
+  var el = e.target.closest(".slang");
+  if (el) {
+    e.stopPropagation();
+    var def = el.getAttribute("data-def");
+    slangPopup.innerHTML = "// что это<br>" + def;
+    var rect = el.getBoundingClientRect();
+    var tipW = 260;
+    var left = rect.left + rect.width / 2 - tipW / 2;
+    if (left < 8) left = 8;
+    if (left + tipW > window.innerWidth - 8) left = window.innerWidth - tipW - 8;
+    var top = rect.top - 8;
+    slangPopup.style.left = left + "px";
+    slangPopup.style.width = tipW + "px";
+    if (top - 120 > 0) {
+      slangPopup.style.top = "auto";
+      slangPopup.style.bottom = (window.innerHeight - top + 8) + "px";
+    } else {
+      slangPopup.style.bottom = "auto";
+      slangPopup.style.top = (rect.bottom + 8) + "px";
+    }
+    slangPopup.style.opacity = "1";
+    slangPopup.style.visibility = "visible";
+    slangActive = el;
+  } else {
+    slangPopup.style.opacity = "0";
+    slangPopup.style.visibility = "hidden";
+    slangActive = null;
+  }
+});
+
+function closeGuide() {
+  document.getElementById("guide-overlay").classList.remove("open");
+  slangPopup.style.opacity = "0";
+  slangPopup.style.visibility = "hidden";
+  slangActive = null;
+}
+
+function catLabel(c) {
+  var labels = {git:"Git / Open-Source", ai:"AI-Agent", edu:"Обучение", hosting:"Хостинг", tools:"Сервисы", access:"Операционные Системы", sec:"Безопасность", fun:"Моды и игры"};
+  return labels[c] || c;
+}
+
+function esc(s) {
+  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+}
+
+function doCopyAction(text, btn, label) {
+  var done = function() {
+    btn.classList.add("copied");
+    btn.childNodes[btn.childNodes.length - 1].nodeValue = " скопировано";
+    setTimeout(function() {
+      btn.classList.remove("copied");
+      btn.childNodes[btn.childNodes.length - 1].nodeValue = " " + label;
+    }, 2000);
+  };
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(done).catch(function() { fallbackCopy(text, done); });
+  } else {
+    fallbackCopy(text, done);
+  }
+}
+
+function fallbackCopy(text, cb) {
+  var ta = document.createElement("textarea");
+  ta.value = text;
+  ta.style.position = "fixed";
+  ta.style.opacity = "0";
+  document.body.appendChild(ta);
+  ta.focus();
+  ta.select();
+  try { document.execCommand("copy"); cb(); } catch(e) {}
+  document.body.removeChild(ta);
+}
+
+function renderCounters() {
+  var toolsCount = CATALOG.length;
+  var requestsCount = parseInt(localStorage.getItem("flearance-requests") || "0", 10);
+
+  var toolsEl = document.getElementById("counter-tools");
+  var requestsEl = document.getElementById("counter-requests");
+
+  if (toolsEl) animateCounter(toolsEl, toolsCount);
+  if (requestsEl) animateCounter(requestsEl, requestsCount);
+}
+
+function animateCounter(el, target) {
+  var current = 0;
+  var step = Math.max(1, Math.floor(target / 30));
+  var interval = setInterval(function() {
+    current += step;
+    if (current >= target) {
+      current = target;
+      clearInterval(interval);
+    }
+    el.textContent = current;
+  }, 30);
+}
+
+function renderRecentTools() {
+  var container = document.getElementById("recent-tools");
+  if (!container) return;
+
+  var dated = CATALOG.filter(function(item) { return item.date; });
+  dated.sort(function(a, b) { return b.date.localeCompare(a.date); });
+  var recent = dated.slice(0, 6);
+
+  var html = "";
+  recent.forEach(function(item) {
+    var dateObj = new Date(item.date);
+    var dateStr = dateObj.toLocaleDateString("ru-RU", {day:"numeric", month:"short", year:"numeric"});
+    html += '<div class="catalog-card">';
+    html += '<div class="card-cat feed-cat" data-cat="' + item.cat + '" data-title="' + esc(item.title) + '">// ' + catLabel(item.cat) + '</div>';
+    html += '<div class="card-title">' + esc(item.title) + '</div>';
+    html += '<div class="card-desc">' + esc(item.desc) + '</div>';
+    html += '<div style="font-family:var(--font-mono);font-size:10px;color:var(--accent2);letter-spacing:1px;margin-top:8px;">добавлено ' + dateStr + '</div>';
+    html += '</div>';
+  });
+
+  container.innerHTML = html;
+
+  // Клик по категории → переход в каталог с подсветкой
+  container.addEventListener("click", function(e) {
+    var cat = e.target.closest(".feed-cat");
+    if (!cat) return;
+    var catAttr = cat.getAttribute("data-cat");
+    var titleAttr = cat.getAttribute("data-title");
+    showPage("catalog");
+    filterCat(catAttr);
+    setTimeout(function() {
+      var cards = document.querySelectorAll("#catalog-grid .catalog-card, #pinned-grid .catalog-card");
+      for (var i = 0; i < cards.length; i++) {
+        var cardTitle = cards[i].querySelector(".card-title");
+        if (cardTitle && cardTitle.textContent === titleAttr) {
+          cards[i].scrollIntoView({ behavior: "smooth", block: "center" });
+          cards[i].classList.add("flash");
+          setTimeout(function(c) { c.classList.remove("flash"); }, 3000, cards[i]);
+          break;
+        }
+      }
+    }, 100);
+  });
+}
+
+function renderLenta() {
+  var container = document.getElementById("lenta-feed");
+  var emptyEl = document.getElementById("lenta-empty");
+  if (!container) return;
+
+  var dated = CATALOG.filter(function(item) { return item.date; });
+  dated.sort(function(a, b) { return b.date.localeCompare(a.date); });
+
+  if (dated.length === 0) {
+    container.innerHTML = "";
+    if (emptyEl) emptyEl.style.display = "block";
+    return;
+  }
+  if (emptyEl) emptyEl.style.display = "none";
+
+  var months = ["янв","фев","мар","апр","май","июн","июл","авг","сен","окт","ноя","дек"];
+  var html = "";
+  var lastGroup = "";
+
+  dated.forEach(function(item) {
+    var d = new Date(item.date);
+    var day = d.getDate();
+    var month = months[d.getMonth()];
+    var year = d.getFullYear();
+    var groupKey = year + "-" + String(d.getMonth()).padStart(2, "0");
+
+    if (groupKey !== lastGroup) {
+      var groupLabel = month.charAt(0).toUpperCase() + month.slice(1) + " " + year;
+      html += '<div class="feed-group-label">' + groupLabel + '</div>';
+      lastGroup = groupKey;
+    }
+
+    html += '<div class="feed-item">';
+    html += '<div class="feed-line"></div>';
+    html += '<div class="feed-dot"></div>';
+    html += '<div class="feed-date-col"><div class="feed-day">' + day + '</div><div class="feed-month">' + month + '</div></div>';
+    html += '<div class="feed-body">';
+    html += '<div class="feed-cat" data-cat="' + item.cat + '" data-title="' + esc(item.title) + '">// ' + catLabel(item.cat) + '</div>';
+    html += '<div class="feed-title">' + esc(item.title) + '</div>';
+    html += '<div class="feed-desc">' + esc(item.desc) + '</div>';
+    html += '<div class="feed-nick">// ' + esc(item.nick) + '</div>';
+    html += '</div></div>';
+  });
+
+  container.innerHTML = html;
+
+  // Клик по категории → переход в каталог с подсветкой
+  container.addEventListener("click", function(e) {
+    var cat = e.target.closest(".feed-cat");
+    if (!cat) return;
+    var catAttr = cat.getAttribute("data-cat");
+    var titleAttr = cat.getAttribute("data-title");
+    showPage("catalog");
+    filterCat(catAttr);
+    setTimeout(function() {
+      var cards = document.querySelectorAll("#catalog-grid .catalog-card, #pinned-grid .catalog-card");
+      for (var i = 0; i < cards.length; i++) {
+        var cardTitle = cards[i].querySelector(".card-title");
+        if (cardTitle && cardTitle.textContent === titleAttr) {
+          cards[i].scrollIntoView({ behavior: "smooth", block: "center" });
+          cards[i].classList.add("flash");
+          setTimeout(function(c) { c.classList.remove("flash"); }, 3000, cards[i]);
+          break;
+        }
+      }
+    }, 100);
+  });
+}
+
+function trackView(title) {
+  var views = JSON.parse(localStorage.getItem("flearance-views") || "{}");
+  views[title] = (views[title] || 0) + 1;
+  localStorage.setItem("flearance-views", JSON.stringify(views));
+}
+
+function getViews() {
+  return JSON.parse(localStorage.getItem("flearance-views") || "{}");
+}
+
+function renderPopularTools() {
+  var container = document.getElementById("popular-grid");
+  var emptyEl = document.getElementById("popular-empty");
+  if (!container) return;
+
+  var views = getViews();
+  var items = CATALOG.map(function(item) {
+    return { item: item, views: views[item.title] || 0 };
+  });
+  items.sort(function(a, b) { return b.views - a.views; });
+
+  var hasViews = items.some(function(x) { return x.views > 0; });
+
+  if (!hasViews) {
+    container.innerHTML = "";
+    if (emptyEl) emptyEl.style.display = "block";
+    return;
+  }
+
+  if (emptyEl) emptyEl.style.display = "none";
+
+  var top = items.slice(0, 20);
+  var html = "";
+  top.forEach(function(x, i) {
+    if (x.views === 0) return;
+    html += '<div class="catalog-card">';
+    html += '<div style="font-family:var(--font-mono);font-size:22px;font-weight:700;color:var(--accent);opacity:0.3;position:absolute;top:14px;right:16px;">' + (i + 1) + '</div>';
+    html += '<div class="card-cat">// ' + catLabel(x.item.cat) + '</div>';
+    html += '<div class="card-title">' + esc(x.item.title) + '</div>';
+    html += '<div class="card-desc">' + esc(x.item.desc) + '</div>';
+    html += '<div style="font-family:var(--font-mono);font-size:10px;color:var(--accent2);letter-spacing:1px;margin-top:8px;">просмотров: ' + x.views + '</div>';
+    html += '</div>';
+  });
+
+  container.innerHTML = html;
+}
+</script>
+</body>
+</html>
