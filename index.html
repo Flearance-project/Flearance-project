@@ -42,10 +42,13 @@
     --sp-1:8px; --sp-2:12px; --sp-3:20px; --sp-4:32px;
   }
   *{margin:0;padding:0;box-sizing:border-box;}
+  button, a, input, textarea, select{-webkit-tap-highlight-color:transparent;}
+  button:focus-visible, a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+  button:not(:focus-visible), a:not(:focus-visible){outline:none;}
   html{scroll-behavior:smooth;}
   body{background:var(--bg);color:var(--text);font-family:var(--font-body);min-height:100vh;overflow-x:hidden;line-height:1.6;}
 
-  @keyframes pulseGlow{0%,100%{filter:drop-shadow(0 0 20px rgba(109,212,0,0.3))}50%{filter:drop-shadow(0 0 40px rgba(109,212,0,0.6))}}
+  @keyframes pulseGlow{0%,100%{filter:drop-shadow(0 0 10px rgba(109,212,0,0.25)) drop-shadow(0 0 20px rgba(0,200,150,0.1))}50%{filter:drop-shadow(0 0 18px rgba(109,212,0,0.45)) drop-shadow(0 0 35px rgba(0,200,150,0.2))}}
   @keyframes fadeInUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 
   /* SPLASH */
@@ -65,7 +68,7 @@
 
   /* NAV */
   nav{display:flex;align-items:center;justify-content:space-between;padding:14px 32px;border-bottom:1px solid var(--border);background:rgba(9,9,16,0.97);position:sticky;top:0;z-index:50;backdrop-filter:blur(12px);}
-  .nav-logo{font-family:var(--font-mono);font-size:16px;font-weight:700;letter-spacing:8px;flex-shrink:0;display:flex;align-items:baseline;}
+  .nav-logo{font-family:var(--font-mono);font-size:16px;font-weight:700;letter-spacing:8px;flex-shrink:0;display:flex;align-items:baseline;filter:drop-shadow(0 0 6px rgba(109,212,0,0.25)) drop-shadow(0 0 12px rgba(0,200,150,0.15));}
   .nav-logo-prefix{color:var(--accent2);font-size:0.9em;letter-spacing:2px;margin-right:6px;}
   .nav-logo-text{background:linear-gradient(135deg,#6dd400,#00c896);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
   .nav-links{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
@@ -73,6 +76,8 @@
   .nav-btn:hover,.nav-btn.active{color:var(--accent);border-color:var(--accent);background:var(--glow);}
   .nav-btn.support{border-color:rgba(168,85,247,0.25);color:rgba(168,85,247,0.65);}
   .nav-btn.support:hover,.nav-btn.support.active{color:var(--accent3);border-color:var(--accent3);background:rgba(168,85,247,0.07);}
+  .nav-btn.lang-toggle{border-color:rgba(0,200,150,0.3);color:var(--accent2);font-weight:600;}
+  .nav-btn.lang-toggle:hover{color:#00e6a8;border-color:rgba(0,200,150,0.5);background:rgba(0,200,150,0.06);}
 
   /* MAIN */
   #main{opacity:0;transition:opacity 0.8s ease;min-height:100vh;display:flex;flex-direction:column;}
@@ -151,7 +156,7 @@
   .tab-prefix{color:var(--accent2);opacity:0.55;margin-right:4px;}
   .cat-tab.active .tab-prefix,.cat-tab:hover .tab-prefix{opacity:0.9;}
   .cat-tab:hover{color:var(--accent);border-color:rgba(109,212,0,0.3);}
-  .cat-tab.active{color:var(--accent);border-color:var(--accent);background:var(--glow);}
+  .cat-tab.active{color:var(--accent);border-color:var(--accent);background:var(--glow);box-shadow:0 0 8px rgba(109,212,0,0.25),0 0 20px rgba(0,200,150,0.12);}
   .cat-tab.support{border-color:rgba(168,85,247,0.25);color:rgba(168,85,247,0.65);}
   .cat-tab.support:hover{color:var(--accent3);border-color:var(--accent3);background:rgba(168,85,247,0.07);}
   .cat-tab.bypass{border-color:rgba(255,180,60,0.25);color:rgba(255,180,60,0.65);}
@@ -174,28 +179,32 @@
   .welcome-btn{font-family:var(--font-mono);font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--bg);background:linear-gradient(135deg,#6dd400,#00c896);border:none;padding:12px 28px;cursor:pointer;transition:opacity 0.2s ease,transform 0.15s ease;opacity:0;visibility:hidden;}
   .welcome-btn.show{opacity:1;visibility:visible;}
   .welcome-btn:hover{transform:scale(1.03);}
-  .rec-overlay{position:fixed;inset:0;background:rgba(5,5,9,0.75);backdrop-filter:blur(4px);z-index:900;display:flex;align-items:center;justify-content:center;padding:24px;opacity:0;visibility:hidden;transition:opacity 0.25s ease,visibility 0.25s ease;}
+  .rec-overlay{position:fixed;inset:0;background:rgba(5,5,9,0.85);backdrop-filter:blur(6px);z-index:900;display:flex;align-items:center;justify-content:center;padding:24px;opacity:0;visibility:hidden;transition:opacity 0.25s ease,visibility 0.25s ease;}
   .rec-overlay.open{opacity:1;visibility:visible;}
-  .rec-modal{width:100%;max-width:520px;height:420px;overflow-y:auto;background:var(--bg3);border:1px solid rgba(168,85,247,0.25);box-shadow:0 20px 60px rgba(0,0,0,0.6);padding:26px 28px 24px;transform:scale(0.94) translateY(10px);opacity:0;transition:transform 0.28s cubic-bezier(.2,.8,.2,1),opacity 0.25s ease;position:relative;}
   .rec-overlay.open .rec-modal{transform:scale(1) translateY(0);opacity:1;}
+  .rec-modal{width:100%;max-width:560px;height:580px;overflow-y:auto;background:var(--bg3);border:1px solid rgba(109,212,0,0.25);box-shadow:0 0 0 1px rgba(0,0,0,0.4),0 20px 60px rgba(0,0,0,0.6);padding:26px 28px 24px;transform:scale(0.94) translateY(10px);opacity:0;transition:transform 0.28s cubic-bezier(.2,.8,.2,1),opacity 0.25s ease;position:relative;}
   .rec-pages{height:calc(100% - 100px);overflow-y:auto;}
   .rec-modal-close{position:absolute;top:18px;right:20px;background:none;border:none;color:var(--text-dim);font-size:18px;line-height:1;cursor:pointer;transition:color 0.2s ease;}
-  .rec-modal-close:hover{color:var(--accent3);}
-  .rec-modal h2{font-family:var(--font-mono);font-size:16px;letter-spacing:4px;color:var(--accent3);margin-bottom:18px;}
-  .rec-tabs{display:flex;gap:6px;margin-bottom:18px;flex-wrap:wrap;}
+  .rec-modal-close:hover{color:var(--accent);}
+  .rec-modal h2{font-family:var(--font-mono);font-size:16px;letter-spacing:4px;color:var(--accent);margin-bottom:18px;}
   .rec-tab{font-family:var(--font-mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dim);background:transparent;border:1px solid var(--border);padding:6px 12px;cursor:pointer;transition:all 0.2s ease;}
-  .rec-tab:hover{color:var(--accent3);border-color:rgba(168,85,247,0.3);}
-  .rec-tab.active{color:var(--accent3);border-color:var(--accent3);background:rgba(168,85,247,0.07);}
-  .rec-welcome{font-family:var(--font-mono);font-size:clamp(22px,4vw,32px);font-weight:700;letter-spacing:6px;background:linear-gradient(135deg,#6dd400,#00c896);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:18px;}
+  .rec-tab:hover{color:var(--accent);border-color:rgba(109,212,0,0.3);}
+  .rec-tab.active{color:var(--accent);border-color:var(--accent);background:var(--glow);}
   .rec-welcome-text{font-size:13px;color:var(--text-dim);line-height:1.9;}
   .rec-welcome-text strong{color:var(--text-mid);}
-  .rec-page{display:none;}
+  .rec-page{display:none;animation:fadeInUp 0.25s ease;}
   .rec-page.active{display:block;}
   .rec-section{margin-bottom:20px;}
-  .rec-section-title{font-family:var(--font-mono);font-size:11px;letter-spacing:3px;color:var(--text-dim);text-transform:uppercase;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--border);}
+  .rec-section-title{font-family:var(--font-mono);font-size:11px;letter-spacing:3px;color:var(--accent);text-transform:uppercase;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--border);}
   .rec-section ul{margin:8px 0 0 18px;color:var(--text-dim);font-size:13px;line-height:2;}
-  .rec-section ul li::marker{color:var(--accent3);}
+  .rec-section ul li::marker{color:var(--accent);}
   .rec-section ul li strong{color:var(--text-mid);}
+  .risk-levels{display:flex;gap:6px;margin:8px 0;}
+  .risk-level{flex:1;text-align:center;padding:6px 4px;border:1px solid var(--border);font-family:var(--font-mono);font-size:9px;letter-spacing:1px;text-transform:uppercase;transition:all 0.2s ease;}
+  .risk-level.low{color:var(--accent2);border-color:rgba(109,212,0,0.3);background:rgba(109,212,0,0.05);}
+  .risk-level.mid{color:rgba(255,200,80,0.9);border-color:rgba(255,180,60,0.3);background:rgba(255,140,0,0.05);}
+  .risk-level.high{color:#ff6b6b;border-color:rgba(255,80,80,0.3);background:rgba(255,60,60,0.05);}
+  .risk-level.active{font-weight:700;}
   .risk-criteria-list{display:flex;flex-direction:column;gap:12px;}
   .risk-criterion{padding:10px 12px;border:1px solid var(--border);background:rgba(0,0,0,0.15);}
   .risk-criterion-head{display:flex;align-items:center;gap:10px;margin-bottom:6px;flex-wrap:wrap;}
@@ -205,12 +214,12 @@
   .guide-risk.clickable{cursor:pointer;transition:all 0.2s ease;}
   .guide-risk.clickable:hover{transform:scale(1.05);filter:brightness(1.2);}
 
-  .catalog-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:var(--sp-2);margin-top:var(--sp-1);width:100%;}
+  .catalog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp-2);margin-top:var(--sp-1);width:100%;}
   .catalog-card{position:relative;min-width:0;border:1px solid var(--border);padding:var(--sp-3);background:var(--card-bg);transition:all 0.2s ease;animation:fadeInUp 0.3s ease;}
   .catalog-card:hover{border-color:rgba(109,212,0,0.25);background:var(--card-hover);}
   .card-cat{font-family:var(--font-mono);font-size:9px;color:var(--accent3);letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;}
   .card-nick{font-family:var(--font-mono);font-size:10px;color:var(--accent2);letter-spacing:2px;margin-bottom:6px;}
-  .card-title{font-size:15px;font-weight:700;letter-spacing:1px;color:var(--text);margin-bottom:var(--sp-1);padding-right:var(--sp-4);}
+  .card-title{font-size:15px;font-weight:700;letter-spacing:1px;color:var(--text);margin-bottom:var(--sp-1);padding-right:var(--sp-4);cursor:pointer;}
   .card-desc{font-size:13px;color:var(--text-dim);line-height:1.7;margin-bottom:var(--sp-2);overflow-wrap:break-word;}
   .card-tip{font-family:var(--font-mono);font-size:11px;color:rgba(109,212,0,0.5);border-top:1px solid var(--border);padding-top:var(--sp-1);line-height:1.6;margin-bottom:var(--sp-1);overflow-wrap:break-word;}
   .card-addr{display:block;margin-top:6px;font-family:var(--font-mono);font-size:11px;color:var(--text-dim);letter-spacing:0.5px;word-break:break-all;line-height:1.6;border:1px dashed rgba(109,212,0,0.1);padding:6px 10px;background:rgba(0,0,0,0.2);}
@@ -227,7 +236,7 @@
   /* GUIDE MODAL */
   .guide-overlay{position:fixed;inset:0;background:rgba(5,5,9,0.75);backdrop-filter:blur(4px);z-index:900;display:flex;align-items:center;justify-content:center;padding:24px;opacity:0;visibility:hidden;transition:opacity 0.25s ease,visibility 0.25s ease;}
   .guide-overlay.open{opacity:1;visibility:visible;}
-  .guide-modal{width:100%;max-width:560px;max-height:84vh;overflow-y:auto;background:var(--bg3);border:1px solid rgba(109,212,0,0.25);box-shadow:0 0 0 1px rgba(0,0,0,0.4),0 20px 60px rgba(0,0,0,0.6);padding:26px 28px 24px;transform:scale(0.94) translateY(10px);opacity:0;transition:transform 0.28s cubic-bezier(.2,.8,.2,1),opacity 0.25s ease;position:relative;}
+  .guide-modal{width:100%;max-width:560px;min-height:580px;height:580px;overflow-y:auto;background:var(--bg3);border:1px solid rgba(109,212,0,0.25);box-shadow:0 0 0 1px rgba(0,0,0,0.4),0 20px 60px rgba(0,0,0,0.6);padding:26px 28px 24px;transform:scale(0.94) translateY(10px);opacity:0;transition:transform 0.28s cubic-bezier(.2,.8,.2,1),opacity 0.25s ease;position:relative;}
   .guide-overlay.open .guide-modal{transform:scale(1) translateY(0);opacity:1;}
   .guide-modal-close{position:absolute;top:18px;right:20px;background:none;border:none;color:var(--text-dim);font-size:18px;line-height:1;cursor:pointer;transition:color 0.2s ease;}
   .guide-modal-close:hover{color:var(--accent);}
@@ -332,8 +341,8 @@
 
   /* AMBIENT */
   .glow-orb{position:fixed;border-radius:50%;filter:blur(100px);pointer-events:none;z-index:0;}
-  .orb1{width:400px;height:400px;background:rgba(109,212,0,0.035);top:-100px;right:10%;}
-  .orb2{width:300px;height:300px;background:rgba(168,85,247,0.04);bottom:10%;left:5%;}
+  .orb1{width:400px;height:400px;background:rgba(109,212,0,0.05);top:-100px;right:10%;filter:blur(140px);}
+  .orb2{width:300px;height:300px;background:rgba(0,200,150,0.035);bottom:10%;left:5%;filter:blur(120px);}
 
   /* TOP NAV MOBILE (secondary) */
   .top-nav-mobile{display:none;}
@@ -366,7 +375,7 @@
     .catalog-grid{grid-template-columns:repeat(2,1fr) !important;gap:10px !important;}
     .pinned-grid{grid-template-columns:1fr !important;gap:10px !important;}
     .catalog-card{padding:var(--sp-2);}
-    .card-title{font-size:13px;}
+    .card-title{font-size:13px;white-space:normal;}
     .card-desc{font-size:11px;line-height:1.5;}
     .card-tip{font-size:10px;}
     .card-addr{font-size:10px;padding:4px 8px;}
@@ -374,7 +383,7 @@
     .card-cat{font-size:8px;}
     /* Guide modal mobile */
     .guide-overlay{padding:12px;}
-    .guide-modal{max-height:90vh;padding:20px 16px;}
+    .guide-modal{height:70vh;min-height:auto;padding:20px 16px;}
     .guide-risk-details .risk-label{min-width:80px;}
     /* Welcome modal mobile */
     .welcome-overlay{padding:16px;}
@@ -384,7 +393,7 @@
     .feed-title{font-size:14px;}
     /* Rec modal mobile */
     .rec-overlay{padding:12px;}
-    .rec-modal{height:auto;max-height:85vh;padding:20px 16px;}
+    .rec-modal{height:70vh;padding:20px 16px;}
   }
 
   /* BOTTOM NAV (mobile only) */
@@ -422,6 +431,58 @@
   .feed-group-label{font-family:var(--font-mono);font-size:11px;letter-spacing:2px;color:var(--text-dim);text-transform:uppercase;padding:20px 0 10px;margin-left:94px;border-bottom:1px solid var(--border);margin-bottom:0;}
   @media(max-width:860px){.feed-date-col{width:50px;}.feed-day{font-size:18px;}.feed-line{left:calc(50px + 8px);}.feed-dot{left:calc(50px + 4px);}.feed-body{padding-left:16px;}.feed-group-label{margin-left:66px;}}
 
+
+  /* FAVORITES */
+  .fav-btn{position:absolute;bottom:12px;right:12px;display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border:none;background:transparent;cursor:pointer;transition:all 0.2s ease;z-index:2;}
+  .catalog-card.expanded .fav-btn{opacity:0;pointer-events:none;}
+  .fav-btn svg{width:14px;height:14px;stroke:var(--text-dim);fill:none;stroke-width:2;transition:all 0.2s ease;}
+  .fav-btn:hover svg{stroke:#ff6b8a;}
+  .fav-btn.active svg{stroke:#ff4d6a;fill:#ff4d6a;filter:drop-shadow(0 0 4px rgba(255,77,106,0.4));}
+  @keyframes favPulse{0%{transform:scale(1)}50%{transform:scale(1.3)}100%{transform:scale(1)}}
+  .fav-btn.pulse svg{animation:favPulse 0.3s ease;}
+  .guide-fav-btn{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border:none;background:transparent;cursor:pointer;transition:all 0.2s ease;flex-shrink:0;margin-left:0;}
+  .guide-fav-btn svg{width:15px;height:15px;stroke:var(--text-dim);fill:none;stroke-width:2;transition:all 0.2s ease;}
+  .guide-fav-btn:hover svg{stroke:#ff6b8a;}
+  .guide-fav-btn.active svg{stroke:#ff4d6a;fill:#ff4d6a;filter:drop-shadow(0 0 4px rgba(255,77,106,0.4));}
+  .card-actions{display:flex;gap:8px;margin-top:10px;padding-top:10px;border-top:1px solid var(--border);opacity:0;transform:translateY(4px);transition:opacity 0.2s ease,transform 0.2s ease;}
+  .catalog-card:hover .card-actions{opacity:1;transform:translateY(0);}
+  .card-action-btn{font-family:var(--font-mono);font-size:10px;letter-spacing:1px;color:var(--text-dim);background:none;border:1px solid var(--border);padding:4px 10px;cursor:pointer;transition:all 0.2s ease;display:inline-flex;align-items:center;gap:5px;white-space:nowrap;}
+  .card-action-btn:hover{color:var(--accent);border-color:rgba(109,212,0,0.3);background:var(--glow);}
+  .card-action-btn.copied{color:var(--accent2);border-color:rgba(0,200,150,0.3);}
+  .card-action-btn svg{width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2;}
+  @media(max-width:860px){.card-actions{opacity:1;transform:translateY(0);flex-wrap:wrap;}}
+  .card-preview{max-height:0;overflow:hidden;transition:max-height 0.35s cubic-bezier(.25,.8,.3,1),opacity 0.25s ease;opacity:0;margin-top:0;}
+  .catalog-card.expanded .card-preview{max-height:400px;opacity:1;margin-top:12px;}
+  .card-preview-steps{display:flex;flex-direction:column;gap:8px;}
+  .card-preview-step{display:flex;gap:8px;font-size:12px;color:var(--text-dim);line-height:1.6;}
+  .card-preview-step-num{font-family:var(--font-mono);font-size:11px;color:var(--accent);opacity:0.5;flex-shrink:0;min-width:16px;}
+  .card-preview-guide-btn{font-family:var(--font-mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);background:none;border:1px solid rgba(109,212,0,0.25);padding:6px 14px;cursor:pointer;transition:all 0.2s ease;margin-top:10px;display:inline-flex;align-items:center;gap:6px;}
+  .card-preview-guide-btn:hover{border-color:var(--accent);background:var(--glow);}
+  .card-title{cursor:pointer;}
+  .card-title::after{content:' \25B8';font-size:10px;color:var(--text-dim);transition:transform 0.2s ease;display:inline;}
+  .catalog-card.expanded .card-title::after{content:' \25BE';}
+  .guide-related{margin-top:20px;padding-top:16px;border-top:1px solid var(--border);}
+  .guide-related-title{font-family:var(--font-mono);font-size:10px;letter-spacing:2px;color:var(--text-dim);text-transform:uppercase;margin-bottom:12px;}
+  .guide-related-grid{display:flex;flex-direction:column;gap:8px;}
+  .guide-related-item{display:flex;align-items:center;gap:10px;padding:8px 12px;border:1px solid var(--border);background:rgba(0,0,0,0.15);cursor:pointer;transition:all 0.2s ease;}
+  .guide-related-item:hover{border-color:rgba(109,212,0,0.25);background:var(--card-hover);}
+  .guide-related-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
+  .guide-related-info{flex:1;min-width:0;}
+  .guide-related-name{font-family:var(--font-mono);font-size:11px;color:var(--text);letter-spacing:0.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .guide-related-desc{font-size:11px;color:var(--text-dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.4;}
+  .paths-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;width:100%;max-width:900px;margin-top:20px;}
+  .path-card{border:1px solid var(--border);background:var(--card-bg);padding:20px;transition:all 0.2s ease;}
+  .path-card:hover{border-color:rgba(109,212,0,0.25);background:var(--card-hover);}
+  .path-icon{font-size:24px;margin-bottom:10px;}
+  .path-title{font-family:var(--font-mono);font-size:13px;letter-spacing:1px;color:var(--accent);margin-bottom:6px;font-weight:600;}
+  .path-desc{font-size:12px;color:var(--text-dim);line-height:1.6;margin-bottom:14px;}
+  .path-steps{display:flex;flex-direction:column;gap:0;}
+  .path-step{display:flex;align-items:center;gap:8px;padding:6px 0;font-size:12px;color:var(--text-dim);cursor:pointer;transition:color 0.15s ease;}
+  .path-step:hover{color:var(--accent);}
+  .path-step-num{font-family:var(--font-mono);font-size:10px;color:var(--accent);opacity:0.4;min-width:14px;}
+  .path-step-name{font-family:var(--font-mono);font-size:11px;letter-spacing:0.5px;}
+  .path-arrow{color:var(--text-dim);opacity:0.3;font-size:10px;}
+
   /* SUGGEST FORM */
   #suggest-form input:focus, #suggest-form textarea:focus {border-color:rgba(109,212,0,0.35);}
 </style>
@@ -434,26 +495,26 @@
 
 <div id="splash">
   <div class="splash-logo">FLEARANCE</div>
-  <div class="splash-sub">арсенал инструментов</div>
+  <div class="splash-sub" data-i18n="splash.subtitle">арсенал инструментов</div>
   <div class="splash-checks">
-    <div class="splash-check" id="chk1">&#10004; &nbsp;open-source фокус</div>
-    <div class="splash-check" id="chk2">&#10004; &nbsp;без регистрации</div>
-    <div class="splash-check" id="chk3">&#10004; &nbsp;без логов</div>
+    <div class="splash-check" id="chk1">&#10004; &nbsp;<span data-i18n="splash.check1">open-source фокус</span></div>
+    <div class="splash-check" id="chk2">&#10004; &nbsp;<span data-i18n="splash.check2">без регистрации</span></div>
+    <div class="splash-check" id="chk3">&#10004; &nbsp;<span data-i18n="splash.check3">без логов</span></div>
   </div>
   <div class="splash-bar" id="splash-bar"><div class="splash-bar-fill" id="splash-bar-fill"></div></div>
-  <button class="splash-skip" id="splash-skip-btn">пропустить &rarr;</button>
+  <button class="splash-skip" id="splash-skip-btn" data-i18n="splash.skip">пропустить &rarr;</button>
 </div>
 
 <div class="welcome-overlay" id="welcome-overlay">
   <div class="welcome-modal">
-    <div class="welcome-title">Добро пожаловать!</div>
+    <div class="welcome-title" data-i18n="welcome.title">Добро пожаловать!</div>
     <div class="welcome-text">
-      <p style="margin-bottom:14px;"><strong>FLEARANCE</strong> — арсенал инструментов для приватности, саморазвития и обхода блокировок. Без регистрации, без логов — просто открываешь и пользуешься.</p>
-      <p style="margin-bottom:14px;">Прямо сейчас ты можешь: <strong>скопировать Session ID</strong> и отправить запрос на добавление инструмента, <strong>пролистать каталог</strong> — там уже 80+ проверенных ссылок, или нажать <strong>«Предложить инструмент»</strong> и пополнить базу сам.</p>
-      <p>Все ссылки копируются и вставляются вручную — это для твоей безопасности. Если что-то непонятно — раздел <strong>«Как работаем»</strong> разложит всё по шагам.</p>
+      <p style="margin-bottom:14px;" data-i18n="welcome.p1"><strong>FLEARANCE</strong> — арсенал инструментов для приватности, саморазвития и обхода блокировок. Без регистрации, без логов — просто открываешь и пользуешься.</p>
+      <p style="margin-bottom:14px;" data-i18n="welcome.p2">Прямо сейчас ты можешь: <strong>скопировать Session ID</strong> и отправить запрос на добавление инструмента, <strong>пролистать каталог</strong> — там уже 80+ проверенных ссылок, или нажать <strong>«Предложить инструмент»</strong> и пополнить базу сам.</p>
+      <p data-i18n="welcome.p3">Все ссылки копируются и вставляются вручную — это для твоей безопасности. Если что-то непонятно — раздел <strong>«Как работаем»</strong> разложит всё по шагам.</p>
     </div>
-    <div class="welcome-timer">Подожди <span id="welcome-sec">11</span> секунд...</div>
-    <button class="welcome-btn" id="welcome-btn">Продолжить</button>
+    <div class="welcome-timer"><span data-i18n="welcome.timer">Подожди</span> <span id="welcome-sec">11</span> <span data-i18n="welcome.timer_suffix">секунд...</span></div>
+    <button class="welcome-btn" id="welcome-btn" data-i18n="welcome.btn">Продолжить</button>
   </div>
 </div>
 
@@ -461,31 +522,32 @@
   <nav>
     <div class="nav-logo"><span class="nav-logo-prefix">//</span><span class="nav-logo-text">FLEARANCE</span></div>
     <div class="nav-links">
-      <button class="nav-btn active" data-page="home">Главная</button>
-      <button class="nav-btn" data-page="howto">Как работаем</button>
-      <button class="nav-btn" data-page="catalog">Каталог</button>
-      <button class="nav-btn" data-page="lenta">Лента</button>
-      <button class="nav-btn" data-page="popular">Популярные</button>
-      <button class="nav-btn" data-page="policy">Политика</button>
-      <button class="nav-btn support" data-page="support">Поддержать</button>
+      <button class="nav-btn active" data-page="home" data-i18n="nav.home">Главная</button>
+      <button class="nav-btn" data-page="howto" data-i18n="nav.howto">Как работаем</button>
+      <button class="nav-btn" data-page="catalog" data-i18n="nav.catalog">Каталог</button>
+      <button class="nav-btn" data-page="lenta" data-i18n="nav.lenta">Лента</button>
+      <button class="nav-btn" data-page="popular" data-i18n="nav.popular">Популярные</button>
+      <button class="nav-btn" data-page="policy" data-i18n="nav.policy">Политика</button>
+      <button class="nav-btn support" data-page="support" data-i18n="nav.support">Поддержать</button>
+      <button class="nav-btn lang-toggle" id="lang-toggle" onclick="setLang(currentLang==='ru'?'en':'ru')">EN</button>
     </div>
   </nav>
 
   <div class="top-nav-mobile" id="top-nav-mobile">
-    <button class="tn-btn" data-page="popular"><span class="tn-icon">★</span>Популярные</button>
-    <button class="tn-btn" data-page="lenta"><span class="tn-icon">≡</span>Лента</button>
-    <button class="tn-btn" data-page="policy"><span class="tn-icon">▣</span>Политика</button>
+    <button class="tn-btn" data-page="popular"><span class="tn-icon">★</span><span data-i18n="nav.popular">Популярные</span></button>
+    <button class="tn-btn" data-page="lenta"><span class="tn-icon">≡</span><span data-i18n="nav.lenta">Лента</span></button>
+    <button class="tn-btn" data-page="policy"><span class="tn-icon">▣</span><span data-i18n="nav.policy">Политика</span></button>
   </div>
 
   <div class="hero">
     <div class="sidebar" id="sidebar">
       <div class="sidebar-inner-content">
-        <div class="sidebar-title">// принципы</div>
-        <div class="policy-item"><div class="policy-dot"></div><div class="policy-text"><strong>Open-source в приоритете.</strong> Инструменты с открытым исходным кодом — проверяем, рекомендуем.</div></div>
-        <div class="policy-item"><div class="policy-dot"></div><div class="policy-text"><strong>Расширение возможностей.</strong> Каждый ресурс — шаг к новым навыкам, доходу или самостоятельности.</div></div>
-        <div class="policy-item"><div class="policy-dot"></div><div class="policy-text"><strong>Один запрос — одно решение.</strong> С фокусом на конкретную задачу и советами по применению.</div></div>
-        <div class="policy-item"><div class="policy-dot"></div><div class="policy-text"><strong>Анонимность</strong> пользователей — приоритет. Ник в каталоге — единственный публичный идентификатор.</div></div>
-        <div class="policy-item"><div class="policy-dot"></div><div class="policy-text"><strong>Легальность.</strong> Только то, что не нарушает закон. Отказ — без обсуждений.</div></div>
+        <div class="sidebar-title" data-i18n="sidebar.title">// принципы</div>
+        <div class="policy-item"><div class="policy-dot"></div><div class="policy-text" data-i18n="sidebar.p1"><strong>Open-source в приоритете.</strong> Инструменты с открытым исходным кодом — проверяем, рекомендуем.</div></div>
+        <div class="policy-item"><div class="policy-dot"></div><div class="policy-text" data-i18n="sidebar.p2"><strong>Расширение возможностей.</strong> Каждый ресурс — шаг к новым навыкам, доходу или самостоятельности.</div></div>
+        <div class="policy-item"><div class="policy-dot"></div><div class="policy-text" data-i18n="sidebar.p3"><strong>Один запрос — одно решение.</strong> С фокусом на конкретную задачу и советами по применению.</div></div>
+        <div class="policy-item"><div class="policy-dot"></div><div class="policy-text" data-i18n="sidebar.p4"><strong>Анонимность</strong> пользователей — приоритет. Ник в каталоге — единственный публичный идентификатор.</div></div>
+        <div class="policy-item"><div class="policy-dot"></div><div class="policy-text" data-i18n="sidebar.p5"><strong>Легальность.</strong> Только то, что не нарушает закон. Отказ — без обсуждений.</div></div>
       </div>
     </div>
 
@@ -496,17 +558,24 @@
     <div class="content">
 
       <div class="panel-page active" id="page-home">
-        <div class="content-tagline">// инструменты для расширения возможностей</div>
+        <div class="content-tagline" data-i18n="home.tagline">// инструменты для расширения возможностей</div>
 
         <div class="blocked-banner" id="blocked-banner">
           <div class="blocked-icon">&#9888;</div>
           <div class="blocked-body">
-            <div class="blocked-title">Часть ссылок в каталоге может быть недоступна в отдельных регионах</div>
-            <div class="blocked-text">Для доступа к инструментам рекомендуем <strong>Tor Browser</strong> — повышает анонимность и приватность соединения.</div>
+            <div class="blocked-title" data-i18n="home.blocked_title">Часть ссылок в каталоге может быть недоступна в отдельных регионах</div>
+            <div class="blocked-text" data-i18n="home.blocked_text">Для доступа к инструментам рекомендуем <strong>Tor Browser</strong> — повышает анонимность и приватность соединения.</div>
             <button class="blocked-btn" id="blocked-tor-btn">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-              открыть Tor Browser в каталоге
+              <span data-i18n="home.blocked_btn">открыть Tor Browser в каталоге</span>
             </button>
+          </div>
+        </div>
+
+        <div class="session-block">
+          <span class="session-label" data-i18n="home.request_title">// как отправить запрос</span>
+          <div class="warning-box" style="margin-bottom:0;">
+            <span data-i18n="home.request_text">Есть два способа отправить запрос на инструмент — через <strong>Session</strong> или по <strong>Email</strong>.<br>Все шаги, шаблон сообщения и контакты — на странице</span> <button onclick="showPage('howto')" style="font-family:var(--font-mono);font-size:13px;color:var(--accent2);background:none;border:none;border-bottom:1px solid rgba(0,200,150,0.3);padding:0 0 1px;cursor:pointer;"><span data-i18n="home.request_link">Как работаем</span></button>.
           </div>
         </div>
 
@@ -514,36 +583,28 @@
         <div style="display:flex;gap:32px;margin-bottom:32px;flex-wrap:wrap;justify-content:center;">
           <div style="text-align:center;">
             <div id="counter-tools" style="font-family:var(--font-mono);font-size:clamp(32px,5vw,48px);font-weight:700;background:linear-gradient(135deg,#6dd400,#00c896);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">0</div>
-            <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:2px;color:var(--text-dim);text-transform:uppercase;">инструментов</div>
+            <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:2px;color:var(--text-dim);text-transform:uppercase;" data-i18n="home.counter_tools">инструментов</div>
           </div>
           <div style="text-align:center;">
             <div id="counter-requests" style="font-family:var(--font-mono);font-size:clamp(32px,5vw,48px);font-weight:700;background:linear-gradient(135deg,#a855f7,#00c896);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">0</div>
-            <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:2px;color:var(--text-dim);text-transform:uppercase;">выполнено запросов</div>
+            <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:2px;color:var(--text-dim);text-transform:uppercase;" data-i18n="home.counter_requests">выполнено запросов</div>
           </div>
         </div>
 
         <!-- Последние добавленные -->
         <div style="width:100%;max-width:900px;margin-bottom:32px;">
-          <div class="section-title">// последние добавленные</div>
-          <div id="recent-tools" class="catalog-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;"></div>
-        </div>
-
-        <div class="session-block">
-          <span class="session-label">// как отправить запрос</span>
-          <div class="warning-box" style="margin-bottom:0;">
-            Есть два способа отправить запрос на инструмент — через <strong>Session</strong> или по <strong>Email</strong>.<br>
-            Все шаги, шаблон сообщения и контакты — на странице <button onclick="showPage('howto')" style="font-family:var(--font-mono);font-size:13px;color:var(--accent2);background:none;border:none;border-bottom:1px solid rgba(0,200,150,0.3);padding:0 0 1px;cursor:pointer;">Как работаем</button>.
-          </div>
+          <div class="section-title" data-i18n="home.recent_title">// последние добавленные</div>
+          <div id="recent-tools" class="catalog-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;"></div>
         </div>
       </div>
 
       <div class="panel-page" id="page-howto">
         <div class="howto-wrap">
-          <h2>// КАК РАБОТАЕМ</h2>
+          <h2 data-i18n="howto.title">// КАК РАБОТАЕМ</h2>
           <div class="howto-step">
             <div class="step-num">1</div>
             <div class="step-body">
-              Выбери способ связи — <strong>Session</strong> или <strong>Email</strong> — и отправь запрос.
+              <span data-i18n="howto.step1">Выбери способ связи — <strong>Session</strong> или <strong>Email</strong> — и отправь запрос.</span>
               <div class="contact-methods">
                 <div class="contact-method">
                   <span class="session-id-label">// Session ID</span>
@@ -551,7 +612,7 @@
                     <span id="session-id-text">054051b2d571e9ababfeef6a5671812775706b6497cca4684e6a13ae114aefba5a</span>
                   </div>
                   <button class="copy-btn" id="session-copy-btn">
-                    <span class="copy-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"></path></svg></span> скопировать Session ID
+                    <span class="copy-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"></path></svg></span> <span data-i18n="howto.copy_session">скопировать Session ID</span>
                   </button>
                 </div>
                 <div class="contact-method">
@@ -560,65 +621,65 @@
                     <span id="contact-email-text">flearance.contact@protonmail.com</span>
                   </div>
                   <button class="copy-btn" id="email-copy-btn">
-                    <span class="copy-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"></path></svg></span> скопировать Email
+                    <span class="copy-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"></path></svg></span> <span data-i18n="howto.copy_email">скопировать Email</span>
                   </button>
                 </div>
               </div>
               <div style="margin-top:14px;font-size:12px;color:rgba(255,180,60,0.5);letter-spacing:0.3px;line-height:1.7;">
-                &#9888; Псевдоним виден публично &mdash; не используй настоящее имя.
+                <span data-i18n="howto.warning">&#9888; Псевдоним виден публично &mdash; не используй настоящее имя.</span>
               </div>
             </div>
           </div>
           <div class="howto-step">
             <div class="step-num">2</div>
             <div class="step-body">
-              Напиши запрос по формату:
+              <span data-i18n="howto.step2">Напиши запрос по формату:</span>
               <div class="format-box">
-                <div class="format-row"><span>Ник:</span> псевдоним для каталога</div>
-                <div class="format-row"><span>Запрос:</span> что нужно найти или получить</div>
-                <div class="format-row"><span>Предпочтения:</span> уточнения (ОС, платформа, бюджет и т.д.)</div>
-                <div class="format-note">* Поле «Предпочтения» можно оставить пустым.</div>
+                <div class="format-row"><span data-i18n="howto.format_nick">Ник:</span> <span data-i18n="howto.format_nick_desc">псевдоним для каталога</span></div>
+                <div class="format-row"><span data-i18n="howto.format_request">Запрос:</span> <span data-i18n="howto.format_request_desc">что нужно найти или получить</span></div>
+                <div class="format-row"><span data-i18n="howto.format_prefs">Предпочтения:</span> <span data-i18n="howto.format_prefs_desc">уточнения (ОС, платформа, бюджет и т.д.)</span></div>
+                <div class="format-note" data-i18n="howto.format_note">* Поле «Предпочтения» можно оставить пустым.</div>
               </div>
               <button class="copy-btn" id="template-copy-btn" style="margin-top:14px;">
-                <span class="copy-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"></path></svg></span> скопировать шаблон
+                <span class="copy-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"></path></svg></span> <span data-i18n="howto.copy_template">скопировать шаблон</span>
               </button>
             </div>
           </div>
           <div class="howto-step">
             <div class="step-num">3</div>
             <div class="step-body">
-              Решение появится в <strong>Каталоге</strong> с твоим ником, описанием и советами.<br><br>
-              Время обработки &mdash; <strong>до 24ч</strong>. Ответ в Session не приходит &mdash; проверяй каталог через <strong>Ctrl+F &rarr; твой ник</strong>.
+              <span data-i18n="howto.step3">Решение появится в <strong>Каталоге</strong> с твоим ником, описанием и советами.<br><br>Время обработки &mdash; <strong>до 24ч</strong>. Ответ в Session не приходит &mdash; проверяй каталог через <strong>Ctrl+F &rarr; твой ник</strong>.</span>
             </div>
           </div>
           <div class="howto-step">
             <div class="step-num">4</div>
             <div class="step-body">
-              Ссылки копируются кнопкой и вставляются вручную в <strong>браузер</strong>. Прямые клики намеренно отключены для безопасности.
+              <span data-i18n="howto.step4">Ссылки копируются кнопкой и вставляются вручную в <strong>браузер</strong>. Прямые клики намеренно отключены для безопасности.</span>
             </div>
           </div>
         </div>
       </div>
 
       <div class="panel-page" id="page-catalog">
-        <div class="section-title">// каталог инструментов</div>
+        <div class="section-title" data-i18n="catalog.title">// каталог инструментов</div>
         <div class="catalog-controls">
           <div class="catalog-tabs">
-            <button class="cat-tab active" data-cat="all"><span class="tab-prefix">//</span>Все</button>
-            <button class="cat-tab" data-cat="access"><span class="tab-prefix">//</span>Операционные Системы</button>
+            <button class="cat-tab active" data-cat="all"><span class="tab-prefix">//</span><span data-i18n="catalog.tab_all">Все</span></button>
+            <button class="cat-tab" data-cat="access"><span class="tab-prefix">//</span><span data-i18n="catalog.tab_access">Операционные Системы</span></button>
             <button class="cat-tab" data-cat="git"><span class="tab-prefix">//</span>Git / Open-Source</button>
             <button class="cat-tab" data-cat="ai"><span class="tab-prefix">//</span>AI-Agents</button>
-            <button class="cat-tab" data-cat="edu"><span class="tab-prefix">//</span>Обучение</button>
-            <button class="cat-tab" data-cat="hosting"><span class="tab-prefix">//</span>Хостинг</button>
-            <button class="cat-tab" data-cat="tools"><span class="tab-prefix">//</span>Сервисы</button>
-            <button class="cat-tab" data-cat="sec"><span class="tab-prefix">//</span>Безопасность</button>
-            <button class="cat-tab" data-cat="fun"><span class="tab-prefix">//</span>Моды и игры</button>
-            <button class="cat-tab support" id="catalog-rec-btn">Рекомендации владельца</button>
-            <button class="cat-tab bypass" id="catalog-suggest-btn">Предложить инструмент</button>
+            <button class="cat-tab" data-cat="edu"><span class="tab-prefix">//</span><span data-i18n="catalog.tab_edu">Обучение</span></button>
+            <button class="cat-tab" data-cat="hosting"><span class="tab-prefix">//</span><span data-i18n="catalog.tab_hosting">Хостинг</span></button>
+            <button class="cat-tab" data-cat="tools"><span class="tab-prefix">//</span><span data-i18n="catalog.tab_tools">Сервисы</span></button>
+            <button class="cat-tab" data-cat="sec"><span class="tab-prefix">//</span><span data-i18n="catalog.tab_sec">Безопасность</span></button>
+            <button class="cat-tab" data-cat="fun"><span class="tab-prefix">//</span><span data-i18n="catalog.tab_fun">Моды и игры</span></button>
+            <button class="cat-tab support" id="catalog-rec-btn" data-i18n="catalog.rec_btn">Рекомендации владельца</button>
+            <button class="cat-tab bypass" id="catalog-suggest-btn" data-i18n="catalog.suggest_btn">Предложить инструмент</button>
           </div>
-          <input type="text" class="cat-search" placeholder="поиск по каталогу...">
+          <button class="cat-tab" data-cat="fav" id="catalog-fav-btn"><span class="tab-prefix">*</span><span data-i18n="catalog.tab_fav">Избранное</span></button>
+          <input type="text" class="cat-search" data-i18n="catalog.search" placeholder="поиск по каталогу...">
           <div class="catalog-count" id="cat-count"></div>
-          <div class="risk-legend"><span class="risk-legend-item"><span class="card-risk-dot low" style="position:static;"></span>низкий риск</span><span class="risk-legend-item"><span class="card-risk-dot medium" style="position:static;"></span>средний риск</span><span class="risk-legend-item"><span class="card-risk-dot high" style="position:static;"></span>высокий риск</span></div>
+          <div class="risk-legend"><span class="risk-legend-item"><span class="card-risk-dot low" style="position:static;"></span><span data-i18n="catalog.risk_low">низкий риск</span></span><span class="risk-legend-item"><span class="card-risk-dot medium" style="position:static;"></span><span data-i18n="catalog.risk_medium">средний риск</span></span><span class="risk-legend-item"><span class="card-risk-dot high" style="position:static;"></span><span data-i18n="catalog.risk_high">высокий риск</span></span></div>
         </div>
         <div class="pinned-grid" id="pinned-grid"></div>
         <div class="catalog-grid" id="catalog-grid"></div>
@@ -629,34 +690,34 @@
         <div class="guide-modal" id="suggest-modal" style="max-width:520px;">
           <button class="guide-modal-close" id="suggest-modal-close">&times;</button>
           <div class="guide-header">
-            <div class="guide-cat">// предложить инструмент</div>
-            <div class="guide-title" style="font-size:16px;">Предложи инструмент для каталога</div>
-            <div class="guide-subtitle">Заполни форму — мы проверим и добавим.</div>
+            <div class="guide-cat" data-i18n="suggest.title">// предложить инструмент</div>
+            <div class="guide-title" style="font-size:16px;" data-i18n="suggest.heading">Предложи инструмент для каталога</div>
+            <div class="guide-subtitle" data-i18n="suggest.subtitle">Заполни форму — мы проверим и добавим.</div>
           </div>
           <form id="suggest-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" style="display:flex;flex-direction:column;gap:16px;">
             <div>
-              <label style="font-family:var(--font-mono);font-size:10px;letter-spacing:2px;color:var(--text-dim);text-transform:uppercase;display:block;margin-bottom:6px;">Название *</label>
-              <input type="text" id="suggest-title" required style="width:100%;font-family:var(--font-mono);font-size:13px;color:var(--text);background:rgba(0,0,0,0.3);border:1px solid var(--border);padding:10px 14px;outline:none;transition:border-color 0.2s ease;box-sizing:border-box;" placeholder="Например: Tor Browser">
+              <label style="font-family:var(--font-mono);font-size:10px;letter-spacing:2px;color:var(--text-dim);text-transform:uppercase;display:block;margin-bottom:6px;" data-i18n="suggest.label_name">Название *</label>
+              <input type="text" id="suggest-title" required style="width:100%;font-family:var(--font-mono);font-size:13px;color:var(--text);background:rgba(0,0,0,0.3);border:1px solid var(--border);padding:10px 14px;outline:none;transition:border-color 0.2s ease;box-sizing:border-box;" data-i18n="suggest.placeholder_name" placeholder="Например: Tor Browser">
             </div>
             <div>
-              <label style="font-family:var(--font-mono);font-size:10px;letter-spacing:2px;color:var(--text-dim);text-transform:uppercase;display:block;margin-bottom:6px;">Ссылка *</label>
+              <label style="font-family:var(--font-mono);font-size:10px;letter-spacing:2px;color:var(--text-dim);text-transform:uppercase;display:block;margin-bottom:6px;" data-i18n="suggest.label_url">Ссылка *</label>
               <input type="url" id="suggest-url" required style="width:100%;font-family:var(--font-mono);font-size:13px;color:var(--text);background:rgba(0,0,0,0.3);border:1px solid var(--border);padding:10px 14px;outline:none;transition:border-color 0.2s ease;box-sizing:border-box;" placeholder="https://...">
             </div>
             <div>
-              <label style="font-family:var(--font-mono);font-size:10px;letter-spacing:2px;color:var(--text-dim);text-transform:uppercase;display:block;margin-bottom:6px;">Описание</label>
-              <textarea id="suggest-desc" rows="3" style="width:100%;font-family:var(--font-mono);font-size:13px;color:var(--text);background:rgba(0,0,0,0.3);border:1px solid var(--border);padding:10px 14px;outline:none;transition:border-color 0.2s ease;resize:vertical;box-sizing:border-box;" placeholder="Кратко опиши, зачем он нужен"></textarea>
+              <label style="font-family:var(--font-mono);font-size:10px;letter-spacing:2px;color:var(--text-dim);text-transform:uppercase;display:block;margin-bottom:6px;" data-i18n="suggest.label_desc">Описание</label>
+              <textarea id="suggest-desc" rows="3" style="width:100%;font-family:var(--font-mono);font-size:13px;color:var(--text);background:rgba(0,0,0,0.3);border:1px solid var(--border);padding:10px 14px;outline:none;transition:border-color 0.2s ease;resize:vertical;box-sizing:border-box;" data-i18n="suggest.placeholder_desc" placeholder="Кратко опиши, зачем он нужен"></textarea>
             </div>
             <div>
-              <label style="font-family:var(--font-mono);font-size:10px;letter-spacing:2px;color:var(--text-dim);text-transform:uppercase;display:block;margin-bottom:6px;">Твой ник (необязательно)</label>
-              <input type="text" id="suggest-nick" style="width:100%;font-family:var(--font-mono);font-size:13px;color:var(--text);background:rgba(0,0,0,0.3);border:1px solid var(--border);padding:10px 14px;outline:none;transition:border-color 0.2s ease;box-sizing:border-box;" placeholder="Псевдоним для каталога">
+              <label style="font-family:var(--font-mono);font-size:10px;letter-spacing:2px;color:var(--text-dim);text-transform:uppercase;display:block;margin-bottom:6px;" data-i18n="suggest.label_nick">Твой ник (необязательно)</label>
+              <input type="text" id="suggest-nick" style="width:100%;font-family:var(--font-mono);font-size:13px;color:var(--text);background:rgba(0,0,0,0.3);border:1px solid var(--border);padding:10px 14px;outline:none;transition:border-color 0.2s ease;box-sizing:border-box;" data-i18n="suggest.placeholder_nick" placeholder="Псевдоним для каталога">
             </div>
             <div style="display:flex;gap:10px;align-items:center;">
-              <button type="submit" style="font-family:var(--font-mono);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--bg);background:linear-gradient(135deg,#6dd400,#00c896);border:none;padding:12px 24px;cursor:pointer;transition:opacity 0.2s ease;">отправить</button>
+              <button type="submit" style="font-family:var(--font-mono);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--bg);background:linear-gradient(135deg,#6dd400,#00c896);border:none;padding:12px 24px;cursor:pointer;transition:opacity 0.2s ease;" data-i18n="suggest.submit">отправить</button>
               <span id="suggest-status" style="font-family:var(--font-mono);font-size:11px;color:var(--accent2);letter-spacing:1px;"></span>
             </div>
           </form>
           <div style="margin-top:16px;padding:12px 14px;border-left:2px solid rgba(255,160,40,0.4);background:rgba(255,140,0,0.04);font-size:12px;color:rgba(255,200,140,0.85);line-height:1.7;">
-            <strong style="color:rgba(255,200,80,1);">Важно:</strong> Мы проверяем каждый инструмент перед добавлением. Не отправляй вредоносный софт или нелегальный контент — отказ без обсуждений.
+            <strong style="color:rgba(255,200,80,1);" data-i18n="suggest.important">Важно:</strong> <span data-i18n="suggest.warning">Мы проверяем каждый инструмент перед добавлением. Не отправляй вредоносный софт или нелегальный контент — отказ без обсуждений.</span>
           </div>
         </div>
       </div>
@@ -666,21 +727,24 @@
           <button class="guide-modal-close" id="guide-modal-close">&times;</button>
           <div class="guide-header">
             <div class="guide-cat" id="guide-cat"></div>
-            <div class="guide-title" id="guide-title"></div>
-            <div class="guide-subtitle">Руководство по скачиванию и безопасности.</div>
+            <div style="display:flex;align-items:center;gap:2px;">
+              <div class="guide-title" id="guide-title"></div>
+              <button class="guide-fav-btn" id="guide-fav-btn"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg></button>
+            </div>
+            <div class="guide-subtitle" data-i18n="guide.subtitle">Руководство по скачиванию и безопасности.</div>
           </div>
           <div class="guide-tabs">
-            <button class="guide-tab active" data-gtab="risk">Риск</button>
-            <button class="guide-tab" data-gtab="tool">Инструмент</button>
+            <button class="guide-tab active" data-gtab="risk" data-i18n="guide.tab_risk">Риск</button>
+            <button class="guide-tab" data-gtab="tool" data-i18n="guide.tab_tool">Инструмент</button>
           </div>
           <div class="guide-gtab active" id="guide-gtab-risk">
             <div id="guide-risk-badge"></div>
             <div class="guide-risk-details" id="guide-risk-details" style="display:none;">
-              <div class="guide-risk-details-title">// оценка рисков</div>
+              <div class="guide-risk-details-title" data-i18n="guide.risk_title">// оценка рисков</div>
               <div id="guide-risk-rows"></div>
             </div>
             <div class="guide-scan-rec" id="guide-scan-rec" style="display:none;">
-              <div class="guide-scan-rec-title">// проверь файл перед использованием</div>
+              <div class="guide-scan-rec-title" data-i18n="guide.scan_title">// проверь файл перед использованием</div>
               <a class="guide-scan-link" href="https://www.virustotal.com" target="_blank">VirusTotal</a>
               <a class="guide-scan-link" href="https://any.run" target="_blank">Any.Run</a>
               <a class="guide-scan-link" href="https://www.hybrid-analysis.com" target="_blank">Hybrid Analysis</a>
@@ -688,13 +752,17 @@
           </div>
           <div class="guide-gtab" id="guide-gtab-tool">
             <div class="guide-intro" id="guide-intro-block" style="display:none;">
-              <div class="guide-intro-label">// что это и как работает</div>
+              <div class="guide-intro-label" data-i18n="guide.intro_title">// что это и как работает</div>
               <div class="guide-intro-text" id="guide-intro-text"></div>
             </div>
             <div id="guide-steps"></div>
             <div class="guide-safety" id="guide-safety-block">
-              <div class="guide-safety-label">// сводка о безопасности</div>
+              <div class="guide-safety-label" data-i18n="guide.safety_title">// сводка о безопасности</div>
               <div class="guide-safety-text" id="guide-safety-text"></div>
+            </div>
+            <div class="guide-related" id="guide-related-block">
+              <div class="guide-related-title" data-i18n="guide.related">// похожие инструменты</div>
+              <div class="guide-related-grid" id="guide-related-grid"></div>
             </div>
           </div>
         </div>
@@ -702,15 +770,15 @@
 
       <div class="qr-time-modal" id="qr-time-modal">
         <div class="qr-time-box">
-          <div class="qr-time-title">выберите время показа QR-кода</div>
+          <div class="qr-time-title" data-i18n="qr.title">выберите время показа QR-кода</div>
           <div class="qr-time-btns">
-            <button data-sec="3">3 сек</button>
-            <button data-sec="5">5 сек</button>
-            <button data-sec="10">10 сек</button>
-            <button data-sec="15">15 сек</button>
-            <button data-sec="custom">свой</button>
+            <button data-sec="3" data-i18n="qr.sec3">3 сек</button>
+            <button data-sec="5" data-i18n="qr.sec5">5 сек</button>
+            <button data-sec="10" data-i18n="qr.sec10">10 сек</button>
+            <button data-sec="15" data-i18n="qr.sec15">15 сек</button>
+            <button data-sec="custom" data-i18n="qr.custom">свой</button>
           </div>
-          <button class="qr-time-close" id="qr-time-close">отмена</button>
+          <button class="qr-time-close" id="qr-time-close" data-i18n="qr.cancel">отмена</button>
         </div>
       </div>
 
@@ -723,57 +791,72 @@
       <div class="rec-overlay" id="rec-overlay">
         <div class="rec-modal">
           <button class="rec-modal-close" id="rec-modal-close">&times;</button>
-          <h2>// РЕКОМЕНДАЦИИ ВЛАДЕЛЬЦА</h2>
+          <h2 data-i18n="rec.title">// РЕКОМЕНДАЦИИ ВЛАДЕЛЬЦА</h2>
           <div class="rec-tabs">
-            <button class="rec-tab active" data-rec="about">О инструментах</button>
-            <button class="rec-tab" data-rec="help">Помощь</button>
-            <button class="rec-tab" data-rec="site">По сайту</button>
-            <button class="rec-tab" data-rec="tools">По инструментам</button>
+            <button class="rec-tab active" data-rec="about" data-i18n="rec.tab_about">О инструментах</button>
+            <button class="rec-tab" data-rec="help" data-i18n="rec.tab_help">Помощь</button>
+            <button class="rec-tab" data-rec="site" data-i18n="rec.tab_site">По сайту</button>
+            <button class="rec-tab" data-rec="tools" data-i18n="rec.tab_tools">По инструментам</button>
           </div>
           <div class="rec-pages">
             <div class="rec-page active" id="rec-page-about">
               <div class="rec-section">
-                <p style="font-size:13px;color:var(--text-dim);line-height:1.8;margin-bottom:12px;">Слушай, тут всё просто. Всё, что лежит в каталоге — не магия и не привилегия, а обычные <strong>инструменты</strong>. Они расширяют твои возможности, но, как и любой инструмент, могут поранить, если держать его не за ту сторону.</p>
-                <p style="font-size:13px;color:var(--text-dim);line-height:1.8;margin-bottom:12px;">Я не пытаюсь никого запугать рисками — просто по опыту знаю: человек, который понимает, как работает его инструмент, получает от него пользу. А тот, кто нажимает не глядя — иногда огребает не по злому умыслу, а просто потому что не знал.</p>
-                <p style="font-size:13px;color:var(--text-dim);line-height:1.8;margin-bottom:20px;"><strong>Поэтому — перед тем как что-то использовать:</strong> открой гайд, глянь на риск-метку, пойми, для чего это вообще нужно. Не всё подходит для всех задач, и это нормально.</p>
+                <div data-i18n="rec.about_p1"><p style="font-size:13px;color:var(--text-dim);line-height:1.8;margin-bottom:12px;">Слушай, тут всё просто. Всё, что лежит в каталоге — не магия и не привилегия, а обычные <strong>инструменты</strong>. Они расширяют твои возможности, но, как и любой инструмент, могут поранить, если держать его не за ту сторону.</p></div>
+                <div data-i18n="rec.about_p2"><p style="font-size:13px;color:var(--text-dim);line-height:1.8;margin-bottom:12px;">Я не пытаюсь никого запугать рисками — просто по опыту знаю: человек, который понимает, как работает его инструмент, получает от него пользу. А тот, кто нажимает не глядя — иногда огребает не по злому умыслу, а просто потому что не знал.</p></div>
+                <div data-i18n="rec.about_p3"><p style="font-size:13px;color:var(--text-dim);line-height:1.8;margin-bottom:20px;"><strong>Поэтому — перед тем как что-то использовать:</strong> открой гайд, глянь на риск-метку, пойми, для чего это вообще нужно. Не всё подходит для всех задач, и это нормально.</p></div>
               </div>
               <div class="rec-section">
-                <div class="rec-section-title">// критерии оценки рисков</div>
+                <div class="rec-section-title" data-i18n="rec.criteria_title">// критерии оценки рисков</div>
                 <div class="risk-criteria-list">
                   <div class="risk-criterion">
-                    <div class="risk-criterion-head"><span class="risk-criterion-name">деанонимизация</span><span class="risk-criterion-q">Кто я в этом инструменте?</span></div>
-                    <div class="risk-criterion-desc">Насколько инструмент помогает установить реальную личность пользователя. Низкий — регистрация без телефона/email. Средний — нужен email или номер. Высокий — подтверждение личности (паспорт, видео, карта).</div>
+                    <div class="risk-criterion-head"><span class="risk-criterion-name" data-i18n="rec.c1_name">деанонимизация</span><span class="risk-criterion-q" data-i18n="rec.c1_q">Кто я в этом инструменте?</span></div>
+                    <div class="risk-levels"><span class="risk-level low active">низкий</span><span class="risk-level mid">средний</span><span class="risk-level high">высокий</span></div>
+                    <div class="risk-criterion-desc" data-i18n="rec.c1_desc">Насколько инструмент помогает установить реальную личность пользователя. Низкий — регистрация без телефона/email. Средний — нужен email или номер. Высокий — подтверждение личности (паспорт, видео, карта).</div>
                   </div>
                   <div class="risk-criterion">
-                    <div class="risk-criterion-head"><span class="risk-criterion-name">утечка данных</span><span class="risk-criterion-q">Что я здесь оставляю?</span></div>
-                    <div class="risk-criterion-desc">Объём и тип данных, которые могут уйти наружу. Низкий — данные обрабатываются локально. Средний — уходят на серверы провайдера, но зашифрованы. Высокий — данные доступны провайдеру в открытом виде.</div>
+                    <div class="risk-criterion-head"><span class="risk-criterion-name" data-i18n="rec.c2_name">утечка данных</span><span class="risk-criterion-q" data-i18n="rec.c2_q">Что я здесь оставляю?</span></div>
+                    <div class="risk-levels"><span class="risk-level low active">низкий</span><span class="risk-level mid">средний</span><span class="risk-level high">высокий</span></div>
+                    <div class="risk-criterion-desc" data-i18n="rec.c2_desc">Объём и тип данных, которые могут уйти наружу. Низкий — данные обрабатываются локально. Средний — уходят на серверы провайдера, но зашифрованы. Высокий — данные доступны провайдеру в открытом виде.</div>
                   </div>
                   <div class="risk-criterion">
-                    <div class="risk-criterion-head"><span class="risk-criterion-name">уровень знаний</span><span class="risk-criterion-q">Знаю ли я, что делаю?</span></div>
-                    <div class="risk-criterion-desc">Какие знания нужны, чтобы случайно не утечь. Низкий — интуитивно понятен. Средний — требует базовых знаний, есть настройки которые стоит изменить. Высокий — требует технических знаний, ошибки = утечка данных.</div>
+                    <div class="risk-criterion-head"><span class="risk-criterion-name" data-i18n="rec.c3_name">уровень знаний</span><span class="risk-criterion-q" data-i18n="rec.c3_q">Знаю ли я, что делаю?</span></div>
+                    <div class="risk-levels"><span class="risk-level low active">низкий</span><span class="risk-level mid">средний</span><span class="risk-level high">высокий</span></div>
+                    <div class="risk-criterion-desc" data-i18n="rec.c3_desc">Какие знания нужны, чтобы случайно не утечь. Низкий — интуитивно понятен. Средний — требует базовых знаний, есть настройки которые стоит изменить. Высокий — требует технических знаний, ошибки = утечка данных.</div>
                   </div>
                   <div class="risk-criterion">
-                    <div class="risk-criterion-head"><span class="risk-criterion-name">сложность настройки</span><span class="risk-criterion-q">Насколько сложно настроить правильно?</span></div>
-                    <div class="risk-criterion-desc">Чем сложнее настройка — тем выше шанс ошибки. Низкий — скачал и работает. Средний — несколько шагов. Высокий — терминал, команды, зависимости.</div>
+                    <div class="risk-criterion-head"><span class="risk-criterion-name" data-i18n="rec.c4_name">сложность настройки</span><span class="risk-criterion-q" data-i18n="rec.c4_q">Насколько сложно настроить правильно?</span></div>
+                    <div class="risk-levels"><span class="risk-level low active">низкий</span><span class="risk-level mid">средний</span><span class="risk-level high">высокий</span></div>
+                    <div class="risk-criterion-desc" data-i18n="rec.c4_desc">Чем сложнее настройка — тем выше шанс ошибки. Низкий — скачал и работает. Средний — несколько шагов. Высокий — терминал, команды, зависимости.</div>
                   </div>
                   <div class="risk-criterion">
-                    <div class="risk-criterion-head"><span class="risk-criterion-name">зависимость от third-party</span><span class="risk-criterion-q">От кого я зависю?</span></div>
-                    <div class="risk-criterion-desc">Насколько инструмент зависит от внешних сервисов. Низкий — полностью локальный. Средний — зависит от одного сервиса, но есть self-hosted. Высокий — полная зависимость от облака.</div>
+                    <div class="risk-criterion-head"><span class="risk-criterion-name" data-i18n="rec.c5_name">зависимость от third-party</span><span class="risk-criterion-q" data-i18n="rec.c5_q">От кого я зависю?</span></div>
+                    <div class="risk-levels"><span class="risk-level low active">низкий</span><span class="risk-level mid">средний</span><span class="risk-level high">высокий</span></div>
+                    <div class="risk-criterion-desc" data-i18n="rec.c5_desc">Насколько инструмент зависит от внешних сервисов. Низкий — полностью локальный. Средний — зависит от одного сервиса, но есть self-hosted. Высокий — полная зависимость от облака.</div>
                   </div>
                   <div class="risk-criterion">
-                    <div class="risk-criterion-head"><span class="risk-criterion-name">альтернативы</span><span class="risk-criterion-q">Есть ли более безопасный вариант?</span></div>
-                    <div class="risk-criterion-desc">Наличие более безопасной замены. «Есть» — можно заменить на приватный аналог. «Нет» — уникальный инструмент, замены нет.</div>
+                    <div class="risk-criterion-head"><span class="risk-criterion-name" data-i18n="rec.c6_name">альтернативы</span><span class="risk-criterion-q" data-i18n="rec.c6_q">Есть ли более безопасный вариант?</span></div>
+                    <div class="risk-levels"><span class="risk-level low active">есть</span><span class="risk-level high">нет</span></div>
+                    <div class="risk-criterion-desc" data-i18n="rec.c6_desc">Наличие более безопасной замены. «Есть» — можно заменить на приватный аналог. «Нет» — уникальный инструмент, замены нет.</div>
                   </div>
                 </div>
-                <p style="font-size:12px;color:var(--text-dim);line-height:1.8;margin-top:16px;padding-top:12px;border-top:1px solid var(--border);">Общий уровень риска определяется <strong>наибольшим</strong> значением среди критериев — консервативный подход: лучше переоценить, чем недооценить.</p>
+                <p style="font-size:12px;color:var(--text-dim);line-height:1.8;margin-top:16px;padding-top:12px;border-top:1px solid var(--border);" data-i18n="rec.risk_footer">Общий уровень риска определяется <strong>наибольшим</strong> значением среди критериев — консервативный подход: лучше переоценить, чем недооценить.</p>
               </div>
             </div>
 
             <div class="rec-page" id="rec-page-help">
               <div class="rec-section">
+                <div class="rec-section-title">// где искать помощь</div>
                 <ul>
-                  <li>Обратись к <strong>компетентному ИИ</strong> (Claude, ChatGPT) с просьбой разобраться в выбранном инструменте — объясни, что хочешь сделать, и получи рекомендацию</li>
-                  <li>Обратись к <strong>владельцу FLEARANCE</strong> — он с радостью ответит и порекомендует лучшее решение для твоей задачи</li>
+                  <li data-i18n="rec.help1">Обратись к <strong>компетентному ИИ</strong> (Claude, ChatGPT) с просьбой разобраться в выбранном инструменте — объясни, что хочешь сделать, и получи рекомендацию</li>
+                  <li data-i18n="rec.help2">Обратись к <strong>владельцу FLEARANCE</strong> — он с радостью ответит и порекомендует лучшее решение для твоей задачи</li>
+                </ul>
+              </div>
+              <div class="rec-section">
+                <div class="rec-section-title">// полезные ресурсы</div>
+                <ul>
+                  <li><strong>Arch Wiki</strong> — лучшая техническая документация в опенсорсе. Даже если не используешь Arch</li>
+                  <li><strong>TryHackMe</strong> — практические задания по кибербезопасности. Есть бесплатный тариф</li>
+                  <li><strong>Exercism</strong> — практика программирования на 65+ языках с менторской обратной связью</li>
                 </ul>
               </div>
             </div>
@@ -781,23 +864,40 @@
             <div class="rec-page" id="rec-page-site">
               <div class="rec-section">
                 <ul>
-                  <li>Держи под рукой <strong>Tor Browser</strong> или <strong>Orbot</strong> — так соединение стабильнее и приватнее, особенно если какая-то ссылка ведёт себя странно</li>
-                  <li>Не используй реальное имя в псевдониме — каталог публичный</li>
-                  <li>Скопируй шаблон запроса перед отправкой — ускорит обработку</li>
-                  <li>Проверяй каталог через <strong>Ctrl+F</strong> по нику — ответ появится там, а не в Session</li>
-                  <li>Ссылки копируются кнопкой и вставляются вручную — прямые клики отключены намеренно</li>
+                  <li data-i18n="rec.site1">Держи под рукой <strong>Tor Browser</strong> или <strong>Orbot</strong> — так соединение стабильнее и приватнее, особенно если какая-то ссылка ведёт себя странно</li>
+                  <li data-i18n="rec.site2">Не используй реальное имя в псевдониме — каталог публичный</li>
+                  <li data-i18n="rec.site3">Скопируй шаблон запроса перед отправкой — ускорит обработку</li>
+                  <li data-i18n="rec.site4">Проверяй каталог через <strong>Ctrl+F</strong> по нику — ответ появится там, а не в Session</li>
+                  <li data-i18n="rec.site5">Ссылки копируются кнопкой и вставляются вручную — прямые клики отключены намеренно</li>
                 </ul>
               </div>
             </div>
 
             <div class="rec-page" id="rec-page-tools">
               <div class="rec-section">
-                <p style="font-size:13px;color:var(--text-dim);line-height:1.7;margin-bottom:14px;"><strong>Мессенджеры</strong> — основа приватных коммуникаций. Вот что рекомендую:</p>
+                <div class="rec-section-title">// мессенджеры</div>
+                <div data-i18n="rec.tools_intro"><p style="font-size:13px;color:var(--text-dim);line-height:1.7;margin-bottom:14px;"><strong>Мессенджеры</strong> — основа приватных коммуникаций. Вот что рекомендую:</p></div>
                 <ul>
-                  <li><strong>SimpleX Chat</strong> — максимальная приватность. Нет даже номера телефона для регистрации. Полная [децентрализация]</li>
-                  <li><strong>Session</strong> — улучшенный интерфейс, работает через сеть Lokinet. Хороший баланс удобства и приватности</li>
-                  <li><strong>Signal</strong> — золотой стандарт [E2E шифрование], но без [децентрализация] — привязка к номеру телефона повышает риск [деанонимизация]</li>
-                  <li><strong>Molly</strong> — улучшенная версия Signal с дополнительными настройками приватности и автоблокировкой</li>
+                  <li data-i18n="rec.tools1"><strong>SimpleX Chat</strong> — максимальная приватность. Нет даже номера телефона для регистрации. Полная [децентрализация]</li>
+                  <li data-i18n="rec.tools2"><strong>Session</strong> — улучшенный интерфейс, работает через сеть Lokinet. Хороший баланс удобства и приватности</li>
+                  <li data-i18n="rec.tools3"><strong>Signal</strong> — золотой стандарт [E2E шифрование], но без [децентрализация] — привязка к номеру телефона повышает риск [деанонимизация]</li>
+                  <li data-i18n="rec.tools4"><strong>Molly</strong> — улучшенная версия Signal с дополнительными настройками приватности и автоблокировкой</li>
+                </ul>
+              </div>
+              <div class="rec-section">
+                <div class="rec-section-title">// операционные системы</div>
+                <ul>
+                  <li><strong>GrapheneOS</strong> — hardened Android для Pixel. Максимальная приватность на мобильном</li>
+                  <li><strong>Tails OS</strong> — live-система с флешки. Ничего не сохраняется, весь трафик через Tor</li>
+                  <li><strong>Linux Mint</strong> — лучший старт для перехода с Windows. Интуитивный интерфейс</li>
+                </ul>
+              </div>
+              <div class="rec-section">
+                <div class="rec-section-title">// безопасность</div>
+                <ul>
+                  <li><strong>KeePassXC</strong> — локальный менеджер паролей. Никаких облаков — база только у тебя</li>
+                  <li><strong>uBlock Origin</strong> — блокировщик рекламы и трекеров. Обязателен к установке</li>
+                  <li><strong>privacy.seedy</strong> — скрипты для отключения телеметрии Windows/macOS/Linux</li>
                 </ul>
               </div>
             </div>
@@ -806,26 +906,26 @@
       </div>
 
       <div class="panel-page" id="page-lenta">
-        <div class="section-title">// лента добавлений</div>
+        <div class="section-title" data-i18n="feed.title">// лента добавлений</div>
         <div style="max-width:700px;width:100%;">
-          <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-dim);letter-spacing:1px;margin-bottom:24px;line-height:1.7;">
+          <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-dim);letter-spacing:1px;margin-bottom:24px;line-height:1.7;" data-i18n="feed.desc">
             Все инструменты в хронологическом порядке — от новых к старым. Полная история добавлений.
           </div>
           <div id="lenta-feed"></div>
-          <div id="lenta-empty" style="display:none;text-align:center;padding:60px 20px;color:var(--text-dim);font-family:var(--font-mono);font-size:13px;letter-spacing:1px;">
+          <div id="lenta-empty" style="display:none;text-align:center;padding:60px 20px;color:var(--text-dim);font-family:var(--font-mono);font-size:13px;letter-spacing:1px;" data-i18n="feed.empty">
             лента пуста
           </div>
         </div>
       </div>
 
       <div class="panel-page" id="page-popular">
-        <div class="section-title">// популярные инструменты</div>
+        <div class="section-title" data-i18n="popular.title">// популярные инструменты</div>
         <div style="max-width:900px;width:100%;">
-          <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-dim);letter-spacing:1px;margin-bottom:20px;line-height:1.7;">
+          <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-dim);letter-spacing:1px;margin-bottom:20px;line-height:1.7;" data-i18n="popular.desc">
             Инструменты сортируются по количеству просмотров. Чем чаще открывают руководство — тем выше в списке.
           </div>
-          <div id="popular-grid" class="catalog-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;"></div>
-          <div id="popular-empty" style="display:none;text-align:center;padding:60px 20px;color:var(--text-dim);font-family:var(--font-mono);font-size:13px;letter-spacing:1px;">
+          <div id="popular-grid" class="catalog-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;"></div>
+          <div id="popular-empty" style="display:none;text-align:center;padding:60px 20px;color:var(--text-dim);font-family:var(--font-mono);font-size:13px;letter-spacing:1px;" data-i18n="popular.empty">
             Пока нет данных о просмотрах. Открывай руководства в каталоге — данные появятся здесь.
           </div>
         </div>
@@ -833,38 +933,38 @@
 
       <div class="panel-page" id="page-policy">
         <div class="policy-full">
-          <h2>// ПОЛИТИКА</h2>
-          <p><strong>FLEARANCE</strong> &mdash; арсенал инструментов для расширения возможностей. Мы собираем open-source решения, AI-агенты, лайфхаки и ресурсы, которые помогают учиться, зарабатывать и становиться самостоятельнее.</p>
-          <p><strong>Приоритет:</strong></p>
+          <h2 data-i18n="policy.title">// ПОЛИТИКА</h2>
+          <p data-i18n="policy.p1"><strong>FLEARANCE</strong> &mdash; арсенал инструментов для расширения возможностей. Мы собираем open-source решения, AI-агенты, лайфхаки и ресурсы, которые помогают учиться, зарабатывать и становиться самостоятельнее.</p>
+          <p><strong data-i18n="policy.priority">Приоритет:</strong></p>
           <ul>
-            <li>Open-source софт и инструменты с открытым исходным кодом</li>
-            <li>AI-агенты и автоматизация рабочих процессов</li>
-            <li>Фичи, гайды и лайфхаки для повышения продуктивности</li>
-            <li>Бесплатные ресурсы и легальные способы получения платного софта</li>
-            <li>Инструменты приватности и цифровой безопасности</li>
+            <li data-i18n="policy.li1">Open-source софт и инструменты с открытым исходным кодом</li>
+            <li data-i18n="policy.li2">AI-агенты и автоматизация рабочих процессов</li>
+            <li data-i18n="policy.li3">Фичи, гайды и лайфхаки для повышения продуктивности</li>
+            <li data-i18n="policy.li4">Бесплатные ресурсы и легальные способы получения платного софта</li>
+            <li data-i18n="policy.li5">Инструменты приватности и цифровой безопасности</li>
           </ul>
-          <p><strong>Не принимаются:</strong> запросы на незаконный контент, вредоносный софт, материалы причиняющие вред людям &mdash; отказ без обсуждений.</p>
-          <p><strong>Анонимность:</strong> мы не храним данные пользователей. Нет логов, нет баз данных, нет куки. Единственный публичный идентификатор &mdash; псевдоним в каталоге. Выбирай ник, не связанный с личностью.</p>
-          <p><strong>Ответственность:</strong> FLEARANCE — навигационный сервис. Все ресурсы — внешние сайты вне нашего контроля. Пользователь самостоятельно оценивает законность использования в своей юрисдикции.</p>
-          <p><strong>Дисклеймер:</strong> материалы сайта носят исключительно информационный и образовательный характер — мы описываем принципы работы технологий шифрования, анонимизации трафика и защиты данных. Сайт не предназначен и не рекламируется как средство обхода блокировок, установленных законодательством какой-либо страны. Использование любых инструментов из каталога должно осуществляться в соответствии с действующим законодательством страны пользователя — ответственность за это лежит на пользователе.</p>
+          <p data-i18n="policy.rejected"><strong>Не принимаются:</strong> запросы на незаконный контент, вредоносный софт, материалы причиняющие вред людям &mdash; отказ без обсуждений.</p>
+          <p data-i18n="policy.anon"><strong>Анонимность:</strong> мы не храним данные пользователей. Нет логов, нет баз данных, нет куки. Единственный публичный идентификатор &mdash; псевдоним в каталоге. Выбирай ник, не связанный с личностью.</p>
+          <p data-i18n="policy.responsibility"><strong>Ответственность:</strong> FLEARANCE — навигационный сервис. Все ресурсы — внешние сайты вне нашего контроля. Пользователь самостоятельно оценивает законность использования в своей юрисдикции.</p>
+          <p data-i18n="policy.disclaimer"><strong>Дисклеймер:</strong> материалы сайта носят исключительно информационный и образовательный характер — мы описываем принципы работы технологий шифрования, анонимизации трафика и защиты данных. Сайт не предназначен и не рекламируется как средство обхода блокировок, установленных законодательством какой-либо страны. Использование любых инструментов из каталога должно осуществляться в соответствии с действующим законодательством страны пользователя — ответственность за это лежит на пользователе.</p>
         </div>
       </div>
 
       <div class="panel-page" id="page-support">
         <div class="support-wrap">
-          <h2>// ПОДДЕРЖАТЬ</h2>
-          <p>FLEARANCE существует на принципах свободы и open-source. Если проект полезен &mdash; поддержи через Monero. Единственная по-настоящему приватная криптовалюта.</p>
+          <h2 data-i18n="support.title">// ПОДДЕРЖАТЬ</h2>
+          <p data-i18n="support.desc">FLEARANCE существует на принципах свободы и open-source. Если проект полезен &mdash; поддержи через Monero. Единственная по-настоящему приватная криптовалюта.</p>
           <div class="xmr-box" id="xmr-address-box">
-            <span class="xmr-label">// XMR адрес</span>
-            <span id="xmr-addr-text">[твой адрес monero здесь]</span>
+            <span class="xmr-label" data-i18n="support.xmr_label">// XMR адрес</span>
+            <span id="xmr-addr-text" data-i18n="support.xmr_addr">[твой адрес monero здесь]</span>
           </div>
           <div class="qr-wrap">
             <img src="qr.png" alt="Monero QR" class="qr-img" id="qr-img">
-            <div class="qr-label">// QR-код для оплаты</div>
-            <button class="qr-expand-btn" id="qr-expand-btn">⤢ развернуть QR</button>
+            <div class="qr-label" data-i18n="support.qr_label">// QR-код для оплаты</div>
+            <button class="qr-expand-btn" id="qr-expand-btn" data-i18n="support.qr_expand">⤢ развернуть QR</button>
           </div>
           <button class="copy-btn" id="xmr-copy-btn" style="margin-top:14px;">
-            <span class="copy-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"></path></svg></span> скопировать адрес Monero
+            <span class="copy-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"></path></svg></span> <span data-i18n="support.copy_addr">скопировать адрес Monero</span>
           </button>
         </div>
       </div>
@@ -874,43 +974,537 @@
 </div>
 
 <div class="bottomnav" id="bottomnav">
-  <button class="bnav-btn active" data-page="home"><span class="bnav-icon">⬡</span><span>Главная</span></button>
-  <button class="bnav-btn" data-page="howto"><span class="bnav-icon">◈</span><span>Как работаем</span></button>
-  <button class="bnav-btn" data-page="catalog"><span class="bnav-icon">◇</span><span>Каталог</span></button>
-  <button class="bnav-btn support-bnav" data-page="support"><span class="bnav-icon">♥</span><span>Поддержать</span></button>
+  <button class="bnav-btn active" data-page="home"><span class="bnav-icon">⬡</span><span data-i18n="nav.home">Главная</span></button>
+  <button class="bnav-btn" data-page="howto"><span class="bnav-icon">◈</span><span data-i18n="nav.howto">Как работаем</span></button>
+  <button class="bnav-btn" data-page="catalog"><span class="bnav-icon">◇</span><span data-i18n="nav.catalog">Каталог</span></button>
+  <button class="bnav-btn support-bnav" data-page="support"><span class="bnav-icon">♥</span><span data-i18n="nav.support">Поддержать</span></button>
 </div>
 
 <script>
-var SLANG = {
-  "Tor":"Программа для анонимного доступа в интернет. Скрывает реальное местоположение и шифрует трафик.",
-  "VPN":"Виртуальная частная сеть. Шифрует трафик и пропускает через сервер в другой стране.",
-  "APK":"Файл установки приложения для Android. Аналог .exe на Windows.",
-  "Docker":"Программа, запускающая приложения в изолированном контейнере — как виртуальная машина, но легче.",
-  "Git":"Система контроля версий. Отслеживает изменения в коде и позволяет работать в команде.",
-  "open-source":"Программа с открытым исходным кодом. Любой может посмотреть, как она работает, и изменить.",
-  "API":"Программный интерфейс. Способ для программ общаться друг с другом.",
-  "CLI":"Командная строка. Интерфейс, где вводишь команды текстом вместо кнопок.",
-  "MCP":"Протокол для подключения инструментов к AI-агентам.",
-  "SSH":"Протокол безопасного подключения к удалённому компьютеру через командную строку.",
-  "localhost":"Твой собственный компьютер. Адрес 127.0.0.1.",
-  "SOCKS5":"Тип прокси-сервера. Маршрутизирует весь трафик через себя.",
-  "proxy":"Посредник между тобой и сайтом. Скрывает реальное подключение.",
-  "GPU":"Графический процессор. Ускоряет вычисления, особенно в AI и 3D.",
-  "VRAM":"Память видеокарты. Объём влияет на размер запускаемых моделей.",
-  "LLM":"Большая языковая модель. AI, который понимает и генерирует текст.",
-  "RAG":"Метод, при котором AI ищет ответы в твоих загруженных документах.",
-  "Docker Compose":"Инструмент для запуска нескольких контейнеров Docker одновременно.",
-  "markdown":"Простой язык разметки для текста. Заголовки, списки, ссылки — пишутся символами.",
-  "E2E шифрование":"Сквозное шифрование. Данные зашифрованы от отправителя до получателя.",
-  ".onion":"Адрес сайта в сети Tor. Доступен только через Tor Browser.",
-  "Audit":"Режим бесплатного просмотра курса. Все видео и материалы доступны, сертификат — платный.",
-  "децентрализация":"Система без единого центра управления. Данные распределены между участниками, а не хранятся на одном сервере. Повышает приватность, но сложнее в использовании.",
-  "деанонимизация":"Раскрытие личности пользователя. Когда данные позволяют установить реальную личность человека за аккаунтом.",
-  "obfs4":"Тип маскировки трафика Tor. Делает Tor-трафик похожим на обычный HTTPS, что помогает обойти блокировки.",
-  "snowflake":"Альтернативный метод обхода блокировок Tor. Использует peer-to-peer сеть для маршрутизации трафика через добровольцев.",
-  "мост":"Промежуточный узел Tor, который скрыт от публичного списка. Помогает подключиться к сети Tor, когда прямые подключения заблокированы.",
-  "webtunnel":"Тип моста Tor, который маскирует трафик под обычное HTTPS-подключение к сайту. Наиболее устойчив к блокировкам на уровне DPI."
+var currentLang = localStorage.getItem("flearance-lang") || "ru";
+
+var LANG = {
+  ru: {
+    "splash.subtitle":"арсенал инструментов",
+    "splash.check1":"open-source фокус",
+    "splash.check2":"без регистрации",
+    "splash.check3":"без логов",
+    "splash.skip":"пропустить &rarr;",
+    "welcome.title":"Добро пожаловать!",
+    "welcome.p1":"<strong>FLEARANCE</strong> — арсенал инструментов для приватности, саморазвития и обхода блокировок. Без регистрации, без логов — просто открываешь и пользуешься.",
+    "welcome.p2":"Прямо сейчас ты можешь: <strong>скопировать Session ID</strong> и отправить запрос на добавление инструмента, <strong>пролистать каталог</strong> — там уже 80+ проверенных ссылок, или нажать <strong>«Предложить инструмент»</strong> и пополнить базу сам.",
+    "welcome.p3":"Все ссылки копируются и вставляются вручную — это для твоей безопасности. Если что-то непонятно — раздел <strong>«Как работаем»</strong> разложит всё по шагам.",
+    "welcome.timer":"Подожди",
+    "welcome.timer_suffix":"секунд...",
+    "welcome.btn":"Продолжить",
+    "nav.home":"Главная",
+    "nav.howto":"Как работаем",
+    "nav.catalog":"Каталог",
+    "nav.lenta":"Лента",
+    "nav.popular":"Популярные",
+    "nav.policy":"Политика",
+    "nav.support":"Поддержать",
+    "sidebar.title":"// принципы",
+    "sidebar.p1":"<strong>Open-source в приоритете.</strong> Инструменты с открытым исходным кодом — проверяем, рекомендуем.",
+    "sidebar.p2":"<strong>Расширение возможностей.</strong> Каждый ресурс — шаг к новым навыкам, доходу или самостоятельности.",
+    "sidebar.p3":"<strong>Один запрос — одно решение.</strong> С фокусом на конкретную задачу и советами по применению.",
+    "sidebar.p4":"<strong>Анонимность</strong> пользователей — приоритет. Ник в каталоге — единственный публичный идентификатор.",
+    "sidebar.p5":"<strong>Легальность.</strong> Только то, что не нарушает закон. Отказ — без обсуждений.",
+    "home.tagline":"// инструменты для расширения возможностей",
+    "home.blocked_title":"Часть ссылок в каталоге может быть недоступна в отдельных регионах",
+    "home.blocked_text":"Для доступа к инструментам рекомендуем <strong>Tor Browser</strong> — повышает анонимность и приватность соединения.",
+    "home.blocked_btn":"открыть Tor Browser в каталоге",
+    "home.counter_tools":"инструментов",
+    "home.counter_requests":"выполнено запросов",
+    "home.recent_title":"// последние добавленные",
+    "home.request_title":"// как отправить запрос",
+    "home.request_text":"Есть два способа отправить запрос на инструмент — через <strong>Session</strong> или по <strong>Email</strong>.<br>Все шаги, шаблон сообщения и контакты — на странице",
+    "home.request_link":"Как работаем",
+    "howto.title":"// КАК РАБОТАЕМ",
+    "howto.step1":"Выбери способ связи — <strong>Session</strong> или <strong>Email</strong> — и отправь запрос.",
+    "howto.copy_session":"скопировать Session ID",
+    "howto.copy_email":"скопировать Email",
+    "howto.warning":"&#9888; Псевдоним виден публично &mdash; не используй настоящее имя.",
+    "howto.step2":"Напиши запрос по формату:",
+    "howto.format_nick":"Ник:",
+    "howto.format_nick_desc":"псевдоним для каталога",
+    "howto.format_request":"Запрос:",
+    "howto.format_request_desc":"что нужно найти или получить",
+    "howto.format_prefs":"Предпочтения:",
+    "howto.format_prefs_desc":"уточнения (ОС, платформа, бюджет и т.д.)",
+    "howto.format_note":"* Поле «Предпочтения» можно оставить пустым.",
+    "howto.copy_template":"скопировать шаблон",
+    "howto.step3":"Решение появится в <strong>Каталоге</strong> с твоим ником, описанием и советами.<br><br>Время обработки &mdash; <strong>до 24ч</strong>. Ответ в Session не приходит &mdash; проверяй каталог через <strong>Ctrl+F &rarr; твой ник</strong>.",
+    "howto.step4":"Ссылки копируются кнопкой и вставляются вручную в <strong>браузер</strong>. Прямые клики намеренно отключены для безопасности.",
+    "catalog.title":"// каталог инструментов",
+    "catalog.tab_all":"Все",
+    "catalog.tab_access":"Операционные Системы",
+    "catalog.tab_git":"Git / Open-Source",
+    "catalog.tab_ai":"AI-Agents",
+    "catalog.tab_edu":"Обучение",
+    "catalog.tab_hosting":"Хостинг",
+    "catalog.tab_tools":"Сервисы",
+    "catalog.tab_sec":"Безопасность",
+    "catalog.tab_fun":"Моды и игры",
+    "catalog.rec_btn":"Рекомендации владельца",
+    "catalog.suggest_btn":"Предложить инструмент",
+    "catalog.search":"поиск по каталогу...",
+    "catalog.risk_low":"низкий риск",
+    "catalog.risk_medium":"средний риск",
+    "catalog.risk_high":"высокий риск",
+    "suggest.title":"// предложить инструмент",
+    "suggest.heading":"Предложи инструмент для каталога",
+    "suggest.subtitle":"Заполни форму — мы проверим и добавим.",
+    "suggest.label_name":"Название *",
+    "suggest.placeholder_name":"Например: Tor Browser",
+    "suggest.label_url":"Ссылка *",
+    "suggest.label_desc":"Описание",
+    "suggest.placeholder_desc":"Кратко опиши, зачем он нужен",
+    "suggest.label_nick":"Твой ник (необязательно)",
+    "suggest.placeholder_nick":"Псевдоним для каталога",
+    "suggest.submit":"отправить",
+    "suggest.important":"Важно:",
+    "suggest.warning":"Мы проверяем каждый инструмент перед добавлением. Не отправляй вредоносный софт или нелегальный контент — отказ без обсуждений.",
+    "guide.subtitle":"Руководство по скачиванию и безопасности.",
+    "guide.tab_risk":"Риск",
+    "guide.tab_tool":"Инструмент",
+    "guide.risk_title":"// оценка рисков",
+    "guide.scan_title":"// проверь файл перед использованием",
+    "guide.intro_title":"// что это и как работает",
+    "guide.safety_title":"// сводка о безопасности",
+    "qr.title":"выберите время показа QR-кода",
+    "qr.sec3":"3 сек",
+    "qr.sec5":"5 сек",
+    "qr.sec10":"10 сек",
+    "qr.sec15":"15 сек",
+    "qr.custom":"свой",
+    "qr.cancel":"отмена",
+    "rec.title":"// РЕКОМЕНДАЦИИ ВЛАДЕЛЬЦА",
+    "rec.tab_about":"О инструментах",
+    "rec.tab_help":"Помощь",
+    "rec.tab_site":"По сайту",
+    "rec.tab_tools":"По инструментам",
+    "rec.about_p1":"<p style=\"font-size:13px;color:var(--text-dim);line-height:1.8;margin-bottom:12px;\">Слушай, тут всё просто. Всё, что лежит в каталоге — не магия и не привилегия, а обычные <strong>инструменты</strong>. Они расширяют твои возможности, но, как и любой инструмент, могут поранить, если держать его не за ту сторону.</p>",
+    "rec.about_p2":"<p style=\"font-size:13px;color:var(--text-dim);line-height:1.8;margin-bottom:12px;\">Я не пытаюсь никого запугать рисками — просто по опыту знаю: человек, который понимает, как работает его инструмент, получает от него пользу. А тот, кто нажимает не глядя — иногда огребает не по злому умыслу, а просто потому что не знал.</p>",
+    "rec.about_p3":"<p style=\"font-size:13px;color:var(--text-dim);line-height:1.8;margin-bottom:20px;\"><strong>Поэтому — перед тем как что-то использовать:</strong> открой гайд, глянь на риск-метку, пойми, для чего это вообще нужно. Не всё подходит для всех задач, и это нормально.</p>",
+    "rec.criteria_title":"// критерии оценки рисков",
+    "rec.c1_name":"деанонимизация",
+    "rec.c1_q":"Кто я в этом инструменте?",
+    "rec.c1_desc":"Насколько инструмент помогает установить реальную личность пользователя. Низкий — регистрация без телефона/email. Средний — нужен email или номер. Высокий — подтверждение личности (паспорт, видео, карта).",
+    "rec.c2_name":"утечка данных",
+    "rec.c2_q":"Что я здесь оставляю?",
+    "rec.c2_desc":"Объём и тип данных, которые могут уйти наружу. Низкий — данные обрабатываются локально. Средний — уходят на серверы провайдера, но зашифрованы. Высокий — данные доступны провайдеру в открытом виде.",
+    "rec.c3_name":"уровень знаний",
+    "rec.c3_q":"Знаю ли я, что делаю?",
+    "rec.c3_desc":"Какие знания нужны, чтобы случайно не утечь. Низкий — интуитивно понятен. Средний — требует базовых знаний, есть настройки которые стоит изменить. Высокий — требует технических знаний, ошибки = утечка данных.",
+    "rec.c4_name":"сложность настройки",
+    "rec.c4_q":"Насколько сложно настроить правильно?",
+    "rec.c4_desc":"Чем сложнее настройка — тем выше шанс ошибки. Низкий — скачал и работает. Средний — несколько шагов. Высокий — терминал, команды, зависимости.",
+    "rec.c5_name":"зависимость от third-party",
+    "rec.c5_q":"От кого я зависю?",
+    "rec.c5_desc":"Насколько инструмент зависит от внешних сервисов. Низкий — полностью локальный. Средний — зависит от одного сервиса, но есть self-hosted. Высокий — полная зависимость от облака.",
+    "rec.c6_name":"альтернативы",
+    "rec.c6_q":"Есть ли более безопасный вариант?",
+    "rec.c6_desc":"Наличие более безопасной замены. «Есть» — можно заменить на приватный аналог. «Нет» — уникальный инструмент, замены нет.",
+    "rec.risk_footer":"Общий уровень риска определяется <strong>наибольшим</strong> значением среди критериев — консервативный подход: лучше переоценить, чем недооценить.",
+    "rec.help1":"Обратись к <strong>компетентному ИИ</strong> (Claude, ChatGPT) с просьбой разобраться в выбранном инструменте — объясни, что хочешь сделать, и получи рекомендацию",
+    "rec.help2":"Обратись к <strong>владельцу FLEARANCE</strong> — он с радостью ответит и порекомендует лучшее решение для твоей задачи",
+    "rec.site1":"Держи под рукой <strong>Tor Browser</strong> или <strong>Orbot</strong> — так соединение стабильнее и приватнее, особенно если какая-то ссылка ведёт себя странно",
+    "rec.site2":"Не используй реальное имя в псевдониме — каталог публичный",
+    "rec.site3":"Скопируй шаблон запроса перед отправкой — ускорит обработку",
+    "rec.site4":"Проверяй каталог через <strong>Ctrl+F</strong> по нику — ответ появится там, а не в Session",
+    "rec.site5":"Ссылки копируются кнопкой и вставляются вручную — прямые клики отключены намеренно",
+    "rec.tools_intro":"<strong>Мессенджеры</strong> — основа приватных коммуникаций. Вот что рекомендую:",
+    "rec.tools1":"<strong>SimpleX Chat</strong> — максимальная приватность. Нет даже номера телефона для регистрации. Полная [децентрализация]",
+    "rec.tools2":"<strong>Session</strong> — улучшенный интерфейс, работает через сеть Lokinet. Хороший баланс удобства и приватности",
+    "rec.tools3":"<strong>Signal</strong> — золотой стандарт [E2E шифрование], но без [децентрализация] — привязка к номеру телефона повышает риск [деанонимизация]",
+    "rec.tools4":"<strong>Molly</strong> — улучшенная версия Signal с дополнительными настройками приватности и автоблокировкой",
+    "feed.title":"// лента добавлений",
+    "feed.desc":"Все инструменты в хронологическом порядке — от новых к старым. Полная история добавлений.",
+    "feed.empty":"лента пуста",
+    "popular.title":"// популярные инструменты",
+    "popular.desc":"Инструменты сортируются по количеству просмотров. Чем чаще открывают руководство — тем выше в списке.",
+    "popular.empty":"Пока нет данных о просмотрах. Открывай руководства в каталоге — данные появятся здесь.",
+    "policy.title":"// ПОЛИТИКА",
+    "policy.p1":"<strong>FLEARANCE</strong> &mdash; арсенал инструментов для расширения возможностей. Мы собираем open-source решения, AI-агенты, лайфхаки и ресурсы, которые помогают учиться, зарабатывать и становиться самостоятельнее.",
+    "policy.priority":"Приоритет:",
+    "policy.li1":"Open-source софт и инструменты с открытым исходным кодом",
+    "policy.li2":"AI-агенты и автоматизация рабочих процессов",
+    "policy.li3":"Фичи, гайды и лайфхаки для повышения продуктивности",
+    "policy.li4":"Бесплатные ресурсы и легальные способы получения платного софта",
+    "policy.li5":"Инструменты приватности и цифровой безопасности",
+    "policy.rejected":"Не принимаются: запросы на незаконный контент, вредоносный софт, материалы причиняющие вред людям &mdash; отказ без обсуждений.",
+    "policy.anon":"Анонимность: мы не храним данные пользователей. Нет логов, нет баз данных, нет куки. Единственный публичный идентификатор &mdash; псевдоним в каталоге. Выбирай ник, не связанный с личностью.",
+    "policy.responsibility":"Ответственность: FLEARANCE — навигационный сервис. Все ресурсы — внешние сайты вне нашего контроля. Пользователь самостоятельно оценивает законность использования в своей юрисдикции.",
+    "policy.disclaimer":"Дисклеймер: материалы сайта носят исключительно информационный и образовательный характер — мы описываем принципы работы технологий шифрования, анонимизации трафика и защиты данных. Сайт не предназначен и не рекламируется как средство обхода блокировок, установленных законодательством какой-либо страны. Использование любых инструментов из каталога должно осуществляться в соответствии с действующим законодательством страны пользователя — ответственность за это лежит на пользователе.",
+    "support.title":"// ПОДДЕРЖАТЬ",
+    "support.desc":"FLEARANCE существует на принципах свободы и open-source. Если проект полезен &mdash; поддержи через Monero. Единственная по-настоящему приватная криптовалюта.",
+    "support.xmr_label":"// XMR адрес",
+    "support.xmr_addr":"[твой адрес monero здесь]",
+    "support.qr_label":"// QR-код для оплаты",
+    "support.qr_expand":"⤢ развернуть QR",
+    "support.copy_addr":"скопировать адрес Monero",
+    "lenta.added":"добавлено",
+    "popular.views":"просмотров:",
+    "catLabel.git":"Git / Open-Source",
+    "catLabel.ai":"AI-Agent",
+    "catLabel.edu":"Обучение",
+    "catLabel.hosting":"Хостинг",
+    "catLabel.tools":"Сервисы",
+    "catLabel.access":"Операционные Системы",
+    "catLabel.sec":"Безопасность",
+    "catLabel.fun":"Моды и игры",
+    "risk.low":"низкий риск",
+    "risk.medium":"средний риск",
+    "risk.high":"высокий риск",
+    "criterion.deanon":"деанонимизация",
+    "criterion.leak":"утечка данных",
+    "criterion.knowledge":"уровень знаний",
+    "criterion.setup":"сложность настройки",
+    "criterion.dependency":"зависимость от third-party",
+    "criterion.alternatives":"альтернативы",
+    "alt.yes":"есть",
+    "alt.no":"нет",
+    "copy.address":"скопировать адрес",
+    "copy.session":"скопировать Session ID",
+    "copy.email":"скопировать Email",
+    "copy.template":"скопировать шаблон",
+    "copy.xmr":"скопировать адрес Monero",
+    "copy.copied":"скопировано",
+    "slang.header":"// что это",
+    "catalog.nothing":"ничего не найдено",
+    "catalog.of":" из ",
+    "suggest.anon":"аноним",
+    "suggest.fill_fields":"заполни название и ссылку",
+    "suggest.sending":"отправка...",
+    "suggest.sent":"отправлено! спасибо",
+    "suggest.error":"ошибка сети, попробуй позже",
+    "suggest.saved":"сохранено локально (Formspree не настроен)",
+    "suggest.subject":"FLEARANCE: новый инструмент от ",
+    "template.text":"Ник: \nЗапрос: \nПредпочтения: ",
+    "qr.prompt":"Введите количество секунд:",
+    "months.jan":"янв","months.feb":"фев","months.mar":"мар","months.apr":"апр","months.may":"май","months.jun":"июн",
+    "months.jul":"июл","months.aug":"авг","months.sep":"сен","months.oct":"окт","months.nov":"ноя","months.dec":"дек",
+    "catalog.tab_fav":"Избранное",
+    "catalog.fav_empty":"Пока ничего не добавлено. Нажимай сердце на карточках.",
+    "card.guide":"гайд",
+    "card.copy":"копировать",
+    "card.share":"поделиться",
+    "guide.full":"полный гайд →",
+    "guide.related":"похожие инструменты",
+    "home.paths_title":"// тематические наборы",
+    "paths.privacy":"Стартовый набор приватности",
+    "paths.privacy_desc":"Пошаговый набор от браузера до мессенджера.",
+    "paths.ai":"Путь в AI",
+    "paths.ai_desc":"От нейросети до собственных AI-агентов.",
+    "paths.dev":"Путь Python-разработчика",
+    "paths.dev_desc":"От Linux до первого проекта с AI.",
+    "paths.android":"Безопасный Android",
+    "paths.android_desc":"Приватная мобильная среда с нуля."
+  },
+  en: {
+    "splash.subtitle":"arsenal of tools",
+    "splash.check1":"open-source focus",
+    "splash.check2":"no registration",
+    "splash.check3":"no logs",
+    "splash.skip":"skip &rarr;",
+    "welcome.title":"Welcome!",
+    "welcome.p1":"<strong>FLEARANCE</strong> — an arsenal of tools for privacy, self-development, and bypassing restrictions. No registration, no logs — just open and use.",
+    "welcome.p2":"Right now you can: <strong>copy Session ID</strong> and send a request to add a tool, <strong>browse the catalog</strong> — there are already 80+ verified links, or click <strong>\"Suggest a Tool\"</strong> and expand the database yourself.",
+    "welcome.p3":"All links are copied and pasted manually — this is for your safety. If something is unclear — the <strong>\"How It Works\"</strong> section will break everything down step by step.",
+    "welcome.timer":"Wait",
+    "welcome.timer_suffix":"seconds...",
+    "welcome.btn":"Continue",
+    "nav.home":"Home",
+    "nav.howto":"How It Works",
+    "nav.catalog":"Catalog",
+    "nav.lenta":"Feed",
+    "nav.popular":"Popular",
+    "nav.policy":"Policy",
+    "nav.support":"Support",
+    "sidebar.title":"// principles",
+    "sidebar.p1":"<strong>Open-source first.</strong> Open-source tools — we verify, we recommend.",
+    "sidebar.p2":"<strong>Empowerment.</strong> Every resource is a step toward new skills, income, or independence.",
+    "sidebar.p3":"<strong>One request — one solution.</strong> Focused on a specific task with application tips.",
+    "sidebar.p4":"<strong>User anonymity</strong> is a priority. The nickname in the catalog is the only public identifier.",
+    "sidebar.p5":"<strong>Legality.</strong> Only what doesn't violate the law. Rejection — no discussions.",
+    "home.tagline":"// tools for empowerment",
+    "home.blocked_title":"Some links in the catalog may be unavailable in certain regions",
+    "home.blocked_text":"For access to tools we recommend <strong>Tor Browser</strong> — increases anonymity and connection privacy.",
+    "home.blocked_btn":"open Tor Browser in catalog",
+    "home.counter_tools":"tools",
+    "home.counter_requests":"requests completed",
+    "home.recent_title":"// recently added",
+    "home.request_title":"// how to submit a request",
+    "home.request_text":"There are two ways to submit a tool request — via <strong>Session</strong> or <strong>Email</strong>.<br>All steps, message template, and contacts are on the page",
+    "home.request_link":"How It Works",
+    "howto.title":"// HOW IT WORKS",
+    "howto.step1":"Choose a communication method — <strong>Session</strong> or <strong>Email</strong> — and send a request.",
+    "howto.copy_session":"copy Session ID",
+    "howto.copy_email":"copy Email",
+    "howto.warning":"&#9888; Nickname is visible publicly &mdash; don't use your real name.",
+    "howto.step2":"Write your request in this format:",
+    "howto.format_nick":"Nick:",
+    "howto.format_nick_desc":"nickname for the catalog",
+    "howto.format_request":"Request:",
+    "howto.format_request_desc":"what you need to find or get",
+    "howto.format_prefs":"Preferences:",
+    "howto.format_prefs_desc":"specifications (OS, platform, budget, etc.)",
+    "howto.format_note":"* The \"Preferences\" field can be left empty.",
+    "howto.copy_template":"copy template",
+    "howto.step3":"The solution will appear in the <strong>Catalog</strong> with your nickname, description, and tips.<br><br>Processing time &mdash; <strong>up to 24h</strong>. No response comes in Session &mdash; check the catalog via <strong>Ctrl+F &rarr; your nickname</strong>.",
+    "howto.step4":"Links are copied via button and pasted manually into the <strong>browser</strong>. Direct clicks are intentionally disabled for security.",
+    "catalog.title":"// tools catalog",
+    "catalog.tab_all":"All",
+    "catalog.tab_access":"Operating Systems",
+    "catalog.tab_git":"Git / Open-Source",
+    "catalog.tab_ai":"AI-Agents",
+    "catalog.tab_edu":"Education",
+    "catalog.tab_hosting":"Hosting",
+    "catalog.tab_tools":"Services",
+    "catalog.tab_sec":"Security",
+    "catalog.tab_fun":"Mods & Games",
+    "catalog.rec_btn":"Owner Recommendations",
+    "catalog.suggest_btn":"Suggest a Tool",
+    "catalog.search":"search catalog...",
+    "catalog.risk_low":"low risk",
+    "catalog.risk_medium":"medium risk",
+    "catalog.risk_high":"high risk",
+    "suggest.title":"// suggest a tool",
+    "suggest.heading":"Suggest a tool for the catalog",
+    "suggest.subtitle":"Fill out the form — we'll verify and add it.",
+    "suggest.label_name":"Name *",
+    "suggest.placeholder_name":"e.g. Tor Browser",
+    "suggest.label_url":"URL *",
+    "suggest.label_desc":"Description",
+    "suggest.placeholder_desc":"Briefly describe what it's for",
+    "suggest.label_nick":"Your nickname (optional)",
+    "suggest.placeholder_nick":"Nickname for the catalog",
+    "suggest.submit":"submit",
+    "suggest.important":"Important:",
+    "suggest.warning":"We verify every tool before adding. Don't submit malicious software or illegal content — rejection without discussion.",
+    "guide.subtitle":"Download and security guide.",
+    "guide.tab_risk":"Risk",
+    "guide.tab_tool":"Tool",
+    "guide.risk_title":"// risk assessment",
+    "guide.scan_title":"// check the file before using",
+    "guide.intro_title":"// what it is and how it works",
+    "guide.safety_title":"// security summary",
+    "qr.title":"select QR code display time",
+    "qr.sec3":"3 sec",
+    "qr.sec5":"5 sec",
+    "qr.sec10":"10 sec",
+    "qr.sec15":"15 sec",
+    "qr.custom":"custom",
+    "qr.cancel":"cancel",
+    "rec.title":"// OWNER RECOMMENDATIONS",
+    "rec.tab_about":"About Tools",
+    "rec.tab_help":"Help",
+    "rec.tab_site":"Site Tips",
+    "rec.tab_tools":"Tool Tips",
+    "rec.about_p1":"<p style=\"font-size:13px;color:var(--text-dim);line-height:1.8;margin-bottom:12px;\">Listen, it's simple. Everything in the catalog isn't magic or privilege — they're ordinary <strong>tools</strong>. They expand your capabilities, but like any tool, they can hurt if you hold them the wrong way.</p>",
+    "rec.about_p2":"<p style=\"font-size:13px;color:var(--text-dim);line-height:1.8;margin-bottom:12px;\">I'm not trying to scare anyone with risks — I just know from experience: a person who understands how their tool works gets value from it. And someone who clicks without looking sometimes gets burned not out of malice, but simply because they didn't know.</p>",
+    "rec.about_p3":"<p style=\"font-size:13px;color:var(--text-dim);line-height:1.8;margin-bottom:20px;\"><strong>Therefore — before using anything:</strong> open the guide, check the risk label, understand what it's actually for. Not everything suits every task, and that's normal.</p>",
+    "rec.criteria_title":"// risk assessment criteria",
+    "rec.c1_name":"deanonymization",
+    "rec.c1_q":"Who am I in this tool?",
+    "rec.c1_desc":"How much the tool helps identify the user's real identity. Low — registration without phone/email. Medium — requires email or number. High — identity verification (passport, video, card).",
+    "rec.c2_name":"data leakage",
+    "rec.c2_q":"What am I leaving here?",
+    "rec.c2_desc":"Volume and type of data that could leak out. Low — data processed locally. Medium — sent to provider servers but encrypted. High — data accessible to provider in plain text.",
+    "rec.c3_name":"knowledge level",
+    "rec.c3_q":"Do I know what I'm doing?",
+    "rec.c3_desc":"What knowledge is needed to avoid accidental leaks. Low — intuitively understandable. Medium — requires basic knowledge, some settings worth changing. High — requires technical knowledge, mistakes = data leaks.",
+    "rec.c4_name":"setup complexity",
+    "rec.c4_q":"How hard is it to set up correctly?",
+    "rec.c4_desc":"The more complex the setup — the higher the chance of error. Low — download and it works. Medium — several steps. High — terminal, commands, dependencies.",
+    "rec.c5_name":"third-party dependency",
+    "rec.c5_q":"Who do I depend on?",
+    "rec.c5_desc":"How much the tool depends on external services. Low — fully local. Medium — depends on one service, but self-hosted available. High — full cloud dependency.",
+    "rec.c6_name":"alternatives",
+    "rec.c6_q":"Is there a safer option?",
+    "rec.c6_desc":"Availability of a safer replacement. \"Yes\" — can be replaced with a private alternative. \"No\" — unique tool, no replacement.",
+    "rec.risk_footer":"Overall risk level is determined by the <strong>highest</strong> value among criteria — conservative approach: better to overestimate than underestimate.",
+    "rec.help1":"Ask a <strong>competent AI</strong> (Claude, ChatGPT) to research the tool you're interested in — explain what you want to do and get a recommendation",
+    "rec.help2":"Contact the <strong>FLEARANCE owner</strong> — they'll be happy to answer and recommend the best solution for your task",
+    "rec.site1":"Keep <strong>Tor Browser</strong> or <strong>Orbot</strong> handy — connection is more stable and private, especially if some link behaves strangely",
+    "rec.site2":"Don't use your real name as a nickname — the catalog is public",
+    "rec.site3":"Copy the request template before sending — speeds up processing",
+    "rec.site4":"Check the catalog via <strong>Ctrl+F</strong> by nickname — the response will appear there, not in Session",
+    "rec.site5":"Links are copied via button and pasted manually — direct clicks are intentionally disabled",
+    "rec.tools_intro":"<strong>Messengers</strong> — the foundation of private communications. Here's what I recommend:",
+    "rec.tools1":"<strong>SimpleX Chat</strong> — maximum privacy. No phone number needed for registration. Full [decentralization]",
+    "rec.tools2":"<strong>Session</strong> — improved interface, works via Lokinet. Good balance of convenience and privacy",
+    "rec.tools3":"<strong>Signal</strong> — gold standard [E2E encryption], but without [decentralization] — phone number binding increases [deanonymization] risk",
+    "rec.tools4":"<strong>Molly</strong> — improved version of Signal with additional privacy settings and auto-lock",
+    "feed.title":"// additions feed",
+    "feed.desc":"All tools in chronological order — from newest to oldest. Complete addition history.",
+    "feed.empty":"feed is empty",
+    "popular.title":"// popular tools",
+    "popular.desc":"Tools are sorted by view count. The more often a guide is opened — the higher it appears in the list.",
+    "popular.empty":"No view data yet. Open guides in the catalog — data will appear here.",
+    "policy.title":"// POLICY",
+    "policy.p1":"<strong>FLEARANCE</strong> &mdash; an arsenal of tools for empowerment. We collect open-source solutions, AI agents, lifehacks, and resources that help you learn, earn, and become more independent.",
+    "policy.priority":"Priority:",
+    "policy.li1":"Open-source software and tools with open source code",
+    "policy.li2":"AI agents and workflow automation",
+    "policy.li3":"Features, guides, and lifehacks for increased productivity",
+    "policy.li4":"Free resources and legal ways to get paid software",
+    "policy.li5":"Privacy and digital security tools",
+    "policy.rejected":"Not accepted: requests for illegal content, malicious software, materials that harm people &mdash; rejection without discussion.",
+    "policy.anon":"Anonymity: we don't store user data. No logs, no databases, no cookies. The only public identifier &mdash; nickname in the catalog. Choose a nickname not linked to your identity.",
+    "policy.responsibility":"Responsibility: FLEARANCE is a navigation service. All resources are external sites outside our control. The user independently assesses the legality of use in their jurisdiction.",
+    "policy.disclaimer":"Disclaimer: site materials are exclusively informational and educational &mdash; we describe the principles of encryption technologies, traffic anonymization, and data protection. The site is not intended or advertised as a means of bypassing restrictions established by the legislation of any country. Use of any tools from the catalog should be in accordance with the current legislation of the user's country — responsibility for this lies with the user.",
+    "support.title":"// SUPPORT",
+    "support.desc":"FLEARANCE exists on the principles of freedom and open-source. If the project is useful &mdash; support via Monero. The only truly private cryptocurrency.",
+    "support.xmr_label":"// XMR address",
+    "support.xmr_addr":"[your monero address here]",
+    "support.qr_label":"// QR code for payment",
+    "support.qr_expand":"⤢ expand QR",
+    "support.copy_addr":"copy Monero address",
+    "lenta.added":"added",
+    "popular.views":"views:",
+    "catLabel.git":"Git / Open-Source",
+    "catLabel.ai":"AI-Agent",
+    "catLabel.edu":"Education",
+    "catLabel.hosting":"Hosting",
+    "catLabel.tools":"Services",
+    "catLabel.access":"Operating Systems",
+    "catLabel.sec":"Security",
+    "catLabel.fun":"Mods & Games",
+    "risk.low":"low risk",
+    "risk.medium":"medium risk",
+    "risk.high":"high risk",
+    "criterion.deanon":"deanonymization",
+    "criterion.leak":"data leakage",
+    "criterion.knowledge":"knowledge level",
+    "criterion.setup":"setup complexity",
+    "criterion.dependency":"third-party dependency",
+    "criterion.alternatives":"alternatives",
+    "alt.yes":"yes",
+    "alt.no":"no",
+    "copy.address":"copy address",
+    "copy.session":"copy Session ID",
+    "copy.email":"copy Email",
+    "copy.template":"copy template",
+    "copy.xmr":"copy Monero address",
+    "copy.copied":"copied",
+    "slang.header":"// what is this",
+    "catalog.nothing":"nothing found",
+    "catalog.of":" of ",
+    "suggest.anon":"anonymous",
+    "suggest.fill_fields":"fill in name and URL",
+    "suggest.sending":"sending...",
+    "suggest.sent":"sent! thank you",
+    "suggest.error":"network error, try later",
+    "suggest.saved":"saved locally (Formspree not configured)",
+    "suggest.subject":"FLEARANCE: new tool from ",
+    "template.text":"Nick: \nRequest: \nPreferences: ",
+    "qr.prompt":"Enter number of seconds:",
+    "months.jan":"Jan","months.feb":"Feb","months.mar":"Mar","months.apr":"Apr","months.may":"May","months.jun":"Jun",
+    "months.jul":"Jul","months.aug":"Aug","months.sep":"Sep","months.oct":"Oct","months.nov":"Nov","months.dec":"Dec",
+    "catalog.tab_fav":"Favorites",
+    "catalog.fav_empty":"Nothing added yet. Click the heart on cards.",
+    "card.guide":"guide",
+    "card.copy":"copy",
+    "card.share":"share",
+    "guide.full":"full guide →",
+    "guide.related":"related tools",
+    "home.paths_title":"// curated collections",
+    "paths.privacy":"Starter Privacy Kit",
+    "paths.privacy_desc":"Step-by-step from browser to messenger.",
+    "paths.ai":"AI Path",
+    "paths.ai_desc":"From neural networks to your own AI agents.",
+    "paths.dev":"Python Dev Path",
+    "paths.dev_desc":"From Linux to your first AI project.",
+    "paths.android":"Safe Android",
+    "paths.android_desc":"Private mobile environment from scratch."
+  }
 };
+
+function t(key) { return LANG[currentLang][key] || LANG["ru"][key] || key; }
+
+function setLang(lang) {
+  currentLang = lang;
+  localStorage.setItem("flearance-lang", lang);
+  document.documentElement.lang = lang;
+  applyTranslations();
+  renderCatalog();
+  renderLenta();
+  renderPopularTools();
+  renderRecentTools();
+  renderCounters();
+  renderPaths();
+  var toggle = document.getElementById("lang-toggle");
+  if (toggle) toggle.textContent = lang === "ru" ? "EN" : "RU";
+}
+
+function applyTranslations() {
+  document.querySelectorAll("[data-i18n]").forEach(function(el) {
+    var key = el.getAttribute("data-i18n");
+    var translated = t(key);
+    if (el.tagName === "INPUT" || el.tagName === "TEXTAREA") {
+      el.placeholder = translated;
+    } else {
+      el.innerHTML = translated;
+    }
+  });
+  document.querySelector('meta[name="description"]').content = currentLang === "ru" ? "Каталог инструментов: open-source софт, AI-агенты, приватность, обход блокировок, обучение. Без регистрации, без логов." : "Tools catalog: open-source software, AI agents, privacy, bypassing restrictions, education. No registration, no logs.";
+  document.querySelector('meta[name="keywords"]').content = currentLang === "ru" ? "каталог инструментов, open-source, приватность, обход блокировок, AI, саморазвитие, Tor, VPN, безопасность" : "tools catalog, open-source, privacy, bypassing restrictions, AI, self-development, Tor, VPN, security";
+  document.querySelector('meta[property="og:title"]').content = currentLang === "ru" ? "FLEARANCE — арсенал инструментов" : "FLEARANCE — arsenal of tools";
+  document.querySelector('meta[property="og:description"]').content = currentLang === "ru" ? "Каталог инструментов: open-source софт, AI-агенты, приватность, обход блокировок, обучение. Без регистрации, без логов." : "Tools catalog: open-source software, AI agents, privacy, bypassing restrictions, education. No registration, no logs.";
+  document.querySelector('meta[property="og:locale"]').content = currentLang === "ru" ? "ru_RU" : "en_US";
+  document.querySelector('meta[name="twitter:title"]').content = currentLang === "ru" ? "FLEARANCE — арсенал инструментов" : "FLEARANCE — arsenal of tools";
+  document.querySelector('meta[name="twitter:description"]').content = currentLang === "ru" ? "Каталог инструментов: open-source софт, AI-агенты, приватность, обход блокировок, обучение." : "Tools catalog: open-source software, AI agents, privacy, bypassing restrictions, education.";
+}
+
+function catLabel(c) {
+  var labels = {git:t("catLabel.git"), ai:t("catLabel.ai"), edu:t("catLabel.edu"), hosting:t("catLabel.hosting"), tools:t("catLabel.tools"), access:t("catLabel.access"), sec:t("catLabel.sec"), fun:t("catLabel.fun")};
+  return labels[c] || c;
+}
+
+function getMonths() {
+  return [t("months.jan"),t("months.feb"),t("months.mar"),t("months.apr"),t("months.may"),t("months.jun"),t("months.jul"),t("months.aug"),t("months.sep"),t("months.oct"),t("months.nov"),t("months.dec")];
+}
+
+var SLANG_DATA = {
+  "Tor":{ru:"Программа для анонимного доступа в интернет. Скрывает реальное местоположение и шифрует трафик.",en:"Software for anonymous internet access. Hides real location and encrypts traffic."},
+  "VPN":{ru:"Виртуальная частная сеть. Шифрует трафик и пропускает через сервер в другой стране.",en:"Virtual Private Network. Encrypts traffic and routes it through a server in another country."},
+  "APK":{ru:"Файл установки приложения для Android. Аналог .exe на Windows.",en:"Android application installation file. Analogous to .exe on Windows."},
+  "Docker":{ru:"Программа, запускающая приложения в изолированном контейнере — как виртуальная машина, но легче.",en:"Software that runs applications in an isolated container — like a virtual machine, but lighter."},
+  "Git":{ru:"Система контроля версий. Отслеживает изменения в коде и позволяет работать в команде.",en:"Version control system. Tracks code changes and enables team collaboration."},
+  "open-source":{ru:"Программа с открытым исходным кодом. Любой может посмотреть, как она работает, и изменить.",en:"Software with open source code. Anyone can see how it works and modify it."},
+  "API":{ru:"Программный интерфейс. Способ для программ общаться друг с другом.",en:"Application Programming Interface. A way for programs to communicate with each other."},
+  "CLI":{ru:"Командная строка. Интерфейс, где вводишь команды текстом вместо кнопок.",en:"Command Line Interface. An interface where you type commands instead of clicking buttons."},
+  "MCP":{ru:"Протокол для подключения инструментов к AI-агентам.",en:"Protocol for connecting tools to AI agents."},
+  "SSH":{ru:"Протокол безопасного подключения к удалённому компьютеру через командную строку.",en:"Secure Shell protocol for connecting to a remote computer via command line."},
+  "localhost":{ru:"Твой собственный компьютер. Адрес 127.0.0.1.",en:"Your own computer. Address 127.0.0.1."},
+  "SOCKS5":{ru:"Тип прокси-сервера. Маршрутизирует весь трафик через себя.",en:"Type of proxy server. Routes all traffic through itself."},
+  "proxy":{ru:"Посредник между тобой и сайтом. Скрывает реальное подключение.",en:"Intermediary between you and the website. Hides your real connection."},
+  "GPU":{ru:"Графический процессор. Ускоряет вычисления, особенно в AI и 3D.",en:"Graphics Processing Unit. Accelerates computations, especially in AI and 3D."},
+  "VRAM":{ru:"Память видеокарты. Объём влияет на размер запускаемых моделей.",en:"Video card memory. Capacity affects the size of models you can run."},
+  "LLM":{ru:"Большая языковая модель. AI, который понимает и генерирует текст.",en:"Large Language Model. AI that understands and generates text."},
+  "RAG":{ru:"Метод, при котором AI ищет ответы в твоих загруженных документах.",en:"Method where AI searches for answers in your uploaded documents."},
+  "Docker Compose":{ru:"Инструмент для запуска нескольких контейнеров Docker одновременно.",en:"Tool for running multiple Docker containers simultaneously."},
+  "markdown":{ru:"Простой язык разметки для текста. Заголовки, списки, ссылки — пишутся символами.",en:"Simple markup language for text. Headers, lists, links are written with symbols."},
+  "E2E шифрование":{ru:"Сквозное шифрование. Данные зашифрованы от отправителя до получателя.",en:"End-to-End encryption. Data is encrypted from sender to recipient."},
+  ".onion":{ru:"Адрес сайта в сети Tor. Доступен только через Tor Browser.",en:"Website address in the Tor network. Accessible only through Tor Browser."},
+  "Audit":{ru:"Режим бесплатного просмотра курса. Все видео и материалы доступны, сертификат — платный.",en:"Free course viewing mode. All videos and materials are available, certificate is paid."},
+  "децентрализация":{ru:"Система без единого центра управления. Данные распределены между участниками, а не хранятся на одном сервере. Повышает приватность, но сложнее в использовании.",en:"System without a single center of control. Data is distributed among participants, not stored on one server. Increases privacy but harder to use."},
+  "деанонимизация":{ru:"Раскрытие личности пользователя. Когда данные позволяют установить реальную личность человека за аккаунтом.",en:"Deanonymization. When data allows identifying the real person behind an account."},
+  "obfs4":{ru:"Тип маскировки трафика Tor. Делает Tor-трафик похожим на обычный HTTPS, что помогает обойти блокировки.",en:"Type of Tor traffic obfuscation. Makes Tor traffic look like regular HTTPS, helping bypass blocks."},
+  "snowflake":{ru:"Альтернативный метод обхода блокировок Tor. Использует peer-to-peer сеть для маршрутизации трафика через добровольцев.",en:"Alternative Tor bypass method. Uses peer-to-peer network to route traffic through volunteers."},
+  "мост":{ru:"Промежуточный узел Tor, который скрыт от публичного списка. Помогает подключиться к сети Tor, когда прямые подключения заблокированы.",en:"Intermediate Tor node hidden from the public list. Helps connect to Tor when direct connections are blocked."},
+  "webtunnel":{ru:"Тип моста Tor, который маскирует трафик под обычное HTTPS-подключение к сайту. Наиболее устойчив к блокировкам на уровне DPI.",en:"Type of Tor bridge that disguises traffic as regular HTTPS connection to a website. Most resistant to DPI-level blocks."}
+};
+
+function getSLANG() {
+  var result = {};
+  for (var key in SLANG_DATA) {
+    result[key] = SLANG_DATA[key][currentLang] || SLANG_DATA[key].ru;
+  }
+  return result;
+}
 
 var RISK_DATA = {
   "Claude (Anthropic)":{deanon:"medium",leak:"high",knowledge:"low",setup:"low",dependency:"high",legal:"medium",alternatives:"yes"},
@@ -990,7 +1584,32 @@ var RISK_DATA = {
   "Audio Guide":{deanon:"low",leak:"low",knowledge:"low",setup:"low",dependency:"low",legal:"low",alternatives:"yes"},
   "PPT Master":{deanon:"low",leak:"low",knowledge:"low",setup:"low",dependency:"low",legal:"low",alternatives:"yes"},
   "Ponytail":{deanon:"low",leak:"low",knowledge:"low",setup:"low",dependency:"low",legal:"low",alternatives:"yes"},
-  "Fingerprint Detector":{deanon:"low",leak:"low",knowledge:"low",setup:"low",dependency:"low",legal:"low",alternatives:"yes"}
+  "Fingerprint Detector":{deanon:"low",leak:"low",knowledge:"low",setup:"low",dependency:"low",legal:"low",alternatives:"yes"},
+  "Cardiag":{deanon:"low",leak:"low",knowledge:"medium",setup:"medium",dependency:"low",legal:"low",alternatives:"no"},
+  "NtWARden":{deanon:"low",leak:"low",knowledge:"high",setup:"high",dependency:"low",legal:"low",alternatives:"yes"},
+  "PettyMillion":{deanon:"low",leak:"low",knowledge:"low",setup:"low",dependency:"high",legal:"low",alternatives:"yes"},
+  "Jackpot (Minecraft мод)":{deanon:"low",leak:"low",knowledge:"low",setup:"medium",dependency:"low",legal:"low",alternatives:"yes"},
+  "Popup Fact Check":{deanon:"low",leak:"medium",knowledge:"low",setup:"low",dependency:"high",legal:"low",alternatives:"yes"},
+  "OpenReel":{deanon:"low",leak:"medium",knowledge:"low",setup:"low",dependency:"high",legal:"low",alternatives:"yes"},
+  "FckSignups":{deanon:"low",leak:"low",knowledge:"low",setup:"low",dependency:"low",legal:"low",alternatives:"yes"},
+  "Lostgamer":{deanon:"low",leak:"low",knowledge:"low",setup:"low",dependency:"high",legal:"low",alternatives:"yes"},
+  "SpamBlocker":{deanon:"low",leak:"low",knowledge:"low",setup:"medium",dependency:"low",legal:"low",alternatives:"yes"},
+  "Бесплатные API нейросетей":{deanon:"medium",leak:"medium",knowledge:"medium",setup:"medium",dependency:"high",legal:"low",alternatives:"yes"},
+  "MaxFusion":{deanon:"medium",leak:"high",knowledge:"low",setup:"low",dependency:"high",legal:"low",alternatives:"yes"},
+  "privacy.sexy":{deanon:"low",leak:"low",knowledge:"medium",setup:"medium",dependency:"low",legal:"low",alternatives:"yes"},
+  "Ускорение загрузок Steam":{deanon:"low",leak:"low",knowledge:"low",setup:"low",dependency:"low",legal:"low",alternatives:"no"},
+  "Roost Social":{deanon:"medium",leak:"medium",knowledge:"low",setup:"low",dependency:"high",legal:"low",alternatives:"yes"},
+  "prompts.chat":{deanon:"low",leak:"low",knowledge:"low",setup:"low",dependency:"medium",legal:"low",alternatives:"yes"},
+  "RepoStore":{deanon:"low",leak:"low",knowledge:"medium",setup:"medium",dependency:"low",legal:"low",alternatives:"yes"},
+  "SQZ":{deanon:"low",leak:"low",knowledge:"medium",setup:"medium",dependency:"low",legal:"low",alternatives:"yes"},
+  "Ghost Font":{deanon:"low",leak:"low",knowledge:"low",setup:"low",dependency:"medium",legal:"low",alternatives:"no"},
+  "Design Skills для AI-агентов":{deanon:"low",leak:"low",knowledge:"medium",setup:"medium",dependency:"low",legal:"low",alternatives:"yes"},
+  "Курс Markdown (Stepik)":{deanon:"medium",leak:"low",knowledge:"low",setup:"low",dependency:"low",legal:"low",alternatives:"yes"},
+  "Гайд по промтингу GPT-5.6":{deanon:"low",leak:"low",knowledge:"low",setup:"low",dependency:"low",legal:"low",alternatives:"yes"},
+  "Colibri":{deanon:"low",leak:"low",knowledge:"high",setup:"high",dependency:"low",legal:"low",alternatives:"yes"},
+  "Internxt Temporary Email":{deanon:"low",leak:"medium",knowledge:"low",setup:"low",dependency:"high",legal:"low",alternatives:"yes"},
+  "ToolBox (footrue.com)":{deanon:"low",leak:"medium",knowledge:"low",setup:"low",dependency:"high",legal:"low",alternatives:"yes"},
+  "Ditto":{deanon:"low",leak:"low",knowledge:"low",setup:"low",dependency:"high",legal:"low",alternatives:"yes"}
 };
 
 var CATALOG = [
@@ -1072,7 +1691,32 @@ var CATALOG = [
   {cat:"hosting",nick:"flearance",title:"Google Colab",date:"2026-07-01",desc:"Бесплатный GPU для Python-ноутбуков. Идеально для ML-экспериментов.",tip:"Runtime — Change runtime type — T4 GPU.",addr:"colab.research.google.com",addrLabel:"открыть",guide:{risk:"low",intro:"Google Colab — бесплатный сервис для запуска Python-кода с [GPU]. Идеально для обучения нейросетей и экспериментов с AI.",steps:["Перейди на <strong>colab.research.google.com</strong>","Нажми <strong>\"File → New notebook\"</strong>","В меню: <strong>Runtime → Change runtime type → T4 GPU</strong>","Пиши Python-код в ячейках и запускай через <strong>Shift+Enter</strong>","Ноутбук сохраняется в Google Drive автоматически"],safety:"Бесплатный GPU доступен с лимитами по времени. Не загружай конфиденциальные данные — ноутбуки хранятся на серверах Google."}},
   {cat:"edu",nick:"flearance",title:"Frontend Mentor",date:"2026-07-01",desc:"Реальные задачи по вёрстке и JS. Дизайн в Figma, ты пишешь код. Бесплатно.",tip:"Начни с уровня Newbie. Задачи с ревью от сообщества.",addr:"frontendmentor.io",addrLabel:"задачи",guide:{risk:"low",intro:"Frontend Mentor — платформа с реальными задачами по веб-разработке. Получаешь дизайн-макет и пишешь код, который его повторяет.",steps:["Перейди на <strong>frontendmentor.io</strong> и нажми <strong>\"Sign Up\"</strong>","Зарегистрируйся через email или GitHub","В каталоге выбери задачу по уровню (<strong>Newbie</strong> → <strong>Junior</strong> → <strong>Intermediate</strong>)","Скачай дизайн (Figma) и начни писать код","После решения — опубликуй и получи ревью от сообщества"],safety:"Платформа бесплатна. Задачи — учебные, для практики. Код публикуется в твоём профиле."}},
   {cat:"edu",nick:"flearance",title:"Exercism",date:"2026-07-01",desc:"Практика программирования на 65+ языках. Задачи с менторской обратной связью.",tip:"exercism.org/tracks — выбери язык.",addr:"exercism.org",addrLabel:"платформа",guide:{risk:"low",intro:"Exercism — бесплатная платформа для практики программирования. Задачи с проверкой кода и обратной связью от менторов.",steps:["Перейди на <strong>exercism.org</strong> и нажми <strong>\"Sign Up\"</strong>","Зарегистрируйся через GitHub или email","Перейди в <strong>\"Tracks\"</strong> и выбери язык программирования","Начни с первой задачи — прочитай описание и напиши решение","Отправь решение на проверку — получишь фидбек от ментора"],safety:"Платформа бесплатна. Код — учебный. Менторы — волонтёры из сообщества."}},
-  {cat:"tools",nick:"flearance",title:"Canva (бесплатный план)",date:"2026-07-01",desc:"Дизайн без навыков: постеры, презентации, резюме, логотипы. Тысячи шаблонов.",tip:"Бесплатно: базовые элементы, 5GB хранилища.",addr:"canva.com",addrLabel:"сайт",guide:{risk:"low",intro:"Canva — онлайн-редактор дизайна. Не нужно уметь рисовать — готовые шаблоны, drag-and-drop интерфейс.",steps:["Перейди на <strong>canva.com</strong> и нажми <strong>\"Sign Up\"</strong>","Зарегистрируйся через Google или email","Выбери шаблон (постер, презентация, резюме)","Редактируй текст, цвета, изображения","Нажми <strong>\"Share → Download\"</strong> — скачай результат (PNG, PDF)"],safety:"Бесплатный план — достаточно для большинства задач. Не загружай конфиденциальные данные — дизайн хранится на серверах Canva."}}
+  {cat:"tools",nick:"flearance",title:"Canva (бесплатный план)",date:"2026-07-01",desc:"Дизайн без навыков: постеры, презентации, резюме, логотипы. Тысячи шаблонов.",tip:"Бесплатно: базовые элементы, 5GB хранилища.",addr:"canva.com",addrLabel:"сайт",guide:{risk:"low",intro:"Canva — онлайн-редактор дизайна. Не нужно уметь рисовать — готовые шаблоны, drag-and-drop интерфейс.",steps:["Перейди на <strong>canva.com</strong> и нажми <strong>\"Sign Up\"</strong>","Зарегистрируйся через Google или email","Выбери шаблон (постер, презентация, резюме)","Редактируй текст, цвета, изображения","Нажми <strong>\"Share → Download\"</strong> — скачай результат (PNG, PDF)"],safety:"Бесплатный план — достаточно для большинства задач. Не загружай конфиденциальные данные — дизайн хранится на серверах Canva."}},
+  {cat:"git",nick:"flearance",title:"Cardiag",date:"2026-07-15",tags:["авто","диагностика","звук","нейросеть","открытый код","машина"],desc:"Нейросеть ищет поломки авто по звуку двигателя — записываешь звук на телефон, получаешь вероятную неисправность.",tip:"github.com/adam-s/car-diagnosis — открытый проект, точность ~79%.",addr:"github.com/adam-s/car-diagnosis",addrLabel:"GitHub",guide:{risk:"low",intro:"Cardiag — открытая модель, анализирующая звук двигателя и подсказывающая, какая система авто вероятнее всего неисправна.",steps:["Перейди на <strong>github.com/adam-s/car-diagnosis</strong>","Скачай репозиторий или запусти модель по инструкции в README","Запиши работу двигателя на телефон","Загрузи запись в модель и получи разбор возможной неисправности"],safety:"Точность модели пока около 79% — используй как предварительную подсказку, а не финальный диагноз. Для серьёзных поломок обратись к механику."}},
+  {cat:"sec",nick:"flearance",title:"NtWARden",date:"2026-07-15",tags:["безопасность","вирус","руткит","ядро","windows","анализ","троян"],desc:"Тулкит для инспекции Windows на уровне ядра — находит скрытые процессы, руткиты и подозрительную активность, которую пропускают обычные антивирусы.",tip:"github.com/mrT4ntr4/NtWarden — для продвинутых пользователей, часть функций требует режима тестовой подписи драйверов.",addr:"github.com/mrT4ntr4/NtWarden",addrLabel:"GitHub",guide:{risk:"medium",intro:"NtWARden — открытый инструмент для анализа Windows-систем: процессы, службы, сеть, механизмы ядра. Полезен для исследования малвари и incident response, не является заменой обычного антивируса.",steps:["Скачай релиз с <strong>github.com/mrT4ntr4/NtWarden</strong>","Для функций уровня ядра включи тестовую подпись драйверов: <code>bcdedit /set testsigning on</code> (нужна перезагрузка)","Запусти NtWarden от имени администратора","Во вкладке Kernel Mode драйвер установится и запустится автоматически","Изучай процессы, службы, сеть и признаки скрытой активности"],safety:"Инструмент для опытных пользователей — работа с ядром системы. Тестируй сначала на виртуальной машине. Не является заменой полноценного антивируса для повседневной защиты."}},
+  {cat:"fun",nick:"flearance",title:"PettyMillion",date:"2026-07-15",tags:["соцсеть","жалобы","анонимно","юмор","развлечение"],desc:"Анонимная соцсеть для жалоб на жизнь — от медленных людей до блокировок интернета. Можно почитать чужие претензии.",tip:"pettymillion.com — без регистрации.",addr:"pettymillion.com",addrLabel:"сайт",guide:{risk:"low",intro:"PettyMillion — сайт, где можно анонимно оставить жалобу на бытовые несправедливости или почитать чужие.",steps:["Перейди на <strong>pettymillion.com</strong>","Оставь анонимную жалобу или почитай чужие","Ничего регистрировать не нужно"],safety:"Развлекательный сайт, анонимные посты. Не публикуй личные данные о себе или других."}},
+  {cat:"fun",nick:"flearance",title:"Jackpot (Minecraft мод)",date:"2026-07-15",scan:true,tags:["minecraft","мод","казино","мини-игры","игра"],desc:"Мод для Minecraft, добавляющий казино-атмосферу: слоты, бильярд, плинко, дартс. Всё на внутриигровой валюте, реальных денег нет.",tip:"curseforge.com/minecraft/mc-mods/jackpot — бесплатно.",addr:"curseforge.com/minecraft/mc-mods/jackpot",addrLabel:"CurseForge",guide:{risk:"low",intro:"Jackpot добавляет в Minecraft казино-мини-игры — автоматы, бильярд, плинко и дартс. Ставки идут только внутриигровыми ресурсами (алмазы/изумруды), реальных денег в моде нет.",steps:["Установи лаунчер с поддержкой модов (Forge/NeoForge)","Скачай Jackpot с <strong>curseforge.com/minecraft/mc-mods/jackpot</strong>","Помести .jar файл в папку mods","Запусти игру и найди игровые автоматы или скрафти их"],safety:"Ставки и выигрыши работают только на внутриигровых ресурсах — это не реальные азартные игры. Скачивай мод только с CurseForge."}},
+  {cat:"tools",nick:"flearance",title:"Popup Fact Check",date:"2026-07-15",tags:["youtube","фактчек","расширение","браузер","видео"],desc:"Расширение проверяет факты из видео на YouTube в реальном времени, включая прямые эфиры.",tip:"popupfactcheck.com — точнее работает с английскими субтитрами.",addr:"popupfactcheck.com",addrLabel:"сайт",guide:{risk:"low",intro:"Popup Fact Check разбирает ключевые утверждения из видео на YouTube и сразу показывает фактчек по ним.",steps:["Перейди на <strong>popupfactcheck.com</strong>","Установи расширение для своего браузера","Открой видео на YouTube","Включи английские субтитры для более точной работы, если ролик не на английском","Наблюдай всплывающие фактчеки по ходу видео"],safety:"Расширение анализирует речь из видео — не открывай приватные/непубличные видео с ним, если не хочешь, чтобы их содержимое обрабатывалось сервисом."}},
+  {cat:"tools",nick:"flearance",title:"OpenReel",date:"2026-07-15",tags:["видео","монтаж","редактор","браузер","бесплатно"],desc:"Бесплатная альтернатива CapCut прямо в браузере — мультитрек, хромакей, субтитры, стикеры, запись экрана.",tip:"openreel.video — без лимитов.",addr:"openreel.video",addrLabel:"сайт",guide:{risk:"low",intro:"OpenReel — браузерный видеоредактор с мультитреком, хромакеем, анимацией по ключевым кадрам, субтитрами и записью экрана.",steps:["Перейди на <strong>openreel.video</strong>","Загрузи видео/аудио материалы","Собери монтаж в мультитрековом редакторе","Добавь эффекты, переходы и субтитры","Экспортируй в нужном формате и качестве"],safety:"Работает прямо в браузере — проверь, куда загружаются исходники (локально или на сервер сервиса), если материал приватный."}},
+  {cat:"git",nick:"flearance",title:"FckSignups",date:"2026-07-15",tags:["опенсорс","без регистрации","подборка","инструменты","браузер"],desc:"Список открытых инструментов, которые работают в браузере и не требуют регистрации — видео, аудио, конвертеры, PDF и многое другое.",tip:"github.com/BraveOPotato/FckSignups — 1.4k+ звёзд на GitHub.",addr:"github.com/BraveOPotato/FckSignups",addrLabel:"GitHub",guide:{risk:"low",intro:"FckSignups — курируемый опенсорс-список инструментов, которые не требуют регистрации: конвертеры, редакторы PDF, парсеры и другое.",steps:["Перейди на <strong>github.com/BraveOPotato/FckSignups</strong>","Открой README со списком инструментов","Найди нужную категорию","Перейди по ссылке на конкретный инструмент"],safety:"Сам репозиторий — просто список ссылок. Проверяй каждый конкретный сервис по ссылке отдельно, как и любой сторонний сайт."}},
+  {cat:"fun",nick:"flearance",title:"Lostgamer",date:"2026-07-15",tags:["игра","geoguessr","угадайка","браузер","развлечение"],desc:"GeoGuessr, но по локациям из видеоигр — 318 тайтлов, включая GTA 5, Genshin Impact, Skyrim, Zelda.",tip:"lostgamer.io — соло-режим, кооп скоро.",addr:"lostgamer.io",addrLabel:"сайт",guide:{risk:"low",intro:"Lostgamer — браузерная игра-угадайка: по скриншоту нужно определить, из какой игры и локации он сделан.",steps:["Перейди на <strong>lostgamer.io</strong>","Начни раунд","Смотри на кадр и угадывай игру/локацию","Сравнивай счёт с друзьями"],safety:"Браузерная игра, ничего не скачивает. Безопасно."}},
+  {cat:"sec",nick:"flearance",title:"SpamBlocker",date:"2026-07-15",scan:true,tags:["android","спам","звонки","sms","блокировка","опенсорс"],desc:"Опенсорс-блокировщик спам-звонков и SMS через встроенную фильтрацию Android — без рекламы и трекеров.",tip:"github.com/aj3423/SpamBlocker — бесплатно.",addr:"github.com/aj3423/SpamBlocker",addrLabel:"GitHub",guide:{risk:"low",intro:"SpamBlocker проверяет оператора, частоту звонков и другие признаки, чтобы отсеивать спам-звонки и SMS, пропуская важные вызовы.",steps:["Скачай APK с <strong>github.com/aj3423/SpamBlocker/releases</strong>","Установи приложение","Дай разрешения на фильтрацию звонков/SMS","Настрой базу спам-номеров и ручные правила блокировки (например, слова «кредит», «акция»)"],safety:"Опенсорс-проект без рекламы и телеметрии. Устанавливай APK только с официального GitHub-репозитория."}},
+  {cat:"ai",nick:"flearance",title:"Бесплатные API нейросетей",date:"2026-07-15",tags:["ai","api","бесплатно","нейросеть","разработка"],desc:"Подборка сервисов, которые бесплатно раздают токены на доступ к AI-моделям: OpenRouter, NVIDIA NIM, GitHub Models, Groq и другие.",tip:"Можно тестировать разные модели и собирать ботов/приложения за 0 рублей.",addr:"openrouter.ai",addrLabel:"начать",guide:{risk:"low",intro:"Подборка сервисов с бесплатным доступом к AI-моделям через API: OpenRouter (openrouter.ai), NVIDIA NIM (build.nvidia.com), GitHub Models (github.com/models), Cerebras (cloud.cerebras.ai), Groq (console.groq.com), Mistral AI (console.mistral.ai), Cloudflare Workers AI, Hugging Face Inference Providers.",steps:["Выбери сервис из списка","Зарегистрируйся и получи бесплатный API-ключ","Изучи документацию сервиса на предмет лимитов","Используй ключ в своём коде или AI-агенте"],safety:"Не публикуй свои API-ключи в открытом коде. У каждого сервиса свои лимиты и условия — читай их отдельно."}},
+  {cat:"ai",nick:"flearance",title:"MaxFusion",date:"2026-07-15",scan:true,tags:["ai","видео","реклама","генерация","ugc"],desc:"Сервис для генерации AI-роликов: рекламные видео, обучающие ролики, UGC-контент. Работает через ChatGPT/Claude — накидываешь идею, получаешь готовый ролик.",tip:"maxfusion.ai — можно быстро генерировать пачку вариантов для теста.",addr:"maxfusion.ai",addrLabel:"сайт",guide:{risk:"medium",intro:"MaxFusion — платформа для генерации видеорекламы с AI-актёрами: выбираешь персонажа, пишешь сценарий, сервис собирает готовый ролик с хуками и призывами к действию.",steps:["Перейди на <strong>maxfusion.ai</strong> и зарегистрируйся","Выбери AI-актёра из библиотеки или сгенерируй нового по фото/описанию","Напиши сценарий и добавь эмоциональные теги","Сгенерируй видео и экспортируй в нужном формате"],safety:"Коммерческий сервис, платный по токенам. AI-актёры синтетические, не реальные люди — при коммерческом использовании соблюдай маркировку рекламы и локальные правила о синтетическом контенте."}},
+  {cat:"sec",nick:"flearance",title:"privacy.sexy",date:"2026-07-15",scan:true,tags:["приватность","телеметрия","скрипты","windows","macos","linux"],desc:"Библиотека из 100+ скриптов для отключения телеметрии и трекеров на Windows, macOS и Linux.",tip:"Есть веб-версия и десктоп-приложение.",addr:"privacy.sexy",addrLabel:"сайт",guide:{risk:"medium",intro:"privacy.sexy — коллекция скриптов, отключающих телеметрию, трекеры и лишние службы, собирающие данные о пользователе.",steps:["Перейди на <strong>privacy.sexy</strong> или скачай десктоп-приложение с <strong>github.com/undergroundwires/privacy.sexy</strong>","Выбери свою ОС","Отметь нужные категории скриптов (телеметрия, приватность браузера, служебные настройки)","Примени выбранные скрипты"],safety:"Некоторые скрипты отключают системные службы — перед применением незнакомых пунктов читай их описание. Рекомендуется создать точку восстановления системы перед массовым применением."}},
+  {cat:"tools",nick:"flearance",title:"Ускорение загрузок Steam",date:"2026-07-15",tags:["steam","загрузка","windows","лайфхак","игры"],desc:"Простой трюк для Windows — повышение приоритета процесса Steam.exe заметно ускоряет закачку игр.",tip:"Работает на Win 10 и Win 11.",addr:"—",addrLabel:"инфо",guide:{risk:"low",intro:"Повышение приоритета процесса Steam.exe в Диспетчере задач до уровня «В реальном времени» может заметно ускорить загрузку игр.",steps:["Открой Диспетчер задач (Ctrl+Shift+Esc)","Найди процесс Steam.exe и нажми «Подробнее»","Кликни правой кнопкой по Steam.exe","Выбери «Приоритет» → «В реальном времени»"],safety:"Приоритет сбрасывается при перезапуске Steam — трюк нужно повторять перед каждой крупной загрузкой. Не влияет на стабильность системы."}},
+  {cat:"fun",nick:"flearance",title:"Roost Social",date:"2026-07-15",tags:["соцсеть","медленно","приложение","общение","необычное"],desc:"Соцсеть, где сообщения доставляются виртуальными птицами со скоростью, зависящей от реального расстояния между пользователями.",tip:"Доступно на iOS и Android.",addr:"apps.apple.com/us/app/roost-social/id6746680855",addrLabel:"iOS",guide:{risk:"low",intro:"Roost — приложение, где сообщения «доставляют» голубь, колибри, ворон или сокол — скорость зависит от выбранной птицы и расстояния между собеседниками. За полётом можно следить на карте в реальном времени.",steps:["Скачай приложение на <strong>iOS</strong> (apps.apple.com/us/app/roost-social/id6746680855) или <strong>Android</strong> (play.google.com/store/apps/details?id=com.rookery.courier)","Зарегистрируйся","Добавь друга и отправь сообщение выбранной «птицей»","Следи за доставкой на карте или играй в мини-игры, пока сообщение летит"],safety:"Обычное развлекательное приложение, без специфических рисков приватности сверх стандартных соцсетей."}},
+  {cat:"ai",nick:"flearance",title:"prompts.chat",date:"2026-07-15",tags:["промпт","библиотека","нейросеть","бесплатно","claude"],desc:"Библиотека из 165 000+ промптов для нейросетей, разбитая по категориям. Интегрируется с Claude Code.",tip:"Можно собрать личную мини-библиотеку избранных промптов.",addr:"prompts.chat",addrLabel:"сайт",guide:{risk:"low",intro:"prompts.chat — большая библиотека готовых промптов для разных задач и моделей, с возможностью сохранять избранное и использовать промпты в один клик через интеграцию с Claude Code.",steps:["Перейди на <strong>prompts.chat</strong>","Найди нужную категорию промптов","Скопируй промпт или сохрани в свою мини-библиотеку","При использовании с Claude Code — подключи интеграцию по инструкции на сайте"],safety:"Бесплатный ресурс. Проверяй промпты перед использованием в критичных сценариях — не все подходят под задачу без адаптации."}},
+  {cat:"git",nick:"flearance",title:"RepoStore",date:"2026-07-15",scan:true,tags:["android","app store","github","apk","опенсорс"],desc:"Android-магазин приложений, который показывает только опенсорс-репозитории GitHub с реальными APK-релизами.",tip:"MIT-лицензия, без рекламы и трекеров.",addr:"github.com/samyak2403/RepoStore",addrLabel:"GitHub",guide:{risk:"low",intro:"RepoStore превращает GitHub Releases в Play Store-подобный интерфейс: показывает только репозитории, которые публикуют настоящие .apk файлы, отслеживает обновления установленных приложений.",steps:["Скачай APK с <strong>github.com/samyak2403/RepoStore/releases</strong> или <strong>repostore.in</strong>","Установи приложение (разреши установку из неизвестных источников)","В приложении ищи проекты по категориям или тренду","Устанавливай APK через встроенную кнопку — они грузятся напрямую с GitHub Releases автора репозитория"],safety:"RepoStore только показывает то, что уже опубликовано авторами на GitHub — за безопасность конкретного APK отвечает его разработчик, а не RepoStore. Устанавливай приложения, которым доверяешь."}},
+  {cat:"ai",nick:"flearance",title:"SQZ",date:"2026-07-15",tags:["ai","токены","экономия","дедупликация","claude","chatgpt"],desc:"Экономит до 92% лимитов ИИ через дедупликацию — если файл используется в сессии несколько раз, обрабатывает его один раз, а не заново каждый раз.",tip:"Работает локально, поддерживает ChatGPT, Claude, Gemini.",addr:"github.com/ojuschugh1/sqz",addrLabel:"GitHub",guide:{risk:"low",intro:"SQZ анализирует контекст сессии с нейросетью и убирает повторную обработку одного и того же файла, экономя токены/лимиты.",steps:["Клонируй репозиторий: <code>git clone https://github.com/ojuschugh1/sqz</code>","Установи зависимости по инструкции в README","Подключи SQZ к своему workflow с ChatGPT/Claude/Gemini","Работай как обычно — дедупликация происходит автоматически"],safety:"Инструмент работает локально и не собирает данные, согласно описанию проекта. Опенсорс — можно проверить код перед использованием."}},
+  {cat:"tools",nick:"flearance",title:"Ghost Font",date:"2026-07-15",tags:["шрифт","антиai","видео","точки","эксперимент"],desc:"Видео-шрифт из движущихся точек: текст легко читается человеком, но не распознаётся нейросетями.",tip:"mixfont.com/ghost-font — эксперимент, можно попробовать в браузере.",addr:"mixfont.com/ghost-font",addrLabel:"сайт",guide:{risk:"low",intro:"Ghost Font кодирует текст в анимацию из точек: буквы и фон двигаются в разные стороны. Человеческий мозг легко собирает движение в текст, а нейросеть, анализирующая отдельные кадры, текста не видит.",steps:["Перейди на <strong>mixfont.com/ghost-font</strong>","Введи текст, который хочешь закодировать","Получи анимацию из точек","Используй как картинку/видео там, где хочешь скрыть текст от автоматического распознавания"],safety:"Экспериментальный проект. Не рассчитывай на него как на надёжный способ защиты конфиденциальной информации."}},
+  {cat:"ai",nick:"flearance",title:"Design Skills для AI-агентов",date:"2026-07-15",tags:["дизайн","claude","агент","веб","анимация","скиллы"],desc:"Набор скиллов для AI-агентов по веб-дизайну и анимации — учат выбирать визуальные приёмы и точнее ставить задачи.",tip:"github.com/emilkowalski/skills — бесплатно.",addr:"github.com/emilkowalski/skills",addrLabel:"GitHub",guide:{risk:"low",intro:"Репозиторий со скиллами для AI-агентов (например, Claude Code): помогают агенту делать более качественный веб-дизайн, ревьюить элементы и следовать более продуманному визуальному подходу.",steps:["Перейди на <strong>github.com/emilkowalski/skills</strong>","Скачай нужные скиллы","Подключи их к своему AI-агенту (Claude Code и т.п.) по инструкции в README","Используй агента для задач по дизайну — он будет следовать заданным принципам"],safety:"Опенсорс-репозиторий. Проверяй содержимое перед подключением к агенту с широкими правами."}},
+  {cat:"edu",nick:"flearance",title:"Курс Markdown (Stepik)",date:"2026-07-15",tags:["markdown","курс","обучение","бесплатно","текст"],desc:"Самый большой русскоязычный курс по Markdown — 30 уроков, 59 тестов, бесплатная книга в комплекте.",tip:"stepik.org/course/187888/promo — рейтинг 4.9, сертификат по желанию.",addr:"stepik.org/course/187888/promo",addrLabel:"курс",guide:{risk:"low",intro:"Курс по Markdown на Stepik — от базовой разметки до продвинутых фишек, пригодится для GitHub, Obsidian, заметок и технической документации.",steps:["Перейди на <strong>stepik.org/course/187888/promo</strong>","Запишись на курс (бесплатно)","Проходи уроки по порядку, выполняй тесты","После прохождения получи бесплатную книгу и, при желании, платный сертификат"],safety:"Официальная образовательная платформа, безопасно."}},
+  {cat:"ai",nick:"flearance",title:"Гайд по промтингу GPT-5.6",date:"2026-07-15",tags:["openai","gpt","промтинг","гайд","документация"],desc:"Официальное руководство OpenAI по новым моделям: промпты для миграции проектов, шаблоны запросов и настроек.",tip:"developers.openai.com — официальная документация.",addr:"developers.openai.com/api/docs/guides/latest-model",addrLabel:"документация",guide:{risk:"low",intro:"Официальный гайд OpenAI по промтингу для последних моделей GPT — шаблоны запросов, рекомендации по миграции и новые возможности.",steps:["Перейди на <strong>developers.openai.com/api/docs/guides/latest-model</strong>","Изучи раздел с рекомендациями по промтингу","Используй шаблоны для своих задач","Следи за обновлениями документации — модели часто обновляются"],safety:"Официальный ресурс OpenAI, безопасно."}},
+  {cat:"ai",nick:"flearance",title:"Colibri",date:"2026-07-15",scan:true,tags:["llm","локально","большая модель","ram","бесплатно"],desc:"Запускает гигантские LLM (например, 744 млрд параметров) на обычном ПК без видеокарты — подгружает данные в память по мере необходимости.",tip:"github.com/JustVugg/colibri — один файл на 2400 строк кода.",addr:"github.com/JustVugg/colibri",addrLabel:"GitHub",guide:{risk:"medium",intro:"Colibri — инструмент для запуска очень больших языковых моделей на обычном железе: не требует мощной видеокарты, подгружает по 10-20 ГБ данных в оперативную память по мере надобности.",steps:["Клонируй репозиторий: <code>git clone https://github.com/JustVugg/colibri</code>","Установи зависимости по инструкции в README","Скачай нужную модель (например, GLM-5.2)","Запусти Colibri — старт занимает около 30 секунд"],safety:"Для больших моделей нужно много свободного места на диске и оперативной памяти. Опенсорс — код можно проверить перед запуском."}},
+  {cat:"tools",nick:"flearance",title:"Internxt Temporary Email",date:"2026-07-15",tags:["почта","временная","приватность","анонимно","бесплатно"],desc:"Одноразовые email-адреса для регистраций и получения кодов — быстро и анонимно.",tip:"internxt.com/temporary-email — бесплатно.",addr:"internxt.com/temporary-email",addrLabel:"сайт",guide:{risk:"low",intro:"Internxt Temporary Email выдаёт одноразовый почтовый адрес для регистраций и подтверждающих кодов, без привязки к реальным данным.",steps:["Перейди на <strong>internxt.com/temporary-email</strong>","Получи сгенерированный временный адрес","Используй его при регистрации на нужном сайте","Проверяй входящие письма прямо на странице сервиса"],safety:"Не используй временную почту для важных аккаунтов, которые понадобятся долгосрочно — доступ к ящику может исчезнуть."}},
+  {cat:"tools",nick:"flearance",title:"ToolBox (footrue.com)",date:"2026-07-15",tags:["инструменты","pdf","конвертер","браузер","бесплатно"],desc:"270+ бесплатных инструментов в браузере: работа с PDF, изображениями, видео, аудио, текстом, кодом, финансами.",tip:"footrue.com — без регистрации и установки.",addr:"footrue.com",addrLabel:"сайт",guide:{risk:"low",intro:"ToolBox объединяет десятки утилит в одном месте: склейка/сжатие PDF, конвертация изображений и видео, генерация QR-кодов и паролей, финансовые калькуляторы и другое.",steps:["Перейди на <strong>footrue.com</strong>","Выбери нужную категорию инструментов","Загрузи файл или введи данные","Получи результат прямо в браузере"],safety:"Проверяй, что важные/приватные файлы не отправляются на сторонний сервер, если это критично — для таких случаев отдавай предпочтение оффлайн-инструментам."}},
+  {cat:"tools",nick:"flearance",title:"Ditto",date:"2026-07-15",tags:["дизайн","сайт","клонирование","figma","css"],desc:"Извлекает дизайн-токены с любого сайта по URL — цвета, шрифты, отступы. Результат можно скормить нейросетям или закинуть в Figma/Tailwind.",tip:"ditto.site — можно совмещать стиль нескольких сайтов.",addr:"ditto.site",addrLabel:"сайт",guide:{risk:"low",intro:"Ditto анализирует сайт по URL и извлекает дизайн-систему: цвета, типографику, отступы, тени. Выдаёт DESIGN.md документ, который можно передать в Claude/ChatGPT/Cursor, или сразу экспортировать в Figma, React, Tailwind, CSS-переменные.",steps:["Перейди на <strong>ditto.site</strong>","Вставь URL сайта, дизайн которого хочешь проанализировать","Дождись извлечения дизайн-токенов","Экспортируй результат в нужном формате (DESIGN.md, Figma, Tailwind и др.)"],safety:"Инструмент извлекает публично доступные визуальные параметры (CSS, шрифты) — это не взлом сайта. Уважай авторские права при использовании чужого дизайна в коммерческих проектах."}},
 ];
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -1185,15 +1829,15 @@ document.addEventListener("DOMContentLoaded", function() {
       var title = document.getElementById("suggest-title").value.trim();
       var url = document.getElementById("suggest-url").value.trim();
       var desc = document.getElementById("suggest-desc").value.trim();
-      var nick = document.getElementById("suggest-nick").value.trim() || "аноним";
+      var nick = document.getElementById("suggest-nick").value.trim() || t("suggest.anon");
 
       if (!title || !url) {
-        suggestStatus.textContent = "заполни название и ссылку";
+        suggestStatus.textContent = t("suggest.fill_fields");
         suggestStatus.style.color = "rgba(255,180,60,0.85)";
         return;
       }
 
-      suggestStatus.textContent = "отправка...";
+      suggestStatus.textContent = t("suggest.sending");
       suggestStatus.style.color = "var(--text-dim)";
 
       // Отправка на Formspree
@@ -1202,12 +1846,12 @@ document.addEventListener("DOMContentLoaded", function() {
         fetch(formAction, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ title: title, url: url, desc: desc, nick: nick, _subject: "FLEARANCE: новый инструмент от " + nick })
+          body: JSON.stringify({ title: title, url: url, desc: desc, nick: nick, _subject: t("suggest.subject") + nick })
         }).then(function() {
-          suggestStatus.textContent = "отправлено! спасибо";
+          suggestStatus.textContent = t("suggest.sent");
           suggestStatus.style.color = "#00c896";
         }).catch(function() {
-          suggestStatus.textContent = "ошибка сети, попробуй позже";
+          suggestStatus.textContent = t("suggest.error");
           suggestStatus.style.color = "rgba(255,180,60,0.85)";
         });
       } else {
@@ -1215,7 +1859,7 @@ document.addEventListener("DOMContentLoaded", function() {
         var suggestions = JSON.parse(localStorage.getItem("flearance-suggestions") || "[]");
         suggestions.push({ title: title, url: url, desc: desc, nick: nick, date: new Date().toISOString(), status: "pending" });
         localStorage.setItem("flearance-suggestions", JSON.stringify(suggestions));
-        suggestStatus.textContent = "сохранено локально (Formspree не настроен)";
+        suggestStatus.textContent = t("suggest.saved");
         suggestStatus.style.color = "rgba(255,180,60,0.85)";
       }
 
@@ -1239,6 +1883,18 @@ document.addEventListener("DOMContentLoaded", function() {
     blockedTorBtn.addEventListener("click", function() {
       showPage("catalog");
       filterCat("sec");
+      setTimeout(function() {
+        var cards = document.querySelectorAll("#catalog-grid .catalog-card, #pinned-grid .catalog-card");
+        for (var i = 0; i < cards.length; i++) {
+          var cardTitle = cards[i].querySelector(".card-title");
+          if (cardTitle && (cardTitle.textContent === "Tor Browser (продвинутое)" || cardTitle.textContent === "Tor Browser (продвинутое)")) {
+            cards[i].scrollIntoView({ behavior: "smooth", block: "center" });
+            cards[i].classList.add("flash");
+            setTimeout(function(c) { c.classList.remove("flash"); }, 3000, cards[i]);
+            break;
+          }
+        }
+      }, 100);
     });
   }
 
@@ -1299,21 +1955,21 @@ document.addEventListener("DOMContentLoaded", function() {
 
   document.getElementById("session-copy-btn").addEventListener("click", function() {
     var id = document.getElementById("session-id-text").textContent.trim();
-    doCopyAction(id, this, "скопировать Session ID");
+    doCopyAction(id, this, t("copy.session"));
   });
 
   document.getElementById("email-copy-btn").addEventListener("click", function() {
     var email = document.getElementById("contact-email-text").textContent.trim();
-    doCopyAction(email, this, "скопировать Email");
+    doCopyAction(email, this, t("copy.email"));
   });
 
   document.getElementById("template-copy-btn").addEventListener("click", function() {
-    doCopyAction("Ник: \nЗапрос: \nПредпочтения: ", this, "скопировать шаблон");
+    doCopyAction(t("template.text"), this, t("copy.template"));
   });
 
   document.getElementById("xmr-copy-btn").addEventListener("click", function() {
     var addr = document.getElementById("xmr-addr-text").textContent.trim();
-    doCopyAction(addr, this, "скопировать адрес Monero");
+    doCopyAction(addr, this, t("copy.xmr"));
   });
 
   // QR Time Modal + Fullscreen
@@ -1367,7 +2023,7 @@ document.addEventListener("DOMContentLoaded", function() {
       var secAttr = btn.getAttribute("data-sec");
       var sec;
       if (secAttr === "custom") {
-        var input = prompt("Введите количество секунд:", "10");
+        var input = prompt(t("qr.prompt"), "10");
         sec = parseInt(input, 10);
         if (!sec || sec < 1) sec = 10;
       } else {
@@ -1380,6 +2036,11 @@ document.addEventListener("DOMContentLoaded", function() {
   renderCatalog();
   renderCounters();
   renderRecentTools();
+  renderPaths();
+  applyTranslations();
+  var langToggle = document.getElementById("lang-toggle");
+  if (langToggle) langToggle.textContent = currentLang === "ru" ? "EN" : "RU";
+  document.documentElement.lang = currentLang;
 
   document.getElementById("guide-modal-close").addEventListener("click", closeGuide);
   document.getElementById("guide-overlay").addEventListener("click", function(e) {
@@ -1451,9 +2112,11 @@ function renderCatalog() {
   var count = 0;
   var pinnedHtml = "";
   var regularHtml = "";
+  var favs = getFavorites();
   for (var i = 0; i < CATALOG.length; i++) {
     var item = CATALOG[i];
     var matchCat = currentCat === "all" || item.cat === currentCat;
+    if (currentCat === "fav") matchCat = favs.indexOf(item.title) !== -1;
     var matchSearch = !currentSearch ||
       item.title.toLowerCase().indexOf(currentSearch) !== -1 ||
       item.desc.toLowerCase().indexOf(currentSearch) !== -1 ||
@@ -1461,20 +2124,34 @@ function renderCatalog() {
       (item.tags && item.tags.join(" ").toLowerCase().indexOf(currentSearch) !== -1);
     if (matchCat && matchSearch) {
       count++;
+      var isFav = favs.indexOf(item.title) !== -1;
       var cardClass = item.pinned ? 'catalog-card pinned' : 'catalog-card';
       var cardHtml = '<div class="' + cardClass + '">';
+      // Favorite button (bottom-right)
+      cardHtml += '<button class="fav-btn' + (isFav ? ' active' : '') + '" data-title="' + esc(item.title) + '" title="' + t("catalog.tab_fav") + '"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg></button>';
       if (item.guide) {
         var riskDot = item.guide.risk ? '<div class="card-risk-dot ' + item.guide.risk + '"></div>' : '';
         cardHtml += riskDot;
-        cardHtml += '<button class="guide-btn" data-idx="' + i + '"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h9l5 5v15a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z"></path><path d="M15 2v5h5"></path><line x1="8" y1="13" x2="16" y2="13"></line><line x1="8" y1="17" x2="13" y2="17"></line></svg><span class="guide-tooltip">Руководство</span></button>';
+        cardHtml += '<button class="guide-btn" data-idx="' + i + '"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h9l5 5v15a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z"></path><path d="M15 2v5h5"></path><line x1="8" y1="13" x2="16" y2="13"></line><line x1="8" y1="17" x2="13" y2="17"></line></svg><span class="guide-tooltip">' + t("catalog.rec_btn") + '</span></button>';
       }
       cardHtml += '<div class="card-cat">// ' + catLabel(item.cat) + '</div>';
       cardHtml += '<div class="card-nick">// ' + esc(item.nick) + '</div>';
-      cardHtml += '<div class="card-title">' + esc(item.title) + '</div>';
+      cardHtml += '<div class="card-title" data-idx="' + i + '">' + esc(item.title) + '</div>';
       cardHtml += '<div class="card-desc">' + esc(item.desc) + '</div>';
       cardHtml += '<div class="card-tip">' + esc(item.tip) + '</div>';
       cardHtml += '<div class="card-addr"><span class="card-addr-label">// ' + esc(item.addrLabel) + '</span>' + esc(item.addr) + '</div>';
-      cardHtml += '<button class="copy-btn copy-addr-btn" data-addr="' + esc(item.addr) + '"><span class="copy-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"></path></svg></span> скопировать адрес</button>';
+      // Card actions
+      cardHtml += '<div class="card-actions">';
+      cardHtml += '<button class="card-action-btn copy-addr-btn" data-addr="' + esc(item.addr) + '"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"></path></svg>' + t("card.copy") + '</button>';
+      if (item.guide) {
+        cardHtml += '<button class="card-action-btn guide-action-btn" data-idx="' + i + '"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h9l5 5v15a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z"></path><path d="M15 2v5h5"></path></svg>' + t("card.guide") + '</button>';
+      }
+      cardHtml += '<button class="card-action-btn share-btn" data-title="' + esc(item.title) + '" data-desc="' + esc(item.desc) + '"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>' + t("card.share") + '</button>';
+      cardHtml += '</div>';
+      // Preview container
+      if (item.guide) {
+        cardHtml += '<div class="card-preview"></div>';
+      }
       cardHtml += '</div>';
       if (item.pinned) {
         pinnedHtml += cardHtml;
@@ -1484,19 +2161,62 @@ function renderCatalog() {
     }
   }
   if (pinnedGrid) pinnedGrid.innerHTML = pinnedHtml;
-  grid.innerHTML = regularHtml || (!pinnedHtml ? '<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--text-dim);font-family:var(--font-mono);font-size:13px;letter-spacing:1px;">ничего не найдено</div>' : '');
-  document.getElementById("cat-count").textContent = count + " из " + CATALOG.length;
+  if (currentCat === "fav" && count === 0) {
+    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--text-dim);font-family:var(--font-mono);font-size:13px;letter-spacing:1px;">' + t("catalog.fav_empty") + '</div>';
+  } else {
+    grid.innerHTML = regularHtml || (!pinnedHtml ? '<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--text-dim);font-family:var(--font-mono);font-size:13px;letter-spacing:1px;">' + t("catalog.nothing") + '</div>' : '');
+  }
+  document.getElementById("cat-count").textContent = count + t("catalog.of") + CATALOG.length;
 
   [grid, pinnedGrid].forEach(function(container) {
     if (!container) return;
+    // Copy address buttons
     container.querySelectorAll(".copy-addr-btn").forEach(function(btn) {
-      btn.addEventListener("click", function() {
-        doCopyAction(btn.getAttribute("data-addr"), btn, "скопировать адрес");
+      btn.addEventListener("click", function(e) {
+        e.stopPropagation();
+        doCopyAction(btn.getAttribute("data-addr"), btn, t("card.copy"));
       });
     });
+    // Guide buttons (icon in top-right)
     container.querySelectorAll(".guide-btn").forEach(function(btn) {
-      btn.addEventListener("click", function() {
+      btn.addEventListener("click", function(e) {
+        e.stopPropagation();
         openGuide(CATALOG[parseInt(btn.getAttribute("data-idx"), 10)]);
+      });
+    });
+    // Guide action buttons (in card actions row)
+    container.querySelectorAll(".guide-action-btn").forEach(function(btn) {
+      btn.addEventListener("click", function(e) {
+        e.stopPropagation();
+        openGuide(CATALOG[parseInt(btn.getAttribute("data-idx"), 10)]);
+      });
+    });
+    // Favorite buttons
+    container.querySelectorAll(".fav-btn").forEach(function(btn) {
+      btn.addEventListener("click", function(e) {
+        e.stopPropagation();
+        toggleFavorite(btn.getAttribute("data-title"), btn);
+      });
+    });
+    // Share buttons
+    container.querySelectorAll(".share-btn").forEach(function(btn) {
+      btn.addEventListener("click", function(e) {
+        e.stopPropagation();
+        var title = btn.getAttribute("data-title");
+        var desc = btn.getAttribute("data-desc");
+        if (navigator.share) {
+          navigator.share({ title: "FLEARANCE: " + title, text: desc, url: window.location.href });
+        } else {
+          doCopyAction(window.location.href, btn, t("card.share"));
+        }
+      });
+    });
+    // Card title click → expand preview
+    container.querySelectorAll(".card-title").forEach(function(el) {
+      el.addEventListener("click", function(e) {
+        e.stopPropagation();
+        var idx = parseInt(el.getAttribute("data-idx"), 10);
+        if (!isNaN(idx)) toggleCardPreview(el.closest(".catalog-card"), idx);
       });
     });
   });
@@ -1515,7 +2235,7 @@ function openGuide(item) {
   document.querySelector('.guide-tab[data-gtab="risk"]').classList.add("active");
   document.getElementById("guide-gtab-risk").classList.add("active");
 
-  var riskLabels = {low:"низкий риск", medium:"средний риск", high:"высокий риск"};
+  var riskLabels = {low:t("risk.low"), medium:t("risk.medium"), high:t("risk.high")};
   var riskClass = g.risk || "medium";
   document.getElementById("guide-risk-badge").innerHTML =
     '<span class="guide-risk clickable ' + riskClass + '" id="guide-risk-click">' + (riskLabels[riskClass] || riskClass) + ' &rarr;</span>';
@@ -1535,11 +2255,11 @@ function openGuide(item) {
   var rd = RISK_DATA[item.title];
   if (rd) {
     var criterionLabels = {
-      deanon:"деанонимизация", leak:"утечка данных", knowledge:"уровень знаний",
-      setup:"сложность настройки", dependency:"зависимость от third-party",
-      alternatives:"альтернативы"
+      deanon:t("criterion.deanon"), leak:t("criterion.leak"), knowledge:t("criterion.knowledge"),
+      setup:t("criterion.setup"), dependency:t("criterion.dependency"),
+      alternatives:t("criterion.alternatives")
     };
-    var altLabels = {yes:"есть", no:"нет"};
+    var altLabels = {yes:t("alt.yes"), no:t("alt.no")};
     var rows = "";
     ["deanon","leak","knowledge","setup","dependency","alternatives"].forEach(function(key) {
       var val = rd[key];
@@ -1582,14 +2302,30 @@ function openGuide(item) {
     scanBlock.style.display = "none";
   }
 
+  // Related tools
+  renderRelatedTools(item);
+
+  // Guide favorite button
+  var guideFavBtn = document.getElementById("guide-fav-btn");
+  if (guideFavBtn) {
+    var favs = getFavorites();
+    if (favs.indexOf(item.title) !== -1) {
+      guideFavBtn.classList.add("active");
+    } else {
+      guideFavBtn.classList.remove("active");
+    }
+    guideFavBtn.onclick = function() { toggleFavorite(item.title, guideFavBtn); };
+  }
+
   var overlay = document.getElementById("guide-overlay");
   overlay.classList.add("open");
   document.getElementById("guide-modal").scrollTop = 0;
 }
 
 function parseSlang(text) {
+  var slang = getSLANG();
   return text.replace(/\[([^\]]+)\]/g, function(match, term) {
-    var def = SLANG[term];
+    var def = slang[term];
     if (!def) return match;
     return '<span class="slang" data-def="' + def.replace(/"/g, '&quot;') + '">' + term + '</span>';
   });
@@ -1603,7 +2339,7 @@ document.addEventListener("click", function(e) {
   if (el) {
     e.stopPropagation();
     var def = el.getAttribute("data-def");
-    slangPopup.innerHTML = "// что это<br>" + def;
+    slangPopup.innerHTML = t("slang.header") + "<br>" + def;
     var rect = el.getBoundingClientRect();
     var tipW = 260;
     var left = rect.left + rect.width / 2 - tipW / 2;
@@ -1637,7 +2373,7 @@ function closeGuide() {
 }
 
 function catLabel(c) {
-  var labels = {git:"Git / Open-Source", ai:"AI-Agent", edu:"Обучение", hosting:"Хостинг", tools:"Сервисы", access:"Операционные Системы", sec:"Безопасность", fun:"Моды и игры"};
+  var labels = {git:t("catLabel.git"), ai:t("catLabel.ai"), edu:t("catLabel.edu"), hosting:t("catLabel.hosting"), tools:t("catLabel.tools"), access:t("catLabel.access"), sec:t("catLabel.sec"), fun:t("catLabel.fun")};
   return labels[c] || c;
 }
 
@@ -1648,10 +2384,11 @@ function esc(s) {
 function doCopyAction(text, btn, label) {
   var done = function() {
     btn.classList.add("copied");
-    btn.childNodes[btn.childNodes.length - 1].nodeValue = " скопировано";
+    var span = btn.querySelector("[data-i18n]");
+    if (span) span.innerHTML = t("copy.copied");
     setTimeout(function() {
       btn.classList.remove("copied");
-      btn.childNodes[btn.childNodes.length - 1].nodeValue = " " + label;
+      if (span) span.innerHTML = label;
     }, 2000);
   };
   if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -1708,12 +2445,14 @@ function renderRecentTools() {
   var html = "";
   recent.forEach(function(item) {
     var dateObj = new Date(item.date);
-    var dateStr = dateObj.toLocaleDateString("ru-RU", {day:"numeric", month:"short", year:"numeric"});
+    var months = getMonths();
+    var monthName = months[dateObj.getMonth()];
+    var dateStr = dateObj.getDate() + " " + monthName + " " + dateObj.getFullYear();
     html += '<div class="catalog-card">';
     html += '<div class="card-cat feed-cat" data-cat="' + item.cat + '" data-title="' + esc(item.title) + '">// ' + catLabel(item.cat) + '</div>';
     html += '<div class="card-title">' + esc(item.title) + '</div>';
     html += '<div class="card-desc">' + esc(item.desc) + '</div>';
-    html += '<div style="font-family:var(--font-mono);font-size:10px;color:var(--accent2);letter-spacing:1px;margin-top:8px;">добавлено ' + dateStr + '</div>';
+    html += '<div style="font-family:var(--font-mono);font-size:10px;color:var(--accent2);letter-spacing:1px;margin-top:8px;">' + t("lenta.added") + ' ' + dateStr + '</div>';
     html += '</div>';
   });
 
@@ -1757,7 +2496,7 @@ function renderLenta() {
   }
   if (emptyEl) emptyEl.style.display = "none";
 
-  var months = ["янв","фев","мар","апр","май","июн","июл","авг","сен","окт","ноя","дек"];
+  var months = getMonths();
   var html = "";
   var lastGroup = "";
 
@@ -1851,11 +2590,171 @@ function renderPopularTools() {
     html += '<div class="card-cat">// ' + catLabel(x.item.cat) + '</div>';
     html += '<div class="card-title">' + esc(x.item.title) + '</div>';
     html += '<div class="card-desc">' + esc(x.item.desc) + '</div>';
-    html += '<div style="font-family:var(--font-mono);font-size:10px;color:var(--accent2);letter-spacing:1px;margin-top:8px;">просмотров: ' + x.views + '</div>';
+    html += '<div style="font-family:var(--font-mono);font-size:10px;color:var(--accent2);letter-spacing:1px;margin-top:8px;">' + t("popular.views") + ' ' + x.views + '</div>';
     html += '</div>';
   });
 
   container.innerHTML = html;
+}
+
+/* === FAVORITES === */
+function getFavorites() {
+  return JSON.parse(localStorage.getItem("flearance-favorites") || "[]");
+}
+
+function toggleFavorite(title, btn) {
+  var favs = getFavorites();
+  var idx = favs.indexOf(title);
+  if (idx === -1) {
+    favs.push(title);
+    btn.classList.add("active", "pulse");
+    setTimeout(function() { btn.classList.remove("pulse"); }, 300);
+  } else {
+    favs.splice(idx, 1);
+    btn.classList.remove("active");
+  }
+  localStorage.setItem("flearance-favorites", JSON.stringify(favs));
+  // Sync all fav buttons for this title
+  document.querySelectorAll('.fav-btn[data-title="' + CSS.escape(title) + '"]').forEach(function(b) {
+    if (b !== btn) {
+      if (idx === -1) b.classList.add("active");
+      else b.classList.remove("active");
+    }
+  });
+  // Sync guide modal fav button
+  var guideFavBtn = document.getElementById("guide-fav-btn");
+  if (guideFavBtn && document.getElementById("guide-title") && document.getElementById("guide-title").textContent === title) {
+    if (idx === -1) guideFavBtn.classList.add("active");
+    else guideFavBtn.classList.remove("active");
+  }
+  var favBtn = document.getElementById("catalog-fav-btn");
+  if (favBtn && currentCat === "fav") renderCatalog();
+}
+
+/* === CARD PREVIEW === */
+function toggleCardPreview(cardEl, idx) {
+  var wasExpanded = cardEl.classList.contains("expanded");
+  // Close all expanded cards
+  document.querySelectorAll(".catalog-card.expanded").forEach(function(c) { c.classList.remove("expanded"); });
+  if (!wasExpanded) {
+    cardEl.classList.add("expanded");
+    // Render preview content if not yet rendered
+    var previewEl = cardEl.querySelector(".card-preview");
+    if (previewEl && !previewEl.dataset.rendered) {
+      var item = CATALOG[idx];
+      if (item && item.guide) {
+        var steps = (item.guide.steps || []).slice(0, 3);
+        var stepsHtml = '<div class="card-preview-steps">';
+        steps.forEach(function(step, si) {
+          stepsHtml += '<div class="card-preview-step"><span class="card-preview-step-num">' + (si + 1) + '.</span><span>' + esc(step.replace(/<[^>]*>/g, '')) + '</span></div>';
+        });
+        stepsHtml += '</div>';
+        stepsHtml += '<button class="card-preview-guide-btn" onclick="event.stopPropagation();this.closest(\'.catalog-card\').classList.remove(\'expanded\');openGuide(CATALOG[' + idx + '])">' + t("guide.full") + '</button>';
+        previewEl.innerHTML = stepsHtml;
+        previewEl.dataset.rendered = "1";
+      }
+    }
+  }
+}
+
+/* === RELATED TOOLS === */
+function findRelated(item, max) {
+  max = max || 4;
+  var scores = [];
+  CATALOG.forEach(function(other, i) {
+    if (other === item) return;
+    var score = 0;
+    if (other.cat === item.cat) score += 3;
+    if (item.tags && other.tags) {
+      item.tags.forEach(function(tag) {
+        if (other.tags.indexOf(tag) !== -1) score += 1;
+      });
+    }
+    if (score > 0) scores.push({ item: other, idx: i, score: score });
+  });
+  scores.sort(function(a, b) { return b.score - a.score; });
+  return scores.slice(0, max);
+}
+
+function renderRelatedTools(item) {
+  var grid = document.getElementById("guide-related-grid");
+  var block = document.getElementById("guide-related-block");
+  if (!grid || !block) return;
+  var related = findRelated(item);
+  if (related.length === 0) { block.style.display = "none"; return; }
+  block.style.display = "block";
+  var html = "";
+  related.forEach(function(r) {
+    var riskClass = (r.item.guide && r.item.guide.risk) ? r.item.guide.risk : "medium";
+    html += '<div class="guide-related-item" onclick="closeGuide();setTimeout(function(){openGuide(CATALOG[' + r.idx + '])},200)">';
+    html += '<div class="guide-related-dot card-risk-dot ' + riskClass + '" style="position:static;"></div>';
+    html += '<div class="guide-related-info">';
+    html += '<div class="guide-related-name">' + esc(r.item.title) + '</div>';
+    html += '<div class="guide-related-desc">' + esc(r.item.desc) + '</div>';
+    html += '</div></div>';
+  });
+  grid.innerHTML = html;
+}
+
+/* === PATHS (curated collections) === */
+var PATHS = [
+  {
+    icon: "shield",
+    titleKey: "paths.privacy",
+    descKey: "paths.privacy_desc",
+    tools: ["Tor Browser (продвинутое)", "uBlock Origin", "Bitwarden", "Signal", "KeePassXC"]
+  },
+  {
+    icon: "cpu",
+    titleKey: "paths.ai",
+    descKey: "paths.ai_desc",
+    tools: ["Claude (Anthropic)", "Ollama", "LM Studio", "Open WebUI"]
+  },
+  {
+    icon: "code",
+    titleKey: "paths.dev",
+    descKey: "paths.dev_desc",
+    tools: ["Linux Mint", "VS Code (оптимизация)", "Ollama", "Exercism"]
+  },
+  {
+    icon: "smartphone",
+    titleKey: "paths.android",
+    descKey: "paths.android_desc",
+    tools: ["GrapheneOS", "SimpleX Chat", "SpamBlocker", "Fingerprint Detector"]
+  }
+];
+
+function findToolIdx(title) {
+  for (var i = 0; i < CATALOG.length; i++) {
+    if (CATALOG[i].title === title) return i;
+  }
+  return -1;
+}
+
+function renderPaths() {
+  var grid = document.getElementById("paths-grid");
+  if (!grid) return;
+  var html = "";
+  PATHS.forEach(function(path) {
+    html += '<div class="path-card">';
+    html += '<div class="path-icon">' + path.icon + '</div>';
+    html += '<div class="path-title">' + t(path.titleKey) + '</div>';
+    html += '<div class="path-desc">' + t(path.descKey) + '</div>';
+    html += '<div class="path-steps">';
+    path.tools.forEach(function(toolTitle, si) {
+      var idx = findToolIdx(toolTitle);
+      if (idx === -1) return;
+      var item = CATALOG[idx];
+      var riskClass = (item.guide && item.guide.risk) ? item.guide.risk : "medium";
+      html += '<div class="path-step" onclick="showPage(\'catalog\');filterCat(\'' + item.cat + '\');setTimeout(function(){var cards=document.querySelectorAll(\'#catalog-grid .catalog-card, #pinned-grid .catalog-card\');for(var i=0;i<cards.length;i++){var ct=cards[i].querySelector(\'.card-title\');if(ct&&ct.textContent===\'' + esc(item.title).replace(/'/g, "\\'") + '\'){cards[i].scrollIntoView({behavior:\'smooth\',block:\'center\'});cards[i].classList.add(\'flash\');setTimeout(function(c){c.classList.remove(\'flash\')},3000,cards[i]);break;}}},100)">';
+      html += '<span class="path-step-num">' + (si + 1) + '.</span>';
+      html += '<span class="card-risk-dot ' + riskClass + '" style="position:static;width:5px;height:5px;"></span>';
+      html += '<span class="path-step-name">' + esc(item.title) + '</span>';
+      html += '</div>';
+    });
+    html += '</div></div>';
+  });
+  grid.innerHTML = html;
 }
 </script>
 </body>
